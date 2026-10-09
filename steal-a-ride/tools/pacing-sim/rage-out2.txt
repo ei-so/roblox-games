@@ -1,0 +1,5 @@
+burst 1.15 4s winded 0.85 sim median  71.3 min ~ real  3.0 h (p10  56.7, p90  88.5 min) (p10   56.7, p90   88.5) | first deposit (median min): For   0.6 Lak   3.7 Des  11.2 Jun  18.7 Tun  31.2 Vol  53.9 Cos  71.2
+burst 1.15 3s winded 0.85 sim median  64.7 min ~ real  2.8 h (p10  47.3, p90  85.0 min) (p10   47.3, p90   85.0) | first deposit (median min): For   0.6 Lak   3.7 Des  10.3 Jun  15.4 Tun  28.0 Vol  46.2 Cos  64.2
+burst 1.15 4s winded 0.8 sim median  71.1 min ~ real  3.0 h (p10  57.0, p90  88.5 min) (p10   57.0, p90   88.5) | first deposit (median min): For   0.6 Lak   3.7 Des  11.2 Jun  18.1 Tun  30.7 Vol  54.5 Cos  70.1
+burst 1.15 3s winded 0.9 sim median  68.8 min ~ real  2.9 h (p10  49.3, p90  86.6 min) (p10   49.3, p90   86.6) | first deposit (median min): For   0.6 Lak   3.7 Des  11.2 Jun  17.6 Tun  28.5 Vol  47.1 Cos  68.1
+burst 1.15 2s winded 0.9 sim median  63.6 min ~ real  2.7 h (p10  39.4, p90  78.6 min) (p10   39.4, p90   78.6) | first deposit (median min): For   0.6 Lak   3.7 Des   9.8 Jun  14.9 Tun  25.1 Vol  41.2 Cos  63.1

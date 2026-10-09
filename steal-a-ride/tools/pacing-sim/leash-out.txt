@@ -1,0 +1,24 @@
+leash buffer 15.0, margin x1.0
+biome         guard  ride med  ride p90  old w  new w  carry flag
+Lake           33.8      36.1      40.1   0.94  0.934   33.7 
+Desert         45.0      51.9      57.9   0.91  0.866   45.0 
+Jungle         55.0      59.3      66.3   0.88  0.927   55.0 
+Tundra         65.0      75.7      79.7   0.85  0.859   65.0 
+Volcano        75.0      90.6      92.6   0.82  0.828   75.0 
+Cosmic         95.0     102.7     106.7   0.80  0.925   95.0 
+MysticGrove   110.0     115.8     117.8   0.78  0.927  107.3 
+secretMult 0.909 (Legendary mount from the previous biome + saddle 20 still beats every guardian)
+leash, OLD weights       sim median  79.5 min ~ real  3.4 h (p10  59.8, p90  89.7 min) (p10   59.8, p90   89.7) | first deposit (median min): For   0.6 Lak   2.8 Des   9.7 Jun  17.0 Tun  33.8 Vol  53.3 Cos  79.5 Mys  84.4
+leash, NEW weights       sim median  69.9 min ~ real  3.0 h (p10  56.6, p90  82.6 min) (p10   56.6, p90   82.6) | first deposit (median min): For   0.6 Lak   2.9 Des  13.9 Jun  17.9 Tun  36.0 Vol  56.3 Cos  69.7 Mys   nan
+leash, NEW weights       sim median  86.7 min ~ real  3.7 h (p10  72.8, p90 100.7 min) (p10   72.8, p90  100.7) | first deposit (median min): For   0.6 Lak   2.9 Des  13.9 Jun  17.9 Tun  36.0 Vol  56.3 Cos  69.7 Mys  86.6
+CONFIG
+  carry Forest = 0.96
+  carry Lake = 0.934
+  carry Desert = 0.866
+  carry Jungle = 0.927
+  carry Tundra = 0.859
+  carry Volcano = 0.828
+  carry Cosmic = 0.925
+  carry MysticGrove = 0.927
+  secretMult = 0.909
+  leashBuffer = 15.0

@@ -1,0 +1,222 @@
+{
+  "date": "2026-10-07",
+  "placeId": 123937616497204,
+  "publishedByCodex": false,
+  "offline": "11 PASS groups including compile of 36 sources",
+  "review": "Read-only review: findings fixed; final targeted re-review had no actionable findings",
+  "budget": {
+    "farDisabled": true,
+    "maxActive": 24,
+    "secretUnchanged": true,
+    "pass": true,
+    "fixtureActive": 24
+  },
+  "hatches": {
+    "fragments": {
+      "HatchBubble": 6,
+      "HatchLeaf": 6
+    },
+    "themes": {
+      "HatchTheme_Jungle": {
+        "touch": false,
+        "query": false,
+        "loaded": true,
+        "texture": "rbxasset://textures/particles/sparkles_main.dds",
+        "collision": false,
+        "playing": true
+      },
+      "HatchTheme_Desert": {
+        "touch": false,
+        "query": false,
+        "loaded": true,
+        "texture": "rbxasset://textures/particles/smoke_main.dds",
+        "collision": false,
+        "playing": true
+      },
+      "HatchTheme_Volcano": {
+        "touch": false,
+        "query": false,
+        "loaded": true,
+        "texture": "rbxasset://textures/particles/fire_main.dds",
+        "collision": false,
+        "playing": true
+      },
+      "HatchTheme_Cosmic": {
+        "touch": false,
+        "query": false,
+        "loaded": true,
+        "texture": "rbxasset://textures/particles/sparkles_main.dds",
+        "collision": false,
+        "playing": true
+      },
+      "HatchTheme_Lake": {
+        "touch": false,
+        "query": false,
+        "loaded": true,
+        "texture": "rbxasset://textures/particles/smoke_main.dds",
+        "collision": false,
+        "playing": true
+      },
+      "HatchTheme_Forest": {
+        "touch": false,
+        "query": false,
+        "loaded": true,
+        "texture": "rbxasset://textures/particles/sparkles_main.dds",
+        "collision": false,
+        "playing": true
+      },
+      "HatchTheme_Tundra": {
+        "touch": false,
+        "query": false,
+        "loaded": true,
+        "texture": "rbxasset://textures/particles/sparkles_main.dds",
+        "collision": false,
+        "playing": true
+      }
+    }
+  },
+  "audioCache": {
+    "sounds": {
+      "Jungle": true,
+      "Tundra": true,
+      "Desert": true,
+      "Lake": true,
+      "Cosmic": true,
+      "Volcano": true,
+      "Forest": true
+    },
+    "fuseEntry": true,
+    "toggle": true,
+    "plot": "Plot1"
+  },
+  "menu": {
+    "tabs": [
+      "StablePanel",
+      "ShopPanel",
+      "IndexPanel",
+      "RebirthPanel",
+      "StorePanel",
+      "GuidePanel",
+      "FusePanel"
+    ],
+    "fuseRequestBlocked": true,
+    "closedTabRestoresControls": true,
+    "pass": true,
+    "expandedMenuHidesControls": true
+  },
+  "compact": {
+    "cards": [
+      {
+        "actions": "182, 44",
+        "name": "Legendary",
+        "size": "194, 132"
+      },
+      {
+        "actions": "182, 44",
+        "name": "Rare",
+        "size": "194, 132"
+      },
+      {
+        "actions": "182, 44",
+        "name": "Uncommon · Golden",
+        "size": "194, 132"
+      },
+      {
+        "actions": "182, 44",
+        "name": "Common",
+        "size": "194, 132"
+      }
+    ],
+    "list": "613, 138",
+    "viewport": "665, 374",
+    "pass": true,
+    "panel": "641, 292"
+  },
+  "desktop": {
+    "touch": false,
+    "menu": [
+      {
+        "position": "8.40000153, 60",
+        "name": "StableButton",
+        "size": "78, 27.6000004"
+      },
+      {
+        "position": "8.40000153, 247.200012",
+        "name": "FuseButton",
+        "size": "78, 27.6000004"
+      },
+      {
+        "position": "8.40000153, 91.1999969",
+        "name": "ShopButton",
+        "size": "78, 27.6000004"
+      },
+      {
+        "position": "8.40000153, 153.600006",
+        "name": "RebirthButton",
+        "size": "78, 27.6000004"
+      },
+      {
+        "position": "8.40000153, 122.399994",
+        "name": "IndexButton",
+        "size": "78, 27.6000004"
+      },
+      {
+        "position": "8.40000153, 184.800003",
+        "name": "StoreButton",
+        "size": "78, 27.6000004"
+      },
+      {
+        "position": "8.40000153, 216",
+        "name": "GuideButton",
+        "size": "78, 27.6000004"
+      }
+    ],
+    "viewport": "810, 404",
+    "pass": true,
+    "stable": "444.000031, 282"
+  },
+  "lifecycle": {
+    "cleaned": true,
+    "pass": true,
+    "cameraRestored": true
+  },
+  "studio": {
+    "simulatorReset": true,
+    "edit": true,
+    "temporaryConfigRemoved": true,
+    "matches": {
+      "Config": true,
+      "CreatureBuilder": true,
+      "UIController": true,
+      "ClientMain": true,
+      "StableUI": true,
+      "Effects": true
+    },
+    "store": "StealARide_v1",
+    "http": false
+  },
+  "simulator": {
+    "device": "default",
+    "error": "nil",
+    "reset": true
+  },
+  "fusion": {
+    "nearMachineConsumed": 3,
+    "matchingSpecies": "Bunny",
+    "inputRarity": "Common",
+    "outputRarity": "Uncommon",
+    "bestMutation": "Golden",
+    "equippedMountRetained": true,
+    "farMachineRejected": true,
+    "locationsCombined": [
+      "Pen",
+      "Stable"
+    ]
+  },
+  "limits": [
+    "Emulated mobile; physical phone not tested",
+    "Rarity Common selection observed via native input; virtual-input targeting of All was unreliable, fresh All inventory rendering verified",
+    "Bare ContentProvider asset-string preload failed; real Sound objects loaded and played after cache fix",
+    "Standalone lifecycle test avoids execute_luau camera restoration side effects"
+  ]
+}

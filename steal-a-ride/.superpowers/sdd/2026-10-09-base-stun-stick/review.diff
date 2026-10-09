@@ -1,0 +1,299 @@
+--- a/ReplicatedStorage/Shared/Config.luau
++++ b/ReplicatedStorage/Shared/Config.luau
+@@ -214,6 +214,7 @@
+ 		{ id = "color", title = "Color" }, { id = "floor", title = "Floor" }, { id = "plants", title = "Plants" },
+ 		{ id = "seating", title = "Seating" }, { id = "rug", title = "Rug" }, { id = "lights", title = "Lights" },
+ 		{ id = "statue", title = "Statue" }, { id = "banners", title = "Banners" }, { id = "gate", title = "Gate" },
++		{ id = "stick", title = "Stick" },
+ 	},
+ 	items = {
+ 		{ id = "colorDefault", slot = "color", name = "Original", price = 0 },
+@@ -278,6 +279,15 @@
+ 		{ id = "gateTorii", slot = "gate", name = "Torii Gate", price = 100000, color = rgb(205, 45, 40) },
+ 		{ id = "gateCrystal", slot = "gate", name = "Crystal Gate", price = 500000, color = rgb(130, 230, 255) },
+ 		{ id = "gateGolden", slot = "gate", name = "Golden Gate", price = 2000000, color = rgb(255, 200, 60) },
++		-- base stun stick looks (StealService builds the Tool). incomeMinutes = price in minutes of the buyer's income; requires = previous tier
++		{ id = "stickWood", slot = "stick", name = "Wooden Stick", price = 0, color = rgb(150, 105, 60), material = "Wood", burst = 10 },
++		{ id = "stickIron", slot = "stick", name = "Iron Stick", incomeMinutes = 10, color = rgb(165, 170, 180), material = "Metal", burst = 15 },
++		{ id = "stickGold", slot = "stick", name = "Gold Stick", incomeMinutes = 30, requires = "stickIron", color = rgb(255, 200, 60),
++			material = "SmoothPlastic", trail = true, burst = 20 },
++		{ id = "stickCrystal", slot = "stick", name = "Crystal Stick", incomeMinutes = 60, requires = "stickGold", color = rgb(130, 230, 255),
++			material = "Glass", trail = true, burst = 30 },
++		{ id = "stickGlitch", slot = "stick", name = "Glitch Stick", incomeMinutes = 120, requires = "stickCrystal", color = rgb(255, 42, 79),
++			material = "Neon", trail = true, glitch = true, burst = 45 },
+ 		{ id = "gateCosmic", slot = "gate", name = "Cosmic Portal", price = 5000000, color = rgb(170, 90, 255) },
+ 	},
+ }
+@@ -317,6 +327,17 @@
+ 	soda = { boost = 0.25, duration = 20 },
+ }
+ 
++-- Base stun stick: only inside your own base; hits a carrier of an egg stolen from you (StealService.swing)
++Config.Stick = { range = 7, stun = 2, cooldown = 0.8 }
++
++-- Base cosmetic price: fixed, or minutes of income for incomeMinutes items (stick tiers), never below the gear floor
++function Config.basePrice(item, income: number): number
++	if item.incomeMinutes then
++		return math.max(Config.Gear.minPrice, math.floor(item.incomeMinutes * 60 * income))
++	end
++	return item.price
++end
++
+ -- Plaza: free chest (every chestCooldown s, pays chestSeconds of income, at least chestMin), global boards, server showcase
+ Config.Plaza = { chestCooldown = 4 * 3600, chestSeconds = 600, chestMin = 1000, boardRefresh = 120, showcaseRefresh = 10 }
+ 
+--- a/ServerScriptService/Services/BaseService.luau
++++ b/ServerScriptService/Services/BaseService.luau
+@@ -12,6 +12,7 @@
+ local PlotService = require(script.Parent.PlotService)
+ 
+ local BaseService = {}
++BaseService.incomeOf = function(_player) return 0 end -- set by Main (CreatureService): income-priced items
+ local Base = Config.Base
+ local rgb = Color3.fromRGB
+ local DEFAULTS = {} -- [slot] = free default item id
+@@ -21,13 +22,19 @@
+ 	end
+ end
+ 
+--- Cost to take this item: nil = not for sale, 0 = owned or free (equip only)
+-function BaseService.price(data, itemId): number?
++-- Cost to take this item: nil = not for sale (or locked behind `requires`), 0 = owned or free (equip only)
++function BaseService.price(data, itemId, income: number?): number?
+ 	local item = Base.itemById[itemId]
+ 	if not item then
+ 		return nil
+ 	end
+-	return (item.price == 0 or data.Base.owned[itemId]) and 0 or item.price
++	if item.price == 0 or data.Base.owned[itemId] then
++		return 0
++	end
++	if item.requires and not data.Base.owned[item.requires] then
++		return nil
++	end
++	return Config.basePrice(item, income or 0)
+ end
+ 
+ function BaseService.equipped(data, slot: string): string
+@@ -787,9 +794,9 @@
+ 	end
+ 	for _, item in Base.items do
+ 		ShopService.extraItems["base:" .. item.id] = function(player, data)
+-			local cost = BaseService.price(data, item.id)
++			local cost = BaseService.price(data, item.id, BaseService.incomeOf(player))
+ 			return cost, function()
+-				data.Base.owned[item.id] = item.price > 0 or nil
++				data.Base.owned[item.id] = item.price ~= 0 or nil
+ 				data.Base.equipped[item.slot] = item.id
+ 				BaseService.apply(player)
+ 			end
+--- a/ServerScriptService/Main.luau
++++ b/ServerScriptService/Main.luau
+@@ -88,6 +88,7 @@
+ 	end
+ end
+ GearService.isShielded = StealService.shielded
++BaseService.incomeOf = CreatureService.incomeOf
+ RebirthService.afterRebirth = function(player)
+ 	GearService.sync(player)
+ 	BaseService.apply(player) -- rebirth tiers upgrade the base
+--- a/ServerScriptService/Services/StealService.luau
++++ b/ServerScriptService/Services/StealService.luau
+@@ -1,6 +1,7 @@
+--- PvP: steal eggs from carriers and from unlocked bases (never creatures), take-backs,
++-- PvP: steal eggs from carriers and from unlocked bases (never creatures), take-backs, the base stun stick,
+ -- base locks, and the new-player shield (first 15 min: can't steal or be stolen from).
+ local Players = game:GetService("Players")
++local Debris = game:GetService("Debris")
+ local ReplicatedStorage = game:GetService("ReplicatedStorage")
+ local Config = require(ReplicatedStorage.Shared.Config)
+ local DataService = require(script.Parent.DataService)
+@@ -8,6 +9,8 @@
+ local EggService = require(script.Parent.EggService)
+ local HatchService = require(script.Parent.HatchService)
+ local GuardianService = require(script.Parent.GuardianService)
++local SpeedService = require(script.Parent.SpeedService)
++local BaseService = require(script.Parent.BaseService)
+ 
+ local Notify = ReplicatedStorage.Remotes.Notify
+ local S = Config.Steal
+@@ -148,12 +151,118 @@
+ 	return math.abs(offset.X) < floor.Size.X / 2 + 0.5 and math.abs(offset.Z) < floor.Size.Z / 2 + 0.5
+ end
+ 
++-- Base stun stick: owners hold it only inside their own plot. A hit on someone carrying an egg stolen from the owner
++-- stuns them, sends the egg home and clears the robbed cooldown (they may try again once the stun ends).
++local lastSwing = {} -- [owner] = os.clock()
++
++local function hitFx(root, item)
++	local burst = Instance.new("ParticleEmitter")
++	burst.Color = item.glitch and ColorSequence.new(Color3.fromRGB(255, 42, 79), Color3.fromRGB(37, 232, 255)) or ColorSequence.new(item.color)
++	burst.LightEmission = 1
++	burst.Rate = 0
++	burst.Speed = NumberRange.new(10, 18)
++	burst.Lifetime = NumberRange.new(0.3, 0.5)
++	burst.Size = NumberSequence.new(0.6, 0)
++	burst.SpreadAngle = Vector2.new(180, 180)
++	burst.Parent = root
++	burst:Emit(item.burst)
++	Debris:AddItem(burst, 1)
++end
++
++function StealService.swing(owner)
++	local now = os.clock()
++	if now - (lastSwing[owner] or -math.huge) < Config.Stick.cooldown then
++		return nil
++	end
++	lastSwing[owner] = now
++	local plot, root = PlotService.get(owner), rootOf(owner)
++	local humanoid = owner.Character and owner.Character:FindFirstChildOfClass("Humanoid")
++	if not plot or not root or not humanoid or humanoid.Health <= 0 or not insidePlot(plot, root.Position) then
++		return nil
++	end
++	local thief, best
++	for carrier, egg in EggService.carriers() do
++		local r = rootOf(carrier)
++		local d = r and (r.Position - root.Position).Magnitude
++		if egg.stolenFrom == owner and d and d <= Config.Stick.range and (not best or d < best) then
++			thief, best = carrier, d
++		end
++	end
++	if not thief then
++		return nil
++	end
++	local egg = EggService.take(thief)
++	HatchService.give(owner, egg)
++	SpeedService.stun(thief, Config.Stick.stun)
++	robbedAt[owner] = nil
++	hitFx(rootOf(thief), Config.Base.itemById[BaseService.equipped(DataService.get(owner), "stick")])
++	Notify:FireClient(owner, "toast", "Whacked! Your egg is back home.")
++	Notify:FireClient(thief, "toast", owner.DisplayName .. " whacked you! The egg went home.")
++	return thief
++end
++
++local function buildStick(owner, itemId)
++	local item = Config.Base.itemById[itemId]
++	local tool = Instance.new("Tool")
++	tool.Name = "Stick"
++	tool.CanBeDropped = false
++	tool.ToolTip = item.name
++	tool:SetAttribute("Skin", itemId)
++	local handle = Instance.new("Part")
++	handle.Name = "Handle"
++	handle.Size = Vector3.new(0.4, 0.4, 4.2)
++	handle.Color = item.color
++	handle.Material = Enum.Material[item.material]
++	handle.CanCollide, handle.Massless = false, true
++	handle.Parent = tool
++	tool.GripPos, tool.GripUp = Vector3.new(0, 0, -1.6), Vector3.new(0, 0, 1) -- classic sword grip: held near one end, raised
++	tool.GripForward, tool.GripRight = Vector3.new(-1, 0, 0), Vector3.new(0, 1, 0)
++	if item.trail then
++		local a0, a1 = Instance.new("Attachment"), Instance.new("Attachment")
++		a0.Position, a1.Position = Vector3.new(0, 0, 2), Vector3.new(0, 0, 1)
++		a0.Parent, a1.Parent = handle, handle
++		local trail = Instance.new("Trail")
++		trail.Attachment0, trail.Attachment1 = a0, a1
++		trail.Lifetime = 0.25
++		trail.LightEmission = 1
++		trail.Color = item.glitch and ColorSequence.new(Color3.fromRGB(255, 42, 79), Color3.fromRGB(37, 232, 255)) or ColorSequence.new(item.color)
++		trail.Parent = handle
++	end
++	tool.Activated:Connect(function() -- Tool activation replicates to the server: no RemoteEvent needed
++		local anim = Instance.new("StringValue")
++		anim.Name, anim.Value = "toolanim", "Slash" -- the default Animate script plays a slash
++		anim.Parent = tool
++		StealService.swing(owner)
++	end)
++	return tool
++end
++
++-- fully automatic: held while inside your own plot (put back in hand if unequipped), re-skinned on equip change, gone outside
++local function syncStick(player, root)
++	local character = player.Character
++	local backpack = player:FindFirstChildOfClass("Backpack")
++	local tool = (character and character:FindFirstChild("Stick")) or (backpack and backpack:FindFirstChild("Stick"))
++	local plot, data = PlotService.get(player), DataService.get(player)
++	local want = root and plot and data and insidePlot(plot, root.Position) and BaseService.equipped(data, "stick")
++	if tool and tool:GetAttribute("Skin") ~= want then
++		tool:Destroy()
++		tool = nil
++	end
++	if want then
++		tool = tool or buildStick(player, want)
++		if tool.Parent ~= character then
++			tool.Parent = character
++		end
++	end
++end
++
+ local function tick()
+ 	local now = os.clock()
+ 	local carriers = EggService.carriers()
+ 	for _, player in Players:GetPlayers() do
+ 		local root = rootOf(player)
+ 		local egg = carriers[player]
++		syncStick(player, root)
+ 		-- carrier prompts: Steal Egg for everyone else; Take Back for the victim during the window
+ 		if root then
+ 			local steal = root:FindFirstChild("StealPrompt")
+@@ -232,7 +341,7 @@
+ 		end
+ 	end)
+ 	Players.PlayerRemoving:Connect(function(player)
+-		robbedAt[player], lockedUntil[player] = nil, nil
++		robbedAt[player], lockedUntil[player], lastSwing[player] = nil, nil, nil
+ 	end)
+ end
+ 
+--- a/ServerScriptService/Services/GearService.luau
++++ b/ServerScriptService/Services/GearService.luau
+@@ -132,6 +132,7 @@
+ 			for _, player in Players:GetPlayers() do
+ 				if DataService.get(player) then
+ 					player:SetAttribute("GearPrice", GearService.price(player))
++					player:SetAttribute("Income", CreatureService.incomeOf(player)) -- Base panel prices income-scaled stick tiers
+ 				end
+ 			end
+ 		end
+--- a/StarterGui/MainUI/BaseUI.luau
++++ b/StarterGui/MainUI/BaseUI.luau
+@@ -83,19 +83,24 @@
+ 	end
+ 	local owned, equipped = decode("BaseOwned"), decode("BaseEquipped")
+ 	local cash = player:GetAttribute("Cash") or 0
++	local income = player:GetAttribute("Income") or 0
+ 	for _, item in Config.Base.items do
+ 		local row = rows[item.id]
+ 		row.Visible = item.slot == current
+ 		local isEquipped = (equipped[item.slot] or defaults[item.slot]) == item.id
+ 		local isOwned = item.price == 0 or owned[item.id]
++		local price = Config.basePrice(item, income)
+ 		if isEquipped then
+-			row.Buy.Text, row.Buy.BackgroundColor3, row.Desc.Text = "Equipped", GREY, "In your base now"
++			row.Buy.Text, row.Buy.BackgroundColor3, row.Desc.Text = "Equipped", GREY, item.slot == "stick" and "Whack thieves in your base" or "In your base now"
+ 		elseif isOwned then
+ 			row.Buy.Text, row.Buy.BackgroundColor3, row.Desc.Text = "Equip", BLUE, item.price == 0 and "Free" or "Owned"
++		elseif item.requires and not owned[item.requires] then
++			row.Buy.Text, row.Buy.BackgroundColor3 = "Locked", GREY
++			row.Desc.Text = "Unlock " .. Config.Base.itemById[item.requires].name .. " first"
+ 		else
+-			row.Buy.Text = "$" .. Format.number(item.price)
+-			row.Buy.BackgroundColor3 = cash >= item.price and GREEN or GREY
+-			row.Desc.Text = cash >= item.price and "Yours forever, even after rebirth" or "Need more cash"
++			row.Buy.Text = "$" .. Format.number(price)
++			row.Buy.BackgroundColor3 = cash >= price and GREEN or GREY
++			row.Desc.Text = cash >= price and "Yours forever, even after rebirth" or "Need more cash"
+ 		end
+ 	end
+ end
+--- a/StarterPlayer/StarterPlayerScripts/ClientMain.luau
++++ b/StarterPlayer/StarterPlayerScripts/ClientMain.luau
+@@ -5,6 +5,8 @@
+ local Config = require(game:GetService("ReplicatedStorage"):WaitForChild("Shared"):WaitForChild("Config"))
+ 
+ local player = Players.LocalPlayer
++-- the base stun stick equips itself (StealService); no hotbar, so number keys stay with the gear bar
++game:GetService("StarterGui"):SetCoreGuiEnabled(Enum.CoreGuiType.Backpack, false)
+ local biomes = workspace:WaitForChild("Biomes")
+ local atmosphere = Lighting:FindFirstChildOfClass("Atmosphere")
+ local tint = Lighting:FindFirstChild("BiomeTint")

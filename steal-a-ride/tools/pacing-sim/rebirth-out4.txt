@@ -1,0 +1,88 @@
+
+keep +1/4, saddle 15s; x1.8 R5-R10 then x1.2: real hours (median of 8 bots; bot hours x 2.56)
+  R 1 $    1e+05 total    1.0 h   this rebirth   1.0 h
+  R 2 $    1e+06 total    2.0 h   this rebirth   1.0 h
+  R 3 $    1e+07 total    3.6 h   this rebirth   1.7 h
+  R 4 $    1e+08 total    5.8 h   this rebirth   2.2 h
+  R 5 $    4e+08 total    9.2 h   this rebirth   3.4 h
+  R 6 $  7.2e+08 total   12.6 h   this rebirth   3.4 h
+  R 7 $  1.3e+09 total   18.7 h   this rebirth   6.1 h
+  R 8 $ 2.33e+09 total   26.6 h   this rebirth   7.9 h
+  R 9 $  4.2e+09 total   29.2 h   this rebirth   2.5 h
+  R10 $ 7.56e+09 total   32.0 h   this rebirth   2.8 h
+  R11 $ 9.07e+09 total   34.8 h   this rebirth   2.8 h
+  R12 $ 1.09e+10 total   37.6 h   this rebirth   2.8 h
+  R13 $ 1.31e+10 total   40.5 h   this rebirth   2.9 h
+  R14 $ 1.57e+10 total   43.6 h   this rebirth   3.1 h
+  R15 $ 1.88e+10 total   46.9 h   this rebirth   3.3 h
+  R16 $ 2.26e+10 total   50.3 h   this rebirth   3.4 h
+  R17 $ 2.71e+10 total   53.6 h   this rebirth   3.3 h
+  R18 $ 3.25e+10 total   57.3 h   this rebirth   3.7 h
+  R19 $  3.9e+10 total   61.2 h   this rebirth   3.9 h
+  R20 $ 4.68e+10 total   65.4 h   this rebirth   4.2 h
+
+keep +1/4, saddle 15s; x1.8 R5-R10 then x1.1: real hours (median of 8 bots; bot hours x 2.56)
+  R 1 $    1e+05 total    1.0 h   this rebirth   1.0 h
+  R 2 $    1e+06 total    2.0 h   this rebirth   1.0 h
+  R 3 $    1e+07 total    3.6 h   this rebirth   1.7 h
+  R 4 $    1e+08 total    5.8 h   this rebirth   2.2 h
+  R 5 $    4e+08 total    9.2 h   this rebirth   3.4 h
+  R 6 $  7.2e+08 total   12.6 h   this rebirth   3.4 h
+  R 7 $  1.3e+09 total   18.7 h   this rebirth   6.1 h
+  R 8 $ 2.33e+09 total   26.6 h   this rebirth   7.9 h
+  R 9 $  4.2e+09 total   29.2 h   this rebirth   2.5 h
+  R10 $ 7.56e+09 total   32.0 h   this rebirth   2.8 h
+  R11 $ 8.31e+09 total   34.7 h   this rebirth   2.7 h
+  R12 $ 9.15e+09 total   37.3 h   this rebirth   2.6 h
+  R13 $ 1.01e+10 total   39.8 h   this rebirth   2.5 h
+  R14 $ 1.11e+10 total   42.3 h   this rebirth   2.4 h
+  R15 $ 1.22e+10 total   44.8 h   this rebirth   2.5 h
+  R16 $ 1.34e+10 total   47.4 h   this rebirth   2.6 h
+  R17 $ 1.47e+10 total   49.9 h   this rebirth   2.5 h
+  R18 $ 1.62e+10 total   52.3 h   this rebirth   2.4 h
+  R19 $ 1.78e+10 total   54.8 h   this rebirth   2.5 h
+  R20 $ 1.96e+10 total   57.3 h   this rebirth   2.5 h
+
+keep +1/4, saddle 15s; x1.5 R5-R10 then x1.2: real hours (median of 8 bots; bot hours x 2.56)
+  R 1 $    1e+05 total    1.0 h   this rebirth   1.0 h
+  R 2 $    1e+06 total    2.0 h   this rebirth   1.0 h
+  R 3 $    1e+07 total    3.6 h   this rebirth   1.7 h
+  R 4 $    1e+08 total    5.8 h   this rebirth   2.2 h
+  R 5 $    4e+08 total    9.2 h   this rebirth   3.4 h
+  R 6 $    6e+08 total   11.9 h   this rebirth   2.7 h
+  R 7 $    9e+08 total   15.2 h   this rebirth   3.4 h
+  R 8 $ 1.35e+09 total   20.1 h   this rebirth   4.8 h
+  R 9 $ 2.02e+09 total   23.4 h   this rebirth   3.3 h
+  R10 $ 3.04e+09 total   25.5 h   this rebirth   2.1 h
+  R11 $ 3.64e+09 total   27.6 h   this rebirth   2.1 h
+  R12 $ 4.37e+09 total   29.8 h   this rebirth   2.2 h
+  R13 $ 5.25e+09 total   31.9 h   this rebirth   2.2 h
+  R14 $  6.3e+09 total   34.1 h   this rebirth   2.2 h
+  R15 $ 7.56e+09 total   36.4 h   this rebirth   2.3 h
+  R16 $ 9.07e+09 total   38.7 h   this rebirth   2.3 h
+  R17 $ 1.09e+10 total   41.0 h   this rebirth   2.3 h
+  R18 $ 1.31e+10 total   43.5 h   this rebirth   2.5 h
+  R19 $ 1.57e+10 total   46.0 h   this rebirth   2.5 h
+  R20 $ 1.88e+10 total   48.6 h   this rebirth   2.6 h
+
+keep +1/4, saddle 15s; x1.5 R5-R10 then x1.1: real hours (median of 8 bots; bot hours x 2.56)
+  R 1 $    1e+05 total    1.0 h   this rebirth   1.0 h
+  R 2 $    1e+06 total    2.0 h   this rebirth   1.0 h
+  R 3 $    1e+07 total    3.6 h   this rebirth   1.7 h
+  R 4 $    1e+08 total    5.8 h   this rebirth   2.2 h
+  R 5 $    4e+08 total    9.2 h   this rebirth   3.4 h
+  R 6 $    6e+08 total   11.9 h   this rebirth   2.7 h
+  R 7 $    9e+08 total   15.2 h   this rebirth   3.4 h
+  R 8 $ 1.35e+09 total   20.1 h   this rebirth   4.8 h
+  R 9 $ 2.02e+09 total   23.4 h   this rebirth   3.3 h
+  R10 $ 3.04e+09 total   25.5 h   this rebirth   2.1 h
+  R11 $ 3.34e+09 total   27.4 h   this rebirth   1.9 h
+  R12 $ 3.68e+09 total   29.4 h   this rebirth   2.0 h
+  R13 $ 4.04e+09 total   31.3 h   this rebirth   1.9 h
+  R14 $ 4.45e+09 total   33.1 h   this rebirth   1.7 h
+  R15 $ 4.89e+09 total   34.9 h   this rebirth   1.9 h
+  R16 $ 5.38e+09 total   36.8 h   this rebirth   1.9 h
+  R17 $ 5.92e+09 total   38.5 h   this rebirth   1.7 h
+  R18 $ 6.51e+09 total   40.4 h   this rebirth   1.8 h
+  R19 $ 7.16e+09 total   42.2 h   this rebirth   1.8 h
+  R20 $ 7.88e+09 total   44.1 h   this rebirth   1.9 h

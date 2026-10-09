@@ -1,0 +1,92 @@
+{
+  "date": "2026-10-08",
+  "game": "Steal a Mount",
+  "placeId": 123937616497204,
+  "studioId": "bb7be3bd-e0eb-45d0-a99b-2b63eef08865",
+  "featuresInOrder": [
+    "Daily visitor likes and all-time Top Bases",
+    "3 daily and 3 weekly quests",
+    "Same-server friend income bonus and native invites"
+  ],
+  "sourceEquality": {
+    "status": "PASS (CR-normalized)",
+    "paths": [
+      "ServerScriptService.Services.LikeService",
+      "ServerScriptService.Services.DataService",
+      "ServerScriptService.Main",
+      "ServerScriptService.Services.PlazaService",
+      "ServerStorage.BuildTools.BuildPlaza",
+      "StarterPlayer.StarterPlayerScripts.ClientMain",
+      "ReplicatedStorage.Shared.Config",
+      "ServerScriptService.Services.CreatureService",
+      "ServerScriptService.Services.HatchService",
+      "ServerScriptService.Services.StealService",
+      "StarterGui.MainUI.UIController",
+      "ServerScriptService.Services.QuestService",
+      "StarterGui.MainUI.QuestsUI",
+      "ServerScriptService.Services.FriendService",
+      "StarterGui.MainUI.RetentionUI"
+    ]
+  },
+  "runtime": {
+    "status": "PASS",
+    "stores": [
+      "SAMEngagement_20261008_likes",
+      "SAMEngagement_20261008_quests",
+      "SAMEngagement_20261008_combined"
+    ],
+    "checks": [
+      "8 like prompts; server self-like refusal; owner prompt hidden; sign and Top Bases GUI",
+      "Actual walk-home deposit, Rare hatch, chest keyboard prompt, fuse remote, income quest events",
+      "Actual mouse daily reward claim and all 3 weekly claims; one-time 15-minute Luck bonus",
+      "Saved quest assignment/progress/claimed flags, LuckUntil and Likes=7 preserved across rejoin",
+      "Final likes flush to isolated OrderedDataStore and readback >=7",
+      "FriendCount simulation: 4 friends produces 30% cap in actual CreatureService income, CashPerSecond and HUD; native refresh restores zero",
+      "Native Invite Friends screen opens; no invite sent",
+      "Short iPhone 7 landscape canvas 665x316: 9 Menu buttons fit at >=44px, Quests 560x292, claims128x44",
+      "iPad Pro M5 canvas1375x971: centered Quests560x460, claimed weekly state visible",
+      "Daily popup deferred while Quests visible, appears alone after close; menu lock and touch controls restore after claim"
+    ]
+  },
+  "offline": {
+    "command": "python -X utf8 steal-a-ride/tests/run_feedback_checks.py --runtime \"$env:TEMP/steal-a-mount-luau-0.741\"",
+    "status": "PASS",
+    "groups": 25,
+    "compiledLuauSources": 48,
+    "coverage": [
+      "daily likes/self/duplicates/distance/failed load/UTC reset",
+      "persistent 3+3 assignments/event progress/claim income/UTC and Monday resets/stale and double claims/one-time weekly bonus",
+      "friend counts/departures/lookup failures/yielding stale responses/30% cap plus VIP",
+      "popup sequencing and short/tall Menu geometry",
+      "departing final likes/monotonic all-time writes/profile-save ordering",
+      "steal quest event requires attached egg"
+    ]
+  },
+  "review": {
+    "importantFindingsResolved": [
+      "Short-phone menu last-row clipping",
+      "Final like score omitted when owner leaves before refresh",
+      "Authoritative profile save must start before leaderboard I/O"
+    ],
+    "remainingImportantFindings": 0
+  },
+  "finalState": {
+    "studioMode": "Edit",
+    "dataStoreName": "StealARide_v2",
+    "legacyDataStoreName": "StealARide_v1",
+    "httpEnabled": false,
+    "published": false,
+    "tempRuntimeScriptsRemain": false,
+    "emulatorRestored": "iPad Pro M5 (13in),1376x1032"
+  },
+  "backups": {
+    "local": "steal-a-ride/before-engagement-20261008/src",
+    "studio": "ServerStorage.EngagementBackup20261008"
+  },
+  "limits": [
+    "Real two-player like/steal flows and positive native same-server friendship require a multiplayer test; only one real Studio player available. Logic uses actual-source offline checks.",
+    "Invite delivery not tested; prompt opening verified only.",
+    "Known ContextActionService no-function warnings remain; diagnostic assertion from a billboard expectation missing its ' likes' suffix was a test command error, not a game failure.",
+    "Physical devices were not used; phone/tablet checks used Studio emulation."
+  ]
+}

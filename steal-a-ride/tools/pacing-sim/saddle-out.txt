@@ -1,0 +1,4 @@
+saddle fixed (now)       sim median  71.3 min ~ real  3.0 h (p10  56.7, p90  88.5 min) (p10   56.7, p90   88.5) | first deposit (median min): For   0.6 Lak   3.7 Des  11.2 Jun  18.7 Tun  31.2 Vol  53.9 Cos  71.2
+saddle >= 10s income x1.15^L sim median  71.5 min ~ real  3.1 h (p10  56.7, p90  89.6 min) (p10   56.7, p90   89.6) | first deposit (median min): For   0.6 Lak   3.7 Des  11.2 Jun  18.7 Tun  32.1 Vol  54.0 Cos  71.3
+saddle >= 15s income x1.15^L sim median  71.5 min ~ real  3.1 h (p10  56.7, p90  90.5 min) (p10   56.7, p90   90.5) | first deposit (median min): For   0.6 Lak   3.7 Des  13.2 Jun  19.1 Tun  32.2 Vol  55.3 Cos  71.0
+saddle >= 20s income x1.15^L sim median  81.0 min ~ real  3.5 h (p10  61.9, p90  93.1 min) (p10   61.9, p90   93.1) | first deposit (median min): For   0.6 Lak   3.9 Des  15.0 Jun  21.3 Tun  32.7 Vol  59.4 Cos  80.9

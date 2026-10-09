@@ -1,0 +1,17 @@
+{
+  "ability_dash": "rbxassetid://88116956031926",
+  "ability_jump": "rbxassetid://130376445182667",
+  "ability_glide": "rbxassetid://77826991161811",
+  "ability_swim": "rbxassetid://100279436902805",
+  "ability_fireproof": "rbxassetid://135382872676979",
+  "ability_phase": "rbxassetid://108030336595358",
+  "gear_net": "rbxassetid://129442987593088",
+  "gear_trap": "rbxassetid://126972979059553",
+  "gear_soda": "rbxassetid://102075775200059",
+  "rarity_common": "rbxassetid://139228409390857",
+  "rarity_uncommon": "rbxassetid://89889109594855",
+  "rarity_rare": "rbxassetid://93378435828847",
+  "rarity_epic": "rbxassetid://100499275303932",
+  "rarity_legendary": "rbxassetid://87554946714292",
+  "rarity_mythic": "rbxassetid://91004116836378"
+}

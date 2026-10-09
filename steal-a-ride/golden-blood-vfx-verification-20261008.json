@@ -1,0 +1,308 @@
+{
+  "date": "2026-10-08",
+  "status": "Installed in Roblox Studio; unpublished",
+  "placeId": 123937616497204,
+  "sourceScope": [
+    "ClientMain weather section",
+    "Effects weather-audio section",
+    "tests/run_feedback_checks.py storm_harness"
+  ],
+  "verification": {
+    "suite": "27 groups PASS; 48 Luau sources compiled",
+    "command": "python -X utf8 steal-a-ride/tests/run_feedback_checks.py --runtime \"$env:TEMP/steal-a-mount-luau-0.741\"",
+    "redEvidence": [
+      "before-golden-blood-vfx-20261008/task1-red.txt",
+      "before-golden-blood-vfx-20261008/task2-red.txt"
+    ],
+    "greenEvidence": "before-golden-blood-vfx-20261008/final-green.txt"
+  },
+  "stores": {
+    "players": 1,
+    "legacy": "SAMGoldenBloodOld_1791433483",
+    "store": "SAMGoldenBlood_1791433483",
+    "cosmicCue": {
+      "1": 9116418035,
+      "2": 1.2,
+      "3": 0.5,
+      "4": 3.2
+    }
+  },
+  "nativeAssets": {
+    "ok": true,
+    "audio": {
+      "RarityReveal": {
+        "id": "rbxassetid://1841391669",
+        "length": 4.463174603174603,
+        "loaded": true
+      },
+      "BloodWeatherLoop": {
+        "id": "rbxassetid://4175285709",
+        "length": 54.49142857142857,
+        "loaded": true
+      },
+      "GoldenWeatherLoop": {
+        "id": "rbxassetid://9119413402",
+        "length": 63.306666666666665,
+        "loaded": true
+      },
+      "Cosmic": {
+        "id": "rbxassetid://9116418035",
+        "length": 3.2853333333333334,
+        "loaded": true
+      },
+      "AmbienceForest": {
+        "id": "rbxassetid://9112835068",
+        "length": 64.35189583333333,
+        "loaded": true
+      },
+      "AmbienceDesert": {
+        "id": "rbxassetid://551546110",
+        "length": 61.40226757369614,
+        "loaded": true
+      }
+    },
+    "status": {
+      "rbxassetid://9116418035": "Enum.AssetFetchStatus.Success",
+      "rbxassetid://4175285709": "Enum.AssetFetchStatus.Success",
+      "rbxassetid://1841391669": "Enum.AssetFetchStatus.Success",
+      "rbxassetid://9119413402": "Enum.AssetFetchStatus.Success",
+      "rbxassetid://551546110": "Enum.AssetFetchStatus.Success",
+      "rbxassetid://9112835068": "Enum.AssetFetchStatus.Success"
+    },
+    "error": "nil",
+    "texture": {
+      "rbxasset://textures/particles/sparkles_main.dds": "Enum.AssetFetchStatus.Success"
+    }
+  },
+  "soundMetadata": {
+    "551546110": {
+      "name": "Snowstorm",
+      "description": "Audio"
+    },
+    "1841391669": {
+      "name": "Wipsy La La Sting 3",
+      "description": ""
+    },
+    "4175285709": {
+      "name": "Blizzard",
+      "description": "For my games and yours :) "
+    },
+    "9112835068": {
+      "name": "Neighborhood Birds 2 (SFX)",
+      "description": "Neighborhood Birds, Tujunga Hills, Morning Twitter, Chirps, Distant City Rumble, Loop\n\nDuration: 64.4 seconds\nCategory: Birds - Land\nAsset Type: Sound Effect\n\nCourtesy of Pro Sound Effects."
+    },
+    "9119413402": {
+      "name": "Spaceship Interior Rocket Engine Constant 2 (SFX)",
+      "description": "Spaceship, Interior, Rocket Engine Constant, Muffled Thunderous Rumble and Crackle, Deep Rocky Tumbling\n\nDuration: 63.3 seconds\nCategory: Spaceships\nAsset Type: Sound Effect\n\nCourtesy of Pro Sound Effects."
+    }
+  },
+  "audio": {
+    "gold": {
+      "GoldenWeatherLoop": {
+        "pitch": 1,
+        "loaded": true,
+        "volume": 0.05999999865889549,
+        "group": "MamaDuckedLoops",
+        "length": 64.35189583333333,
+        "id": "rbxassetid://9112835068",
+        "playing": true
+      },
+      "Sound": {
+        "pitch": 1.25,
+        "loaded": true,
+        "volume": 0.18000000715255737,
+        "group": "MamaDuckedLoops",
+        "length": 3.2853333333333334,
+        "id": "rbxassetid://9116418035",
+        "playing": true
+      }
+    },
+    "blood": {
+      "Sound": {
+        "pitch": 0.6000000238418579,
+        "loaded": true,
+        "volume": 0.11999999731779099,
+        "group": "MamaDuckedLoops",
+        "length": 3.2853333333333334,
+        "id": "rbxassetid://9116418035",
+        "playing": true
+      },
+      "BloodWeatherLoop": {
+        "pitch": 1,
+        "loaded": true,
+        "volume": 0.009745785035192966,
+        "group": "MamaDuckedLoops",
+        "length": 54.49142857142857,
+        "id": "rbxassetid://4175285709",
+        "playing": true
+      }
+    },
+    "selection": "Forest ambience9112835068 at0.06; Blizzard4175285709 at0.09; Cosmic magic-shimmer9116418035 at pitches1.25/0.6, volumes0.18/0.12, max3s",
+    "subjectiveListening": "User: Use your best judgment; I'll listen later"
+  },
+  "rapidTransitions": {
+    "loops": {
+      "GoldenWeatherLoop": 1,
+      "Rain": 1,
+      "BloodWeatherLoop": 1
+    },
+    "clear": true,
+    "maxMotes": 1,
+    "cycles": 3,
+    "clock": 14.5,
+    "maxRain": 1,
+    "gap": 0.2,
+    "moon": 11
+  },
+  "cameraAndFlight": {
+    "BloodMoon": {
+      "y": 150,
+      "flying": true,
+      "replacement": true,
+      "nilCamera": true
+    },
+    "GoldenHour": {
+      "y": 150,
+      "flying": true,
+      "replacement": true,
+      "nilCamera": true
+    },
+    "Thunderstorm": {
+      "y": 182,
+      "flying": true,
+      "replacement": true,
+      "nilCamera": true
+    }
+  },
+  "respawns": {
+    "BloodMoon": {
+      "weather": "BloodMoon",
+      "character": "eisoisoo"
+    },
+    "GoldenHour": {
+      "weather": "GoldenHour",
+      "character": "eisoisoo"
+    },
+    "Thunderstorm": {
+      "weather": "Thunderstorm",
+      "character": "eisoisoo"
+    }
+  },
+  "respawnClient": {
+    "respawnHolder": true,
+    "holder": "-14.566457748413086, 9.365936279296875, 105",
+    "clock": 17.342777252197266
+  },
+  "escapeMamaOverlap": {
+    "sounds": {
+      "AmbienceForest": {
+        "loaded": true,
+        "volume": 0.1224999949336052,
+        "group": "MamaDuckedLoops",
+        "playing": true
+      },
+      "EscapeMusic": {
+        "loaded": true,
+        "volume": 0.3966613709926605,
+        "group": "MamaDuckedLoops",
+        "playing": true
+      },
+      "BloodWeatherLoop": {
+        "loaded": true,
+        "volume": 0.09000000357627869,
+        "group": "MamaDuckedLoops",
+        "playing": true
+      }
+    },
+    "mix": 0.19999998807907104,
+    "carrying": "Forest"
+  },
+  "mobile": {
+    "device": {
+      "height": 402,
+      "id": "iphone_17_pro",
+      "name": "iPhone 17 Pro",
+      "width": 874
+    },
+    "nativeEmulation": {
+      "moon": 16,
+      "touch": true,
+      "lifetime": 3,
+      "keyboard": true,
+      "clock": 21,
+      "brightness": 0.029999999329447746,
+      "rate": 8,
+      "width": 32
+    },
+    "goldTouchPreview": {
+      "rays": true,
+      "clock": 17.5,
+      "hybrid": {
+        "rate": 12,
+        "width": 32
+      },
+      "touchPreview": {
+        "rate": 6,
+        "width": 24
+      }
+    },
+    "bloodTouchPreview": {
+      "preview": "touch-only settings on hybrid Studio emulator",
+      "rate": 4,
+      "width": 24
+    },
+    "limitation": "Studio emulator reports TouchEnabled=true and KeyboardEnabled=true. Actual touch-only branching is covered by runnable actual-source harness; mobile preview explicitly overrides emission Rate6/4 and holder24x10x24. No physical-device FPS measured."
+  },
+  "visibility": "Old Blood brightness-0.12 plus native night obscured Forest/Cosmic. Same-position previews of final+0.03 keep routes/guardians readable and moon red. Golden routes readable across Forest/Tundra/Cosmic.",
+  "finalRuntimeClear": {
+    "moon": 11,
+    "clock": 14.5,
+    "noLateThunderAfter17Seconds": true,
+    "regionTemplatesUnchanged": true,
+    "finalTransitionClear": true
+  },
+  "finalConsole": "ContextActionService could not find the function passed in, doing nothing.\nContextActionService could not find the function passed in, doing nothing.\nContextActionService could not find the function passed in, doing nothing.\nContextActionService could not find the function passed in, doing nothing.\nContextActionService could not find the function passed in, doing nothing.",
+  "restoration": {
+    "ClientMainEqual": true,
+    "device": "hd_1080",
+    "dpi": 96,
+    "tempBackup": false,
+    "scale": "FitToWindow",
+    "ConfigEqual": true,
+    "moon": 11,
+    "clock": 14.5,
+    "editEffects": false,
+    "EffectsEqual": true,
+    "orientation": "LandscapeLeft"
+  },
+  "studioState": "- Current Studio Mode: Edit\n- Available DataModels: Edit\n- Focused DataModel in the viewport: Edit",
+  "backups": [
+    "before-golden-blood-vfx-20261008/StarterPlayer/StarterPlayerScripts",
+    "ServerStorage.GoldenBloodVFXBackup20261008"
+  ],
+  "screenshots": [
+    "C:/Users/Desktop/Documents/Roblox Games/steal-a-ride/golden-blood-vfx-20261008/golden-hour-sun.png",
+    "C:/Users/Desktop/Documents/Roblox Games/steal-a-ride/golden-blood-vfx-20261008/blood-moon.png",
+    "C:/Users/Desktop/Documents/Roblox Games/steal-a-ride/golden-blood-vfx-20261008/golden-hour-forest.png",
+    "C:/Users/Desktop/Documents/Roblox Games/steal-a-ride/golden-blood-vfx-20261008/blood-moon-cosmic.png",
+    "C:/Users/Desktop/Documents/Roblox Games/steal-a-ride/golden-blood-vfx-20261008/touch-golden-hour.png",
+    "C:/Users/Desktop/Documents/Roblox Games/steal-a-ride/golden-blood-vfx-20261008/touch-blood-moon.png"
+  ],
+  "review": {
+    "reviewer": "weather_review",
+    "findings": "No actionable correctness findings",
+    "rulings": "Existing already-playing Thunderstorm one-shot can finish naturally; queued thunder cancels. Subjective listening, physical performance and published permissions deferred.",
+    "restoration": "Completed after reviewer"
+  },
+  "diagnosticCorrections": [
+    "Initial flight probe looked for TestHooks under Main; actual hook is ServerStorage.TestHooks. Corrected before passing flight check.",
+    "Background task sampler did not persist via execute_luau; final inline Client probe covered real attributes and signals for3 rapid cycles.",
+    "Desktop orientation setter is mobile-only; original device restored before setter rejection, then original resolution/DPI/scaling restored and orientation checked unchanged."
+  ],
+  "limitations": [
+    "User listening pending",
+    "Physical-device FPS unmeasured",
+    "Published-server audio permissions unmeasured"
+  ],
+  "publication": "No publish, commit or push"
+}

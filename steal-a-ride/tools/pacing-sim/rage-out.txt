@@ -1,0 +1,6 @@
+exit (studs from nest): {'Forest': 28, 'Lake': 140, 'Desert': 182, 'Jungle': 231, 'Tundra': 280, 'Volcano': 336, 'Cosmic': 406}
+current chase            sim median  68.6 min ~ real  2.9 h (p10  49.4, p90  82.3 min) (p10   49.4, p90   82.3) | first deposit (median min): For   0.6 Lak   3.3 Des  10.2 Jun  16.2 Tun  27.7 Vol  42.5 Cos  68.3
+burst 1.15 8s winded 0.9 sim median  86.4 min ~ real  3.7 h (p10  72.4, p90 105.1 min) (p10   72.4, p90  105.1) | first deposit (median min): For   0.6 Lak   3.7 Des  13.9 Jun  24.1 Tun  37.5 Vol  61.0 Cos  86.2
+burst 1.15 6s winded 0.9 sim median  82.6 min ~ real  3.5 h (p10  60.0, p90  96.4 min) (p10   60.0, p90   96.4) | first deposit (median min): For   0.6 Lak   3.7 Des  13.9 Jun  22.3 Tun  35.0 Vol  59.9 Cos  82.4
+burst 1.15 8s winded 0.85 sim median  85.6 min ~ real  3.7 h (p10  71.9, p90 103.2 min) (p10   71.9, p90  103.2) | first deposit (median min): For   0.6 Lak   3.7 Des  13.9 Jun  24.1 Tun  36.8 Vol  61.0 Cos  85.1
+burst 1.15 5s winded 0.9 sim median  76.1 min ~ real  3.3 h (p10  58.3, p90  96.6 min) (p10   58.3, p90   96.6) | first deposit (median min): For   0.6 Lak   3.7 Des  12.7 Jun  24.3 Tun  35.3 Vol  57.5 Cos  75.5

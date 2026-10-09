@@ -1,0 +1,28 @@
+PASS: chosen species, rarity rolled at deposit, rarity hatch times, deposit/save, PvP/Mama take, pending return, old saves, Secret/Lucky compatibility
+PASS: species shell clues, no name labels, noncolliding parts, unchanged Secret Egg
+PASS: Mama dead/range/orb/end/origin/nonfinite/occlusion validation and combined click-hold cap
+PASS: Mama 50/75/100-hit speed, cash and Lucky Egg rewards fire once at their thresholds
+PASS: movement, biome guardian/income/carry tuning, Secret weight, mount/saddle bonuses, soda, water, stun, weighted carrier allowance, turn slowdown and recovery
+PASS: Pen roaming walks one smooth connected loop per pet: bounded, faces its path, pauses; slow frames and independent pets
+PASS: earning-first tutorial, upgrade affordability, preserved saved completion
+PASS: saved mounts trimmed to pass/rebirth slots on join, creatures kept; touch Get off returns all mounts
+PASS: F dismount and R flight use separate keys; one request per press, typing guards, touch preserved and remount lifecycle
+PASS: storm streaks/clouds/thunder; golden/blood moods, budgets, duplicate sync, camera replacement and cleanup
+PASS: guardian wind-up, tiredness, rage 1.3x near the safe line overriding tiredness; patch warning ramp before sinking
+PASS: late Mama body starts one wing loop; ended event rejects late body; warning sweep survives delayed phase replication
+PASS: all seven egg/hatch themes; nearest-egg budget, distance cutoff and cleanup
+PASS: dedicated Fuse recipes use 3 matching species/rarity, exclude mounts and top rarities, sort ready first
+PASS: cash gear costs five minutes of income with a $500 floor
+PASS: Dash, flight and Get off touch buttons sit beside the jump button on phones and tablets without overlapping
+PASS: pacing tracker logs first deposit per biome for brand-new players only; Secret/Lucky excluded; failures harmless
+PASS: Plaza showcase picks rarest per owner then fills; chest pays 10 min of income (min $1000) every 4 h
+PASS: base tiers by rebirth; cosmetics priced, bought once, re-equip free, one free default per slot
+PASS: rebirth keep picker (1 +1 per 3 rebirths), capped rewards give a Lucky Egg, Species Mastery +25% income
+PASS: OG check (pre-reset save -> tag + one gift, retried on outage)
+PASS: likes reject owner, duplicates, failed loads and distance; persist totals and reset UTC
+PASS: deterministic 3+3 quests, event progress, UTC/Monday reset, scaled claims, stale/duplicate guards, weekly luck
+PASS: same-server friends, self/stranger exclusion, join/leave, API failure, stale lookup, 30% cap + VIP income
+PASS: popups wait for Menu/panels; nine Menu controls fit short-phone and tall viewports
+PASS: final departing likes flush; stale writes cannot lower all-time Top Bases
+PASS: shared steal success callback requires an attached egg
+PASS: compiled 48 Luau sources

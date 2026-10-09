@@ -1,0 +1,209 @@
+{
+  "date": "2026-10-08",
+  "task": "HUD/Menu/mobile cleanup and overhead player status",
+  "installedUnpublished": true,
+  "decisions": [
+    "Nonessential notices expire",
+    "Base-only status sits on right; shield descriptor above character",
+    "Dropdown/panels preserve touch controls; selecting a tab replaces the previous tab",
+    "Gear Shop and Fuse removed from Menu; Index retained; other navigation preserved"
+  ],
+  "sources": [
+    {
+      "file": "StarterGui/MainUI/UIController.luau",
+      "studio": "game.StarterGui.MainUI.UIController",
+      "status": "installed; full source equality verified"
+    },
+    {
+      "file": "StarterGui/MainUI/ShopUI.luau",
+      "studio": "game.StarterGui.MainUI.ShopUI",
+      "status": "installed; full source equality verified"
+    },
+    {
+      "file": "StarterGui/MainUI/StableUI.luau",
+      "studio": "game.StarterGui.MainUI.StableUI",
+      "status": "installed; full source equality verified"
+    },
+    {
+      "file": "StarterGui/MainUI/GearUI.luau",
+      "studio": "game.StarterGui.MainUI.GearUI",
+      "status": "installed; full source equality verified"
+    },
+    {
+      "file": "StarterGui/MainUI/RetentionUI.luau",
+      "studio": "game.StarterGui.MainUI.RetentionUI",
+      "status": "installed; full source equality verified"
+    },
+    {
+      "file": "StarterGui/MainUI/QuestsUI.luau",
+      "studio": "game.StarterGui.MainUI.QuestsUI",
+      "status": "installed; full source equality verified"
+    },
+    {
+      "file": "StarterPlayer/StarterPlayerScripts/FlightController.luau",
+      "studio": "game.StarterPlayer.StarterPlayerScripts.FlightController",
+      "status": "installed; full source equality verified"
+    },
+    {
+      "file": "StarterPlayer/StarterPlayerScripts/ClientMain.luau",
+      "studio": "game.StarterPlayer.StarterPlayerScripts.ClientMain",
+      "status": "installed; full source equality verified"
+    },
+    {
+      "file": "StarterPlayer/StarterPlayerScripts/NestStatus.luau",
+      "studio": "game.StarterPlayer.StarterPlayerScripts.NestStatus",
+      "status": "deleted"
+    },
+    {
+      "file": "ServerScriptService/Services/ShopService.luau",
+      "studio": "game.ServerScriptService.Services.ShopService",
+      "status": "installed; full source equality verified"
+    },
+    {
+      "file": "ServerScriptService/Main.luau",
+      "studio": "game.ServerScriptService.Main",
+      "status": "installed; full source equality verified"
+    }
+  ],
+  "offline": {
+    "command": "python -X utf8 steal-a-ride/tests/run_feedback_checks.py --runtime \"$env:TEMP/steal-a-mount-luau-0.741\"",
+    "groupsPassed": 33,
+    "sourcesCompiled": 48,
+    "redChecks": [
+      "Old Stable lock keeps Menu disabled",
+      "Unclaimed Daily disappears after switching",
+      "No overhead shield helper"
+    ],
+    "regressionChecks": [
+      "Actual empty renderFuse executes without deleted openFuse",
+      "Unclaimed daily reopens after switching and stays hidden after claim",
+      "Overhead shield duplicate/expiry/respawn/OG handling",
+      "Concurrent Mama/weather/leaderboard/status stacking"
+    ]
+  },
+  "live": {
+    "isolatedStores": [
+      "SAMHUD_1791441000",
+      "SAMHUDOld_1791441000"
+    ],
+    "phone7": {
+      "viewport": "665x374",
+      "nativeClicks": [
+        "Menu opens with touch controls on",
+        "Stable opens with refreshed inventory",
+        "Stable directly switches to Index (initial) and Quests (final)",
+        "Empty Net does not open Shop",
+        "Fuse stall E opens real panel",
+        "Gear stall E replaces Fuse; soda Buy increments inventory"
+      ],
+      "flightHint": {
+        "initiallyVisible": true,
+        "hiddenAfterSeconds": 4.5
+      },
+      "friends": {
+        "oneFriendToast": "Friends: +10% income (1 in this server)",
+        "initialTransparency": 0,
+        "transparencyAfter3Seconds": 1,
+        "cashChangeDoesNotReplay": true
+      },
+      "nestLabelsAbsent": true
+    },
+    "phone17Landscape": {
+      "viewport": "748x381",
+      "screenshots": [
+        "Stable/Fuse headers clear Menu",
+        "Your hits:100 is readable"
+      ],
+      "panelRenderChecks": "Used real OpenRequest handlers; tool raw mouse clicks did not reliably hit this notched emulator",
+      "counter": "Phone7 real MamaHit requests:6 accepted of7; source handler publishes MamaDamage. Additional100/75/50 display states seeded as attributes for layout only."
+    },
+    "portrait": {
+      "viewport": "401x775",
+      "screenOrientation": "Sensor",
+      "insets": "CoreUISafeInsets",
+      "hitsTextFits": true,
+      "combinedEventEvidence": {
+        "content": [
+          {
+            "type": "text",
+            "text": "{\"mamaPos\":\"48.1200104, 106.777786\",\"textFits\":true,\"weatherPos\":\"189.166687, 196.333313\",\"basePos\":\"189.166687, 282.444427\",\"weather\":\"<font color=\\\"#ff5a5a\\\">BLOOD MOON</font>  2:00\\nGrab eggs: 10% Cursed\\nx3 income, +3 speed\\n<font color=\\\"#ff9a9a\\\">Guardians are faster!</font>\",\"viewport\":\"401, 775\",\"hits\":\"Your hits: 100\"}"
+          }
+        ],
+        "isError": false
+      }
+    },
+    "desktop": {
+      "viewport": "1920x1080",
+      "nativeClicks": [
+        "Eligible Daily reward replaced by Stable",
+        "Closing Stable reopens unclaimed Daily",
+        "Claim dismisses Daily and clears DailyDay"
+      ],
+      "mamaCounter50Readable": true,
+      "finalOverheadWorldSize": "8x1.1 studs"
+    },
+    "serverGearGuard": {
+      "awayRefused": true,
+      "awayNoCashOrInventoryChange": true,
+      "within30StudsPurchaseSucceeded": true
+    },
+    "shield": {
+      "replicatedFromServerHead": true,
+      "expiresAfterActualPlaytime1000": true,
+      "restoresAtPlaytime0": true,
+      "respawnWithOGAndShield": true,
+      "ogPreserved": true,
+      "stackOffsetWithOG": 4.4
+    },
+    "review": [
+      "Removed stale Fuse button reference",
+      "Retained pendingDaily until claim",
+      "Stacked weather below Mama in portrait; desktop damage board and base below weather"
+    ],
+    "consoleFinal": "Known CAS could-not-find-function warnings only; earlier desktop startup showed known MainUI/TestHooks yield notices",
+    "diagnosticCorrections": [
+      "Initial cash hook ran before profile readiness; tool-required DataService context did not share Main profiles, so subsequent checks used real TestHooks JSON/lifecycle",
+      "MamaDamage test hook updates HP/rewards but not replicated MamaDamage; used real MamaHit requests for accepted-hit counter verification",
+      "Unsupported Enum.DeviceScalingMode setter failed after Config was already restored; original FitToWindow verified unchanged",
+      "Concurrent Stable typography preview interrupted the final edit/test. Edit calls failed and a transient Mama/weather probe occurred in that preview; no cash/item test changes were issued there. Final retry guarded test Config before mutations and completed in isolated stores."
+    ],
+    "limits": [
+      "No physical-phone or multiplayer run performed",
+      "Final world-sized shield preview inspected on desktop; lifecycle/OG replication tested on phone7"
+    ]
+  },
+  "restoreInitial": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"temporaryConfigAbsent\":true,\"nestScriptAbsent\":true,\"device\":\"hd_1080\",\"dpi\":96,\"resolution\":\"1920, 1080\",\"ambient\":\"0.27451, 0.27451, 0.27451\",\"configEqual\":true,\"orientation\":\"LandscapeLeft\",\"scaling\":\"FitToWindow\",\"clock\":14.5,\"backupCount\":11}"
+      }
+    ],
+    "isError": false
+  },
+  "restoreFinal": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"restored\":true,\"retentionEqual\":true,\"orientation\":\"LandscapeLeft\",\"uiEqual\":true,\"scaling\":\"FitToWindow\",\"clock\":14.5,\"device\":\"hd_1080\"}"
+      }
+    ],
+    "isError": false
+  },
+  "backups": {
+    "local": "steal-a-ride/before-hud-menu-20261008",
+    "studio": "ServerStorage.HUDMenuBackup20261008",
+    "productionConfigBackupDeleted": true,
+    "rollbackNote": "HUD backups precede concurrent Stable typography; preserve that later work when rolling back."
+  },
+  "published": false,
+  "committed": false,
+  "finalSourceVerification": {
+    "allCurrentSourcesMatchStudio": true,
+    "changedSources": 10,
+    "normalization": "CR normalized",
+    "concurrentStableTypographyPreserved": true,
+    "feedbackGroupsPassedAfterTypography": 33,
+    "sourcesCompiledAfterTypography": 48
+  }
+}

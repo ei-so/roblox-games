@@ -1,0 +1,83 @@
+{
+  "date": "2026-10-07",
+  "timezone": "Asia/Singapore",
+  "placeId": 123937616497204,
+  "studioId": "d88c4d82-6880-4c6b-9d15-d5c9c2947818",
+  "testDatastore": "SAMFeedback_20261007_a",
+  "offline": {
+    "groupsPassed": 9,
+    "compiledGameSources": 36,
+    "compiledClientCheck": true,
+    "missingMamaFXCheckFailedBeforeImplementation": true,
+    "lateBodyRegressionFailedBeforeFix": true,
+    "delayedPhaseRegressionFailedBeforeFix": true,
+    "replicationRegressionsPassedAfterFix": true
+  },
+  "assetPreload": {
+    "roar": {"id": 9113980319, "status": "Success"},
+    "whoosh": {"id": 9117034658, "status": "Success"},
+    "step": {"id": 9125404769, "status": "Success"},
+    "wingLoop": {"id": 9125386814, "status": "Success"},
+    "failedSilhouetteImages": [91184272634080, 91361536212232, 18460936892],
+    "shadow": "approved dark oval fallback"
+  },
+  "fullEvent": {
+    "warningSeconds": 8,
+    "activeSeconds": 60,
+    "clientCheck": "PASS",
+    "loadedAndPlaying": ["MamaRoar", "MamaWhoosh", "MamaStep", "MamaWingLoop"],
+    "roarReverbAndEqualizer": true,
+    "wingParent": "Workspace.MamaDragon.Body",
+    "shadowMinZ": -150,
+    "shadowMaxZ": 134.7552490234375,
+    "shadowExistsOnServer": false,
+    "shadowBlocksCollisionTouchOrQueries": false,
+    "warningMix": 0.19999998807907105,
+    "activeMix": 0.20000000298023225,
+    "homeEffectiveVolume": 0.04999999701976776,
+    "restoredMix": 1,
+    "shadowAndWingCleanup": true
+  },
+  "finalRuntimeAfterReviewFixes": {
+    "warningSeconds": 8,
+    "activeSeconds": 12,
+    "clientCheck": "PASS",
+    "allFourSoundsLoadedAndPlaying": true,
+    "shadowMinZ": -144.34588623046876,
+    "shadowMaxZ": 133.25936889648438,
+    "warningMix": 0.19999998807907105,
+    "activeMix": 0.20000000298023225,
+    "homeEffectiveVolume": 0.04999999701976776,
+    "restoredMix": 1,
+    "cleanup": true,
+    "finalConsoleOutput": ""
+  },
+  "escapeStartedDuringMama": {
+    "phaseObserved": "active",
+    "escapeBaseVolumeDuringCrossfade": 0.3638409376144409,
+    "escapeEffectiveVolume": 0.07276818318556622,
+    "forestAmbienceEffectiveVolume": 0.024499999016523334,
+    "mix": 0.19999998807907105
+  },
+  "earlyEnd": {
+    "warningSeconds": 0.2,
+    "activeSeconds": 0.2,
+    "pendingShadowCancelled": true,
+    "restoredMix": 1
+  },
+  "restoredEditState": {
+    "datastore": "StealARide_v1",
+    "configNormalizedCharacters": 27463,
+    "effectsNormalizedCharacters": 28872,
+    "localAndStudioContentMatch": true,
+    "httpEnabled": false,
+    "temporaryConfigBackupRemoved": true,
+    "published": false
+  },
+  "limits": [
+    "Existing MainUI WaitForChild warnings appeared in Effects and ClientMain during startup; UI subsequently loaded.",
+    "Physical phone and subjective listening were not tested.",
+    "Silhouette texture branch was not exercised because all searched images failed preload.",
+    "Deferred review minor: a one-shot warning roar can outlast artificial early cancellation until playback ends or its 10-second timeout. Normal warning is longer than the roar."
+  ]
+}

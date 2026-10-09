@@ -1,0 +1,3 @@
+exit (studs from nest): {'Forest': 28, 'Lake': 140, 'Desert': 182, 'Jungle': 231, 'Tundra': 280, 'Volcano': 336, 'Cosmic': 406}
+installed: burst 4s winded 0.85, surge 60 studs sim median  71.9 min ~ real  3.1 h (p10  54.1, p90  89.2 min) (p10   54.1, p90   89.2) | first deposit (median min): For   0.6 Lak   3.7 Des  13.9 Jun  18.7 Tun  32.1 Vol  53.9 Cos  71.8
+surge on entering the Forest (Chicken keeps 60 studs) sim median  76.8 min ~ real  3.3 h (p10  58.2, p90  98.0 min) (p10   58.2, p90   98.0) | first deposit (median min): For   0.6 Lak   4.2 Des  17.6 Jun  25.3 Tun  38.9 Vol  59.2 Cos  76.7

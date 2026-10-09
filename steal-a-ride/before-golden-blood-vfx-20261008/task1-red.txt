@@ -1,0 +1,21 @@
+PASS: chosen species, rarity rolled at deposit, rarity hatch times, deposit/save, PvP/Mama take, pending return, old saves, Secret/Lucky compatibility
+PASS: species shell clues, no name labels, noncolliding parts, unchanged Secret Egg
+PASS: Mama dead/range/orb/end/origin/nonfinite/occlusion validation and combined click-hold cap
+PASS: Mama 50/75/100-hit speed, cash and Lucky Egg rewards fire once at their thresholds
+PASS: movement, biome guardian/income/carry tuning, Secret weight, mount/saddle bonuses, soda, water, stun, weighted carrier allowance, turn slowdown and recovery
+PASS: Pen roaming walks one smooth connected loop per pet: bounded, faces its path, pauses; slow frames and independent pets
+PASS: earning-first tutorial, upgrade affordability, preserved saved completion
+PASS: saved mounts trimmed to pass/rebirth slots on join, creatures kept; touch Get off returns all mounts
+PASS: F dismount and R flight use separate keys; one request per press, typing guards, touch preserved and remount lifecycle
+C:/Users/Desktop/AppData/Local/Temp/mount-feedback-checks-v2h1eeri/feedback.luau:177: golden sunset and particles
+stacktrace:
+[C] function assert
+C:/Users/Desktop/AppData/Local/Temp/mount-feedback-checks-v2h1eeri/feedback.luau:177
+Traceback (most recent call last):
+  File "C:\Users\Desktop\Documents\Roblox Games\steal-a-ride\tests\run_feedback_checks.py", line 1145, in <module>
+    main()
+  File "C:\Users\Desktop\Documents\Roblox Games\steal-a-ride\tests\run_feedback_checks.py", line 1138, in main
+    subprocess.run([str(args.runtime / ("luau" + exe)), str(script)], check=True)
+  File "C:\Users\Desktop\AppData\Local\Programs\Python\Python311\Lib\subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['C:\\Users\\Desktop\\AppData\\Local\\Temp\\steal-a-mount-luau-0.741\\luau.exe', 'C:\\Users\\Desktop\\AppData\\Local\\Temp\\mount-feedback-checks-v2h1eeri\\feedback.luau']' returned non-zero exit status 1.

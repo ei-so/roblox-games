@@ -1,0 +1,9 @@
+escape odds from Mystic Grove nest (Codex values: spider 84 raw = 105, carry .78), by free riding speed:
+  ride  94 -> carrying  73.3: 0% | with Dash 0%
+  ride 100 -> carrying  78.0: 0% | with Dash 0%
+  ride 106 -> carrying  82.7: 0% | with Dash 0%
+  ride 112 -> carrying  87.4: 0% | with Dash 100%
+  ride 118 -> carrying  92.0: 0% | with Dash 100%
+  ride 125 -> carrying  97.5: 0% | with Dash 100%
+Cosmic (reference)       sim median  76.6 min ~ real  3.3 h (p10  57.3, p90 100.4 min) (p10   57.3, p90  100.4) | first deposit (median min): For   0.6 Lak   4.1 Des  17.8 Jun  24.8 Tun  38.3 Vol  58.8 Cos  76.6 Mys  77.8
+Mystic, Codex values     sim median  90.1 min ~ real  3.8 h (p10  70.7, p90 107.9 min) (p10   70.7, p90  107.9) | first deposit (median min): For   0.6 Lak   4.1 Des  17.8 Jun  24.8 Tun  38.4 Vol  58.8 Cos  75.8 Mys  90.0

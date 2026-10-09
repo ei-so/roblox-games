@@ -1,0 +1,58 @@
+# Shared handoff: Codex and Claude Code
+
+Updated 2026-10-07 Asia/Singapore by Codex. One writing agent at a time. Follow AGENTS.md and verify this checkpoint against files, Git and Studio.
+
+## Current checkpoint
+
+- User request: **next piece, published the piece 4**, plus **smaller mobile side navigation, rarity categories in Stable and a separate Fuse panel**. **Piece 4 published by user (2026-10-07). Piece 5 and requested UI changes in progress.** Active writer: **Codex**. Next: finish egg effects and UI, install guarded sources, verify in isolated Play. Roaming creatures is an opinion request only; no roaming gameplay change authorized.
+- Work in **C:/Users/Desktop/Documents/Roblox Games**. Project moved from Documents/ChatGPT/Roblox; the old folder is empty. Git has no commits and the tree is untracked: do not clean/reset or create a worktree that omits these sources.
+- Game: **Steal a Mount**, place **123937616497204**, universe **10769659624**, owner **eisoisoo**. Connected Studio **bb7be3bd-e0eb-45d0-a99b-2b63eef08865**; re-list before resuming.
+- **Published by user:** earlier feedback/movement/mobile changes and VFX/SFX Pieces **1–4**. **Piece 5 requested in this session**, not yet installed/published.
+- **Piece 4 verified state:** Studio **Edit**, production Config datastore **StealARide_v1**, temporary **FeedbackRuntimeConfigOriginal removed**, HTTP false. Config **27463** / Effects **28872** normalized characters matched local files before Piece 5. User reports Piece 4 published; Codex has not published.
+
+## Piece 4: Mama entrance
+
+## Current additions in progress
+
+- Piece 5 local sources now have seven egg particle themes and short hatch sounds. Normal egg emitters start disabled; Effects enables the closest 24 within 80 studs every 0.5 s. Secret egg construction stays unchanged. Lake/Jungle hatches add native noncolliding bubble/leaf fragments; Creator Store textures failed preload, native textures and seven sounds loaded successfully.
+- Mobile navigation now uses a single Menu toggle opening a 2-column grid. Stable has All + six rarity filters; a separate Fuse panel groups eligible matching creatures, sorts ready recipes first, shows next rarity/count and retains the 30-stud Plaza-machine requirement. No roaming change.
+- Changed local files: Config, CreatureBuilder, Effects, UIController, StableUI, ClientMain; run_feedback_checks.py. Baselines in before-egg-themes-20261007 and before-mobile-stable-20261007; Studio originals in ServerStorage.EggThemesMobileBackup20261007. Offline **11 groups PASS**, including real-source fusion grouping and compilation of 36 sources. All six installed; runtime verification ongoing in temporary SAMFeedback_20261007_p5ui datastore. MUST stop Play and restore FeedbackRuntimeConfigOriginal afterward.
+- First iPhone 7 pass: Menu 84x44; expanded buttons 92x44 in 2 columns; collapsed HUD clear. Native touch jump overlapped Fuse action; fixed by hiding/restoring TouchGui while Stable/Fuse is open. Real fusion rejected away from machine; at machine consumed three Pen+Stable Common Bunnies, kept equipped fourth Bunny and best Golden mutation, produced Uncommon. Full checks after latest fixes pending.
+- Latest steering: disable Menu while any menu tab is open; close current tab before switching. Final UIController observes all seven panels, disables toggle and side buttons, and gates native TouchControlsEnabled for expanded Menu and all tabs. Fuse is the seventh Menu entry; its OpenRequest and machine prompt cannot bypass a current tab. Final runtime: all seven locks/restores PASS, expanded Menu has no joystick overlap, Fuse-open respawn retains lock and restores on close. Desktop retains sidebar/full cards; short mobile landscape cards are 124–132 px with 44 px action row. iPhone 7/17 Pro landscape and portrait inspected.
+- Final hatch runtime: all seven sounds loaded/playing after adding a quiet seven-Sound object cache (bare ContentProvider asset strings had Failure, actual Sound instances loaded). All seven native particle textures correct; six Lake bubbles and six Jungle leaves, cosmetic physics disabled. Nearby test enabled exactly 24 of 35 eggs, far eggs disabled, Secret has no new emitter. Incubator cinematic audio passed; lifecycle cleanup/camera final asynchronous check pending.
+- Read-only review found prompt bypass, competing TouchGui writers and stale fuse timeout; all fixed and re-reviewed with no remaining actionable findings. Fusion timeout token prevents stale callbacks; actions unlock after current inventory arrives. Offline 11 groups PASS again. User wants Piece 5 finished for publication; Codex does not publish. Remaining: confirm lifecycle, stop Play, restore production Config, verify all six full sources, wrap checkpoint.
+- Confirmed mechanics: Pen creatures earn passive cash; Stable stores saved creatures without income; equipped Mounts provide speed/abilities and are excluded from fusion. Fusion accepts Pen + Stable, three same species/rarity, Common through Epic only.
+
+Approved design: distant deep roar + slow shake; after 1.5 s a client-only shadow crosses Home Row from z=-150 to Plaza z=135 over 4 s with a wing whoosh. Warning/active duck background loops to 20%, restored when MamaPhase clears. Active event uses bassy steps and a slowed 3D wing/scale loop parented to MamaDragon; defeat retained. Server code unchanged.
+
+- **Changed:** steal-a-ride/src/ReplicatedStorage/Shared/Config.luau (Config.MamaFX), steal-a-ride/src/StarterPlayer/StarterPlayerScripts/Effects.luau; checks in steal-a-ride/tests/run_feedback_checks.py and new steal-a-ride/MamaFXChecks.luau; evidence in steal-a-ride/mama-entrance-verification-20261007.json.
+- **Assets (Pro Sound Effects, all Edit preload Success):** roar 9113980319, whoosh 9117034658, step 9125404769, wingLoop 9125386814. Sound entries are {id,pitch,volume,maxSeconds?}. Three Creator Store silhouette images failed preload, so Config.MamaFX.shadowImage is empty and the **approved dark oval fallback** is used. Texture branch remains untested.
+- **Mixing:** client SoundGroup MamaDuckedLoops includes HomeMusic, ambience, escape, rain, heartbeat and guardian chase loops. Native group mixing preserves their base volumes and crossfades, including sounds started mid-event. Roar/whoosh/steps/wing loop remain audible outside that background group.
+- **Verified before review fixes:** 8 s warning + 60 s active isolated Play PASS; roar/whoosh/step/wing loaded and playing, roar reverb/EQ, wing at Workspace.MamaDragon.Body, client shadow -150 to 134.755 with collision/touch/query disabled and absent on server, group 0.2 throughout warning/active, HomeMusic effective 0.05, restored group 1 and no shadow/Mama/wing after escape. Escape started during Mama stayed ducked (base ~0.364, effective ~0.073); Forest ambience ~0.0245. Early end (0.2/0.2 s) cancelled the pending sweep and restored mixing.
+- **Read-only review:** found delayed-body and delayed-phase replication races. Both reproduced with the real source in the offline harness, fixed, then all **9 groups PASS including compilation of 36 game sources**. Wing now subscribes to later body descendants with an active-phase guard; sweep follows the warning remote/token and end remotes cancel it. No server changes.
+- **Final runtime after review fixes:** isolated **8 s warning + 12 s active PASS**, all four sounds loaded/playing, sweep z=-144.346 to 133.259 sampled, warning/active group 0.2, HomeMusic effective 0.05, group restored 1, shadow/model/wing removed. Final console output empty. Offline 9/9 groups and standalone client check compilation passed again. Production Config restored and full local/Studio contents verified afterward.
+- **Deferred minor:** artificial very short cancellation may leave the one-shot roar until it ends/its 10 s cleanup. Normal warning lasts longer than the roar. Review did not audit subjective audio quality, physical phone, published permissions, server behavior or a new reduced-motion policy; these are not claimed verified.
+- **Known startup issue outside Piece 4:** existing MainUI WaitForChild warnings still appear in Effects and ClientMain before UI finishes loading. No new gameplay errors observed in the first Play pass.
+
+## Verification commands and rollback
+
+- Offline: python -X utf8 steal-a-ride/tests/run_feedback_checks.py --runtime "$env:TEMP/steal-a-mount-luau-0.741". Official Luau 0.741 binaries already in TEMP.
+- MamaFXChecks.luau is an executable **client test utility**, not an installed game script. Run after profile load; then ServerStorage.TestHooks:Invoke("mama", {warning=8,duration=60}) in Server. Results in PlayerScripts.MamaFXCheckResults. TestHooks is Studio-only; action comes first (no player argument).
+- Piece 4 baseline files: steal-a-ride/before-mama-entrance-20261007/{Config,Effects}.luau. Studio baseline clones: ServerStorage.MamaEntranceBackup20261007 (Effects disabled). These preserve Pieces 1-3 for rollback.
+- Retain older FeedbackBackup20261007 / FeedbackSources20261007 and source backups. **Do not rerun the old feedback installer**: its manifest predates later fixes and changes. Original full place backups in migration-20261007 predate the latest updates.
+- Save a complete local place backup before publication. Publication remains the user's Studio File > Publish to Roblox action; Codex has not published Piece 4. Rollback in Creator Hub > Version History.
+
+## Decisions and prior verified work to preserve
+
+- Walking **25**, mountBase/guardianSpeed/minEscape **x1.25** through Config.SpeedScale; bonuses unchanged. Guardian rage within 60 studs of safe line **1.3x full speed**, overriding tiredness, with red glow/roar/vignette; own-biome catches unchanged. Other-biome carrier bumps use body contact (bumpReach 1 + body radius).
+- Normal eggs have species identity at spawn with visual clues only; preserve it through carrying, returns, incubators, save/raid/queue/Mama transfers. Secret and Lucky rules, economy/progression/purchases unchanged. Forest 8 eggs/20 s missing-slot refill; deeper nests 6 eggs/300 s refill.
+- Mama hold aims at active weak spot with server validation; HP/damage/reward rules retained. Prior real mouse/touch holds, top-centered Mama bar/mobile menu, stomp/jump/escape, species transfers and 2-client reward/PvP checks passed. Owner legitimately has Extra Mount; free second slot remains at Rebirth 3. Saved excess mounts return to stable.
+- Piece 1 patch warning ramp + Desert updraft FX; Piece 2 per-guardian idle/alert/chase/step audio; Piece 3 biome escape music/crossfades/ambience duck and safe-line sting. **Use new suitable assets when needed**, per user decision.
+- Remaining limits: real physical phone and deeper-biome escape calibration unverified; CashPill PerSec text improvement was only a proposal. No map realism or geometry changes authorized here.
+- Access: questionnaire Minimal/no descriptors/no age restriction, All ages/All regions. Earlier Roblox Kids/Select trial/access research and paid-random-item questionnaire question were account decisions for the user; do not change account settings from this handoff.
+
+## Historical context
+
+- Full pre-Piece-4 checkpoint: docs/handoff-before-mama-entrance-wrap-20261007.md. Older history: docs/handoff-history-before-feedback-wrap-20261007.md. These are historical evidence, not current instructions.
+- Earlier feedback spec/plan: docs/superpowers/{specs,plans}/2026-10-07-steal-a-mount-feedback*.md. Root src/tests/README belong to Power Core Incremental, **not this game**.
+- Current next step: implement and verify Piece 5 biome egg/hatch themes. Preserve published Pieces 1–4.

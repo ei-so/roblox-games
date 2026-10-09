@@ -1,0 +1,68 @@
+{
+  "request": "Implement the reset and give OG tags to players who played before it.",
+  "date": "2026-10-08",
+  "implementation": "Claude's existing StealARide_v2 / StealARide_v1 migration verified; no additional game source changes needed.",
+  "isolatedStores": {
+    "key": "u_7908166657",
+    "fresh": "SAMResetVerify_1791407595",
+    "legacy": "SAMResetVerifyOld_1791407595",
+    "userId": 7908166657,
+    "old": {
+      "Pen": {
+        "1": "cosmic"
+      },
+      "SaddleLevel": 20,
+      "LastOnline": 1791406395,
+      "Creatures": {
+        "cosmic": {
+          "rarity": "Rare",
+          "species": "StarJelly"
+        }
+      },
+      "Rebirths": 7,
+      "Cash": 7654321
+    }
+  },
+  "legacyJoin": {
+    "giftCleared": true,
+    "OG": true,
+    "tag": "OG",
+    "resetProgress": true,
+    "gold": true,
+    "saved": true,
+    "giftCount": 1,
+    "eggBiome": "Cosmic",
+    "respawn": true,
+    "cash": 989000
+  },
+  "rejoin": {
+    "OGPersisted": true,
+    "giftRepeated": false,
+    "rejoinTag": true,
+    "rewardCount": 1,
+    "oldSavePreserved": true
+  },
+  "newPlayer": {
+    "saved": true,
+    "newPlayerOG": false,
+    "newPlayerTag": false,
+    "newPlayerGift": false,
+    "freshCash": 0
+  },
+  "offline": {
+    "groups": 26,
+    "compiledLuauSources": 48,
+    "exitCode": 0
+  },
+  "restoration": {
+    "mode": "Edit",
+    "production": "StealARide_v2",
+    "legacy": "StealARide_v1",
+    "matchedSources": 3,
+    "temporaryConfigBackupAbsent": true,
+    "testHooksAbsent": true
+  },
+  "console": "Only known ContextActionService no-function warnings and an onboarding analytics message in the final Play session.",
+  "probeCorrections": "Initial assertions queried before Main finished granting the welcome gift and later assumed that the 30-second Lucky Egg would remain unhatched. Final assertions wait for the OG tag and count the egg or resulting pet.",
+  "published": false
+}

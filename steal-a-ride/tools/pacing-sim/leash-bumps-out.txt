@@ -1,0 +1,9 @@
+Mystic odds with 0.25 s bumps (no Dash / Dash):
+  rider x0.97: b25 0%/0%  b30 0%/2%
+  rider x1.0: b25 0%/0%  b30 0%/68%
+  rider x1.03: b25 0%/0%  b30 5%/75%
+  rider x1.05: b25 0%/0%  b30 38%/82%
+bumps b25 fresh          sim median  98.0 min ~ real  4.2 h (p10  87.0, p90 109.8 min) (p10   87.0, p90  109.8) | first deposit (median min): For   0.6 Lak   2.9 Des  13.1 Jun  17.7 Tun  40.0 Vol  63.1 Cos  83.2 Mys  97.8
+bumps b25 2nd slot       sim median  85.4 min ~ real  3.7 h (p10  74.5, p90  96.5 min) (p10   74.5, p90   96.5) | first deposit (median min): For   0.6 Lak   2.8 Des  10.8 Jun  15.8 Tun  32.4 Vol  53.5 Cos  68.2 Mys  85.3
+bumps b30 fresh          sim median  92.3 min ~ real  3.9 h (p10  79.1, p90 107.8 min) (p10   79.1, p90  107.8) | first deposit (median min): For   0.6 Lak   2.9 Des  12.9 Jun  17.2 Tun  37.0 Vol  61.1 Cos  78.3 Mys  92.3
+bumps b30 2nd slot       sim median  80.5 min ~ real  3.4 h (p10  62.3, p90  93.8 min) (p10   62.3, p90   93.8) | first deposit (median min): For   0.6 Lak   2.8 Des  10.7 Jun  14.9 Tun  30.9 Vol  53.1 Cos  65.0 Mys  80.4

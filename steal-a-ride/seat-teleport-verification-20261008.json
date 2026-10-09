@@ -1,0 +1,82 @@
+{
+  "before": {
+    "ok": true,
+    "result": {
+      "seatBefore": "50, 1.2000000476837158, 105",
+      "seatAfter": "14, 2.104081869125366, 105",
+      "sit": true,
+      "root": "14, 4, 105",
+      "weld": true,
+      "seatMoved": 36.0113525390625,
+      "count": 2
+    }
+  },
+  "snapBackProbe": [
+    {
+      "weld": true,
+      "label": "seated",
+      "root": "-26, 3.0959181785583496, 87",
+      "sit": true,
+      "seat": "-26, 1.2000000476837158, 87"
+    },
+    {
+      "weld": false,
+      "label": "kick immediate",
+      "root": "-14, 4, 105",
+      "sit": false,
+      "seat": "-26, 1.2000000476837158, 87"
+    },
+    {
+      "weld": false,
+      "label": "kick .1",
+      "root": "-14, 4, 105",
+      "sit": false,
+      "seat": "-26, 1.2000000476837158, 87"
+    },
+    {
+      "weld": false,
+      "label": "kick .4",
+      "root": "-26, 4.481502056121826, 87",
+      "sit": false,
+      "seat": "-26, 1.2000000476837158, 87"
+    },
+    {
+      "weld": false,
+      "label": "kick again",
+      "root": "-14, 4, 105",
+      "sit": false,
+      "seat": "-26, 1.2000000476837158, 87"
+    },
+    {
+      "weld": false,
+      "label": "again .4",
+      "root": "-14.000000953674316, 3.223181962966919, 105",
+      "sit": false,
+      "seat": "-26, 1.2000000476837158, 87"
+    }
+  ],
+  "waitProbe": {
+    "root": "-14.01806640625, 3.224830150604248, 104.756103515625",
+    "outside": true,
+    "seatMoved": 0
+  },
+  "after": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"ok\":true,\"result\":{\"hazardMovement\":0,\"campfireCount\":2,\"kickCycles\":3,\"hazardReleased\":true,\"campfireMovement\":0,\"fountainMovement\":0,\"mountPreserved\":true,\"spawnReleased\":true}}"
+      }
+    ],
+    "isError": false
+  },
+  "client": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"campfireCount\":2,\"sitting\":false,\"campfirePositions\":[\"-26, 1.2000000476837158, 87\",\"-26, 1.2000000476837158, 93\"]}"
+      }
+    ],
+    "isError": false
+  },
+  "checks": "39 groups PASS +49 Luau compile; real native chairs/bench/character and clone of current locked-base tick with controlled owner test double; no real two-client test; production v2/v1 Config restored exactly; Studio Edit; not published"
+}

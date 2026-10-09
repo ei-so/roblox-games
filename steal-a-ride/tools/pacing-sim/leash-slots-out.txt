@@ -1,0 +1,23 @@
+Part 1: Mystic Grove escape odds (spider 110), bumps = 0.2s stop every ~6s
+rider/spider           b15       b15 +Dash           b20       b20 +Dash           b25       b25 +Dash
+        0.95        0%/  0%        0%/  0%        0%/  0%        0%/  0%        0%/  0%        0%/  0%
+        0.97        0%/  0%        0%/  0%        0%/  0%        0%/  0%        0%/  0%      100%/  2%
+        0.99        0%/  0%      100%/  0%        0%/  0%      100%/  0%        0%/  0%      100%/  0%
+        1.01      100%/  0%      100%/  0%      100%/  0%      100%/  0%      100%/  0%      100%/ 82%
+        1.03      100%/  0%      100%/  0%      100%/  0%      100%/  0%      100%/ 22%      100%/ 78%
+        1.05      100%/  0%      100%/  0%      100%/  0%      100%/  0%      100%/ 68%      100%/ 92%
+        1.08      100%/  0%      100%/  0%      100%/  0%      100%/  0%      100%/100%      100%/100%
+(each cell: no bumps / with bumps)
+Part 2: pacing with the installed weights
+buffer 15 fresh Cos      sim median  69.9 min ~ real  3.0 h (p10  56.6, p90  82.6 min) (p10   56.6, p90   82.6) | first deposit (median min): For   0.6 Lak   2.9 Des  13.9 Jun  17.9 Tun  36.0 Vol  56.3 Cos  69.7 Mys   nan
+buffer 15 fresh Mys      sim median  86.7 min ~ real  3.7 h (p10  72.8, p90 100.7 min) (p10   72.8, p90  100.7) | first deposit (median min): For   0.6 Lak   2.9 Des  13.9 Jun  17.9 Tun  36.0 Vol  56.3 Cos  69.7 Mys  86.6
+buffer 15 2nd slot Cos   sim median  63.1 min ~ real  2.7 h (p10  51.1, p90  77.4 min) (p10   51.1, p90   77.4) | first deposit (median min): For   0.6 Lak   2.9 Des  13.9 Jun  16.6 Tun  31.7 Vol  52.1 Cos  63.1 Mys   nan
+buffer 15 2nd slot Mys   sim median  76.9 min ~ real  3.3 h (p10  63.4, p90  92.0 min) (p10   63.4, p90   92.0) | first deposit (median min): For   0.6 Lak   2.9 Des  13.9 Jun  16.6 Tun  31.7 Vol  52.1 Cos  63.1 Mys  76.8
+buffer 20 fresh Cos      sim median  63.1 min ~ real  2.7 h (p10  52.2, p90  75.9 min) (p10   52.2, p90   75.9) | first deposit (median min): For   0.6 Lak   2.9 Des  13.5 Jun  17.2 Tun  32.4 Vol  52.3 Cos  63.1 Mys   nan
+buffer 20 fresh Mys      sim median  76.3 min ~ real  3.3 h (p10  63.2, p90  88.2 min) (p10   63.2, p90   88.2) | first deposit (median min): For   0.6 Lak   2.9 Des  13.5 Jun  17.2 Tun  32.4 Vol  52.3 Cos  63.1 Mys  76.1
+buffer 20 2nd slot Cos   sim median  56.3 min ~ real  2.4 h (p10  45.0, p90  67.2 min) (p10   45.0, p90   67.2) | first deposit (median min): For   0.6 Lak   2.6 Des  11.1 Jun  14.5 Tun  28.8 Vol  47.5 Cos  56.2 Mys   nan
+buffer 20 2nd slot Mys   sim median  67.5 min ~ real  2.9 h (p10  56.5, p90  79.9 min) (p10   56.5, p90   79.9) | first deposit (median min): For   0.6 Lak   2.6 Des  11.1 Jun  14.5 Tun  28.8 Vol  47.5 Cos  56.2 Mys  67.5
+buffer 25 fresh Cos      sim median  59.7 min ~ real  2.6 h (p10  49.0, p90  72.9 min) (p10   49.0, p90   72.9) | first deposit (median min): For   0.6 Lak   2.9 Des  13.1 Jun  15.9 Tun  28.6 Vol  48.9 Cos  59.6 Mys   nan
+buffer 25 fresh Mys      sim median  72.6 min ~ real  3.1 h (p10  60.6, p90  85.0 min) (p10   60.6, p90   85.0) | first deposit (median min): For   0.6 Lak   2.9 Des  13.1 Jun  15.9 Tun  28.6 Vol  49.0 Cos  59.6 Mys  72.6
+buffer 25 2nd slot Cos   sim median  50.9 min ~ real  2.2 h (p10  38.7, p90  63.0 min) (p10   38.7, p90   63.0) | first deposit (median min): For   0.6 Lak   2.6 Des  10.3 Jun  13.6 Tun  24.3 Vol  42.1 Cos  50.8 Mys   nan
+buffer 25 2nd slot Mys   sim median  60.2 min ~ real  2.6 h (p10  49.0, p90  72.1 min) (p10   49.0, p90   72.1) | first deposit (median min): For   0.6 Lak   2.6 Des  10.3 Jun  13.6 Tun  24.3 Vol  42.1 Cos  50.8 Mys  60.2

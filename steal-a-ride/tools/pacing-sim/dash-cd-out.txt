@@ -1,0 +1,6 @@
+Dash cd  8s spider 84: Cosmic 3.24 h | Mystic 3.85 h (reached 200/200, Cosmic first 187) | gap median  27.6 p90  66.6 min | Dash escape 112:100% 118:100% 125:100%
+Dash cd  8s spider 88: Cosmic 3.24 h | Mystic 3.98 h (reached 200/200, Cosmic first 199) | gap median  37.4 p90  72.1 min | Dash escape 112:9% 118:100% 125:100%
+Dash cd 10s spider 84: Cosmic 3.44 h | Mystic 4.04 h (reached 200/200, Cosmic first 188) | gap median  29.1 p90  60.9 min | Dash escape 112:100% 118:100% 125:100%
+Dash cd 10s spider 88: Cosmic 3.45 h | Mystic 4.18 h (reached 200/200, Cosmic first 197) | gap median  38.8 p90  70.2 min | Dash escape 112:9% 118:100% 125:100%
+Dash cd 12s spider 84: Cosmic 3.44 h | Mystic 4.04 h (reached 200/200, Cosmic first 188) | gap median  29.1 p90  62.7 min | Dash escape 112:100% 118:100% 125:100%
+Dash cd 12s spider 88: Cosmic 3.45 h | Mystic 4.17 h (reached 200/200, Cosmic first 197) | gap median  38.4 p90  70.1 min | Dash escape 112:9% 118:100% 125:100%

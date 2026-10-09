@@ -1,0 +1,154 @@
+{
+  "gameName": "Steal a Mount",
+  "status": "Migration/code/private publish/artwork complete. Public release incomplete: 104 asset access failures; Studio API access disabled; paid luck requires odds disclosures and PolicyService restrictions. Questionnaire pending at paid-random policy question; user approval for bounded compliance fix requested.",
+  "original": {
+    "username": "krgwsg",
+    "creatorId": 11767417694,
+    "placeId": 91426156190208,
+    "universeId": 10769593546
+  },
+  "destination": {
+    "username": "eisoisoo",
+    "creatorId": 7908166657,
+    "placeId": 123937616497204,
+    "universeId": 10769659624
+  },
+  "backup": {
+    "file": "Steal-a-Mount-original.rbxl",
+    "bytes": 1235164,
+    "sha256": "8C1A02555119B3DCF11E2596580B8B82D42CCB08F073DF6D909BF3B51AC84728"
+  },
+  "experienceArt": {
+    "icon": "assets/page/page_icon.png",
+    "thumbnails": [
+      "assets/page/thumb_riding.png",
+      "assets/page/thumb_mama.png",
+      "assets/page/thumb_heist.png"
+    ],
+    "iconSaved": true,
+    "homeThumbnailsActive": true,
+    "detailThumbnailsSaved": true
+  },
+  "passes": [
+    {
+      "configKey": "VIP",
+      "originalId": 2005773845,
+      "newId": 2009138282,
+      "name": "VIP",
+      "priceRobux": 199,
+      "description": "+50% cash and a VIP chat tag",
+      "icon": "assets/purchases/vip.png",
+      "forSale": true,
+      "managedPricing": false,
+      "salesVerified": true,
+      "iconUploaded": true
+    },
+    {
+      "configKey": "ExtraMount",
+      "originalId": 2006763831,
+      "newId": 2006037890,
+      "name": "Extra Mount Slot",
+      "priceRobux": 149,
+      "description": "Ride two creatures: speed of the faster, both abilities",
+      "icon": "assets/purchases/extramount.png",
+      "forSale": true,
+      "managedPricing": false,
+      "iconUploaded": true,
+      "salesVerified": true
+    },
+    {
+      "configKey": "Incubators",
+      "originalId": 2007609755,
+      "newId": 2008886448,
+      "name": "+2 Incubators",
+      "priceRobux": 99,
+      "description": "Hatch two more eggs at once (max 6)",
+      "icon": "assets/purchases/incubators.png",
+      "forSale": true,
+      "managedPricing": false,
+      "iconUploaded": true,
+      "salesVerified": true
+    },
+    {
+      "configKey": "PenSlots",
+      "originalId": 2005335814,
+      "newId": 2006001857,
+      "name": "+5 Pen Slots",
+      "priceRobux": 129,
+      "description": "Five more earning spots (max 20)",
+      "icon": "assets/purchases/penslot.png",
+      "forSale": true,
+      "managedPricing": false,
+      "iconUploaded": true,
+      "salesVerified": true
+    },
+    {
+      "configKey": "Lucky",
+      "originalId": 2005827919,
+      "newId": 2008862492,
+      "name": "Lucky",
+      "priceRobux": 249,
+      "description": "10% of hatches roll one rarity higher",
+      "icon": "assets/purchases/lucky.png",
+      "forSale": true,
+      "managedPricing": false,
+      "iconUploaded": true,
+      "salesVerified": true
+    }
+  ],
+  "products": [
+    {
+      "configKey": "InstantHatch",
+      "originalId": 3716909972,
+      "newId": 3716940270,
+      "name": "Instant Hatch",
+      "priceRobux": 29,
+      "description": "Hatch every egg in your incubators now",
+      "icon": "assets/purchases/instanthatch.png",
+      "forSale": true,
+      "managedPricing": false,
+      "iconUploaded": true,
+      "salesVerified": true
+    },
+    {
+      "configKey": "LuckPotion",
+      "originalId": 3716910052,
+      "newId": 3716940345,
+      "name": "Luck Potion",
+      "priceRobux": 49,
+      "description": "15 minutes: every hatch rolls rarity twice",
+      "icon": "assets/purchases/luckpotion.png",
+      "forSale": true,
+      "managedPricing": false,
+      "iconUploaded": true,
+      "salesVerified": true
+    },
+    {
+      "configKey": "ServerLuck",
+      "originalId": 3716910127,
+      "newId": 3716940466,
+      "name": "Server Luck",
+      "priceRobux": 149,
+      "description": "15 minutes of luck for everyone in the server",
+      "icon": "assets/purchases/serverluck.png",
+      "forSale": true,
+      "managedPricing": false,
+      "iconUploaded": true,
+      "salesVerified": true
+    }
+  ],
+  "notes": [
+    "Prices copied from Claude's setup checkpoint; verify against source Creator Hub before recreation.",
+    "Preserve original experience and purchase IDs. Apply new IDs only to the destination game and local working source after recreation.",
+    "A new universe has separate player data and purchase ownership. The place file preserves map, scripts, models and asset references; test asset permissions under the destination owner."
+  ],
+  "configUpdated": true,
+  "privateVersionPublished": true,
+  "migratedBackup": {
+    "file": "Steal-a-Mount-migrated.rbxl",
+    "bytes": 1234091,
+    "sha256": "50CA849E81A2FDBD8CB1CB51258F288FF4304B1FE34CBEC417B38F2122A7A951"
+  },
+  "blockedAssetCount": 104,
+  "accountReach": "Ages 16+ and trusted friends"
+}

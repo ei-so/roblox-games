@@ -1,0 +1,14 @@
+.env
+
+# Local credentials and machine-only files
+.env.*
+!.env.example
+*.pem
+*.key
+*.pfx
+__pycache__/
+*.py[cod]
+node_modules/
+.venv/
+.DS_Store
+Thumbs.db

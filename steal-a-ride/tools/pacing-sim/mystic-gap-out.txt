@@ -1,0 +1,6 @@
+spider raw 76: reached 33/200 | Cosmic->Mystic real min: p10   7.4  median  17.1  p90  70.6
+spider raw 80: reached 88/200 | Cosmic->Mystic real min: p10  12.0  median  49.5  p90  77.2
+spider raw 84: reached 187/200 | Cosmic->Mystic real min: p10  13.1  median  27.6  p90  66.6
+spider raw 88: reached 199/200 | Cosmic->Mystic real min: p10  15.8  median  37.4  p90  72.1
+spider 88 (=110) ride:noDash/Dash 100:0%/0% 106:0%/0% 112:0%/9% 118:0%/100% 125:0%/100%
+first Mystic, spider 88  sim median  93.1 min ~ real  4.0 h (p10  75.3, p90 112.1 min) (p10   75.3, p90  112.1) | first deposit (median min): For   0.6 Lak   4.1 Des  17.8 Jun  24.8 Tun  38.4 Vol  58.8 Cos  75.9 Mys  93.1

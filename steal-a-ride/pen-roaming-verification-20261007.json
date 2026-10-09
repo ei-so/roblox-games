@@ -1,0 +1,609 @@
+{
+  "date": "2026-10-07",
+  "project": "Steal a Mount",
+  "placeId": 123937616497204,
+  "scope": "Client cosmetic wandering around each assigned Pen platform; no income, inventory, map, or save rule changes.",
+  "offline": {
+    "groupsPassed": 12,
+    "compiledLuauSources": 36,
+    "newRoamingTestFailedBeforeImplementation": true,
+    "framesTested": [
+      60,
+      15,
+      10,
+      "stalled .5s"
+    ],
+    "seedsPerFrameRate": 32
+  },
+  "runtime": {
+    "datastore": "SAMFeedback_20261007_roam",
+    "fullPen": {
+      "models": [
+        {
+          "path": 12.240593067719601,
+          "jointChanged": true,
+          "maxRadius": 1.5471113920211792,
+          "frames": 1441,
+          "maxY": 3.8935627937316895,
+          "name": "Fox",
+          "homeY": 3.784346580505371,
+          "minY": 3.784346580505371,
+          "maxStep": 0.08776229619979858,
+          "stationaryHeartbeatSampleSeconds": 21.559988046996295
+        },
+        {
+          "path": 9.166498370468616,
+          "jointChanged": true,
+          "maxRadius": 1.5351500511169434,
+          "frames": 1441,
+          "maxY": 3.460397720336914,
+          "name": "Monkey",
+          "homeY": 3.3718128204345703,
+          "minY": 3.3718128204345703,
+          "maxStep": 0.08850517868995667,
+          "stationaryHeartbeatSampleSeconds": 22.22475333325565
+        },
+        {
+          "path": 10.950195923447609,
+          "jointChanged": true,
+          "maxRadius": 1.553808569908142,
+          "frames": 1441,
+          "maxY": 3.8189780712127686,
+          "name": "Hellpup",
+          "homeY": 3.713313579559326,
+          "minY": 3.713313579559326,
+          "maxStep": 0.09932910650968552,
+          "stationaryHeartbeatSampleSeconds": 21.969935735687613
+        },
+        {
+          "path": 12.123161726049148,
+          "jointChanged": true,
+          "maxRadius": 1.5679099559783936,
+          "frames": 1441,
+          "maxY": 4.06727933883667,
+          "name": "CometFox",
+          "homeY": 3.949815273284912,
+          "minY": 3.949815273284912,
+          "maxStep": 0.09933153539896011,
+          "stationaryHeartbeatSampleSeconds": 21.65022103767842
+        },
+        {
+          "path": 10.389918049331754,
+          "jointChanged": true,
+          "maxRadius": 1.4879084825515747,
+          "frames": 1441,
+          "maxY": 3.846143960952759,
+          "name": "Penguin",
+          "homeY": 3.739215850830078,
+          "minY": 3.739215850830078,
+          "maxStep": 0.09933272749185562,
+          "stationaryHeartbeatSampleSeconds": 22.013141298666596
+        },
+        {
+          "path": 8.16281497105956,
+          "jointChanged": true,
+          "maxRadius": 1.5297614336013794,
+          "frames": 1441,
+          "maxY": 3.81937313079834,
+          "name": "StarJelly",
+          "homeY": 3.0227129459381104,
+          "minY": 3.0227129459381104,
+          "maxStep": 0.08850499242544174,
+          "stationaryHeartbeatSampleSeconds": 22.507373268716037
+        },
+        {
+          "path": 9.118027985095978,
+          "jointChanged": true,
+          "maxRadius": 1.5681519508361816,
+          "frames": 1441,
+          "maxY": 3.279998302459717,
+          "name": "Lizard",
+          "homeY": 3.200000047683716,
+          "minY": 3.200000047683716,
+          "maxStep": 0.08841729909181595,
+          "stationaryHeartbeatSampleSeconds": 22.331356252543628
+        },
+        {
+          "path": 8.626999306492507,
+          "jointChanged": true,
+          "maxRadius": 1.3217904567718506,
+          "frames": 1441,
+          "maxY": 3.1749982833862305,
+          "name": "Salamander",
+          "homeY": 3.0999999046325684,
+          "minY": 3.0999999046325684,
+          "maxStep": 0.08850622177124023,
+          "stationaryHeartbeatSampleSeconds": 22.37600082810968
+        },
+        {
+          "path": 8.477791828569025,
+          "jointChanged": true,
+          "maxRadius": 1.4749506711959839,
+          "frames": 1441,
+          "maxY": 4.024069786071777,
+          "name": "Parrot",
+          "homeY": 3.1539244651794434,
+          "minY": 3.1539244651794434,
+          "maxStep": 0.0993279367685318,
+          "stationaryHeartbeatSampleSeconds": 22.42996877618134
+        },
+        {
+          "path": 10.009215577156283,
+          "jointChanged": true,
+          "maxRadius": 1.5967551469802856,
+          "frames": 1441,
+          "maxY": 4.616372585296631,
+          "name": "Bunny",
+          "homeY": 4.0325608253479,
+          "minY": 4.0325608253479,
+          "maxStep": 0.08788976818323135,
+          "stationaryHeartbeatSampleSeconds": 22.1112569430843
+        },
+        {
+          "path": 8.125622931867838,
+          "jointChanged": true,
+          "maxRadius": 1.4740519523620605,
+          "frames": 1441,
+          "maxY": 4.829235553741455,
+          "name": "SnowOwl",
+          "homeY": 3.670022964477539,
+          "minY": 3.670022964477539,
+          "maxStep": 0.08850603550672531,
+          "stationaryHeartbeatSampleSeconds": 22.47368017025292
+        },
+        {
+          "path": 9.291335202520713,
+          "jointChanged": true,
+          "maxRadius": 1.256767988204956,
+          "frames": 1441,
+          "maxY": 4.358745574951172,
+          "name": "EmberBat",
+          "homeY": 3.3684439659118652,
+          "minY": 3.3684439659118652,
+          "maxStep": 0.08841454982757568,
+          "stationaryHeartbeatSampleSeconds": 22.227978921495378
+        },
+        {
+          "path": 10.123248961754143,
+          "jointChanged": true,
+          "maxRadius": 1.4908934831619263,
+          "frames": 1441,
+          "maxY": 3.331669569015503,
+          "name": "Frog",
+          "homeY": 2.9965109825134277,
+          "minY": 2.9965109825134277,
+          "maxStep": 0.08850743621587753,
+          "stationaryHeartbeatSampleSeconds": 22.08741762023419
+        },
+        {
+          "path": 7.332326536998153,
+          "jointChanged": true,
+          "maxRadius": 1.5485743284225464,
+          "frames": 1441,
+          "maxY": 2.710728645324707,
+          "name": "Scarab",
+          "homeY": 2.6578369140625,
+          "minY": 2.6578369140625,
+          "maxStep": 0.08785448223352432,
+          "stationaryHeartbeatSampleSeconds": 22.543280572630465
+        },
+        {
+          "path": 10.58725713007152,
+          "jointChanged": true,
+          "maxRadius": 1.5960886478424072,
+          "frames": 1441,
+          "maxY": 3.003999948501587,
+          "name": "Chick",
+          "homeY": 2.9000000953674316,
+          "minY": 2.9000000953674316,
+          "maxStep": 0.0875844657421112,
+          "stationaryHeartbeatSampleSeconds": 21.974609374068677
+        },
+        {
+          "path": 10.265941798686981,
+          "jointChanged": true,
+          "maxRadius": 1.531263828277588,
+          "frames": 1441,
+          "maxY": 3.5345165729522705,
+          "name": "Panther",
+          "homeY": 3.442396879196167,
+          "minY": 3.442396879196167,
+          "maxStep": 0.09932827204465866,
+          "stationaryHeartbeatSampleSeconds": 22.04409943893552
+        },
+        {
+          "path": 10.383491400396451,
+          "jointChanged": true,
+          "maxRadius": 1.3690698146820068,
+          "frames": 1441,
+          "maxY": 3.415457010269165,
+          "name": "Otter",
+          "homeY": 3.3290066719055176,
+          "minY": 3.3290066719055176,
+          "maxStep": 0.08850537240505219,
+          "stationaryHeartbeatSampleSeconds": 22.01021681819111
+        },
+        {
+          "path": 9.440081836713944,
+          "jointChanged": true,
+          "maxRadius": 1.3964327573776245,
+          "frames": 1441,
+          "maxY": 7.286177635192871,
+          "name": "BabyDragon",
+          "homeY": 5.244999885559082,
+          "minY": 5.244999885559082,
+          "maxStep": 0.08840862661600113,
+          "stationaryHeartbeatSampleSeconds": 22.16097118705511
+        },
+        {
+          "path": 9.184833869105205,
+          "jointChanged": true,
+          "maxRadius": 1.4981375932693481,
+          "frames": 1441,
+          "maxY": 3.4899978637695312,
+          "name": "Duckling",
+          "homeY": 3.4000000953674316,
+          "minY": 3.4000000953674316,
+          "maxStep": 0.08841115236282349,
+          "stationaryHeartbeatSampleSeconds": 22.22731254156679
+        },
+        {
+          "path": 8.09046022221446,
+          "jointChanged": true,
+          "maxRadius": 1.5993355512619019,
+          "frames": 1441,
+          "maxY": 3.450538158416748,
+          "name": "Mammoth",
+          "homeY": 3.3657898902893066,
+          "minY": 3.3657898902893066,
+          "maxStep": 0.08841144293546677,
+          "stationaryHeartbeatSampleSeconds": 22.461651786230505
+        }
+      ],
+      "inventory": {
+        "penSlots": 20,
+        "index": [
+          "Panther_Common",
+          "Scarab_Common",
+          "Monkey_Common",
+          "CometFox_Common",
+          "SnowOwl_Common",
+          "Chick_Common",
+          "EmberBat_Common",
+          "Hellpup_Common",
+          "Duckling_Common",
+          "BabyDragon_Epic",
+          "Mammoth_Common",
+          "StarJelly_Common",
+          "Lizard_Common",
+          "Penguin_Common",
+          "Bunny_Common",
+          "Salamander_Common",
+          "Otter_Common",
+          "Parrot_Common",
+          "Frog_Common",
+          "Fox_Common"
+        ],
+        "stableSize": 50,
+        "creatures": [
+          {
+            "rarity": "Common",
+            "ability": "Glide",
+            "biome": "Volcano",
+            "uid": "7cf291d5-f2c6-489e-8343-633544c9d881",
+            "income": 20000,
+            "display": "Ember Bat",
+            "species": "EmberBat",
+            "speed": 79.6875,
+            "location": "Pen"
+          },
+          {
+            "rarity": "Common",
+            "ability": "Glide",
+            "biome": "Jungle",
+            "uid": "1831e113-7dc5-4de2-9d16-3962d58da556",
+            "income": 800,
+            "display": "Parrot",
+            "species": "Parrot",
+            "speed": 54.6875,
+            "location": "Pen"
+          },
+          {
+            "rarity": "Common",
+            "ability": "Dash",
+            "biome": "Forest",
+            "uid": "de4c0d03-959b-414e-82d5-5c6bdbbf8ed0",
+            "income": 5,
+            "display": "Fox",
+            "species": "Fox",
+            "speed": 28.125,
+            "location": "Pen"
+          },
+          {
+            "rarity": "Common",
+            "ability": "Glide",
+            "biome": "Tundra",
+            "uid": "3c6060a5-58af-42c4-84c0-d0a27204dae5",
+            "income": 4000,
+            "display": "Snow Owl",
+            "species": "SnowOwl",
+            "speed": 65.625,
+            "location": "Pen"
+          },
+          {
+            "speed": 67.625,
+            "uid": "b7bc2a67-88cc-4dbf-a63b-271e5a205104",
+            "rarity": "Common",
+            "location": "Pen",
+            "display": "Mammoth",
+            "species": "Mammoth",
+            "income": 4000,
+            "biome": "Tundra"
+          },
+          {
+            "rarity": "Common",
+            "ability": "Swim",
+            "biome": "Tundra",
+            "uid": "958fb11b-1c63-49a6-8960-b75ffe60925b",
+            "income": 4000,
+            "display": "Penguin",
+            "species": "Penguin",
+            "speed": 65.625,
+            "location": "Pen"
+          },
+          {
+            "rarity": "Common",
+            "ability": "Dash",
+            "biome": "Cosmic",
+            "uid": "718b682f-2190-46bd-b585-0c574fa298bf",
+            "income": 100000,
+            "display": "Comet Fox",
+            "species": "CometFox",
+            "speed": 93.75,
+            "location": "Pen"
+          },
+          {
+            "rarity": "Common",
+            "ability": "Fireproof",
+            "biome": "Volcano",
+            "uid": "37fc269f-dab5-4680-930d-c1d84fdf7bc4",
+            "income": 20000,
+            "display": "Salamander",
+            "species": "Salamander",
+            "speed": 79.6875,
+            "location": "Pen"
+          },
+          {
+            "rarity": "Common",
+            "ability": "Swim",
+            "biome": "Lake",
+            "uid": "4a9e18ae-ca4e-4dfe-b0ed-680c642602a6",
+            "income": 30,
+            "display": "Otter",
+            "species": "Otter",
+            "speed": 35.9375,
+            "location": "Pen"
+          },
+          {
+            "rarity": "Common",
+            "ability": "Phase",
+            "biome": "Cosmic",
+            "uid": "315846c1-9524-4ef0-802c-f25967906531",
+            "income": 100000,
+            "display": "Star Jelly",
+            "species": "StarJelly",
+            "speed": 93.75,
+            "location": "Pen"
+          },
+          {
+            "rarity": "Common",
+            "ability": "Jump",
+            "biome": "Forest",
+            "uid": "b4c7e704-2d6e-4040-8fc0-161861f3be32",
+            "income": 5,
+            "display": "Bunny",
+            "species": "Bunny",
+            "speed": 28.125,
+            "location": "Pen"
+          },
+          {
+            "rarity": "Common",
+            "ability": "Dash",
+            "biome": "Volcano",
+            "uid": "63d72a23-0855-4741-be32-f5423092fdda",
+            "income": 20000,
+            "display": "Hellpup",
+            "species": "Hellpup",
+            "speed": 79.6875,
+            "location": "Pen"
+          },
+          {
+            "rarity": "Epic",
+            "ability": "Phase",
+            "biome": "Cosmic",
+            "uid": "491c9b37-b402-4ddf-86b7-af71fa064d83",
+            "income": 1000000,
+            "display": "Baby Dragon",
+            "species": "BabyDragon",
+            "speed": 100.75,
+            "location": "Pen"
+          },
+          {
+            "rarity": "Common",
+            "ability": "Dash",
+            "biome": "Jungle",
+            "uid": "ec2f9925-c33c-45fc-a260-4f8f6cba7794",
+            "income": 800,
+            "display": "Panther",
+            "species": "Panther",
+            "speed": 54.6875,
+            "location": "Pen"
+          },
+          {
+            "rarity": "Common",
+            "ability": "Swim",
+            "biome": "Lake",
+            "uid": "cb26472b-b217-4e41-8ab7-fbf29c1e3c4f",
+            "income": 30,
+            "display": "Duckling",
+            "species": "Duckling",
+            "speed": 35.9375,
+            "location": "Pen"
+          },
+          {
+            "speed": 30.125,
+            "uid": "80eeec96-262e-4578-900d-9c01ffdc7f72",
+            "rarity": "Common",
+            "location": "Pen",
+            "display": "Chick",
+            "species": "Chick",
+            "income": 5,
+            "biome": "Forest"
+          },
+          {
+            "rarity": "Common",
+            "ability": "Jump",
+            "biome": "Lake",
+            "uid": "9e85e268-90e9-4585-aff0-be0b3ca900e5",
+            "income": 30,
+            "display": "Frog",
+            "species": "Frog",
+            "speed": 35.9375,
+            "location": "Pen"
+          },
+          {
+            "rarity": "Common",
+            "ability": "Dash",
+            "biome": "Desert",
+            "uid": "2318c180-f4ea-4c3b-bf6f-0cbba1abc766",
+            "income": 150,
+            "display": "Lizard",
+            "species": "Lizard",
+            "speed": 45.3125,
+            "location": "Pen"
+          },
+          {
+            "rarity": "Common",
+            "ability": "Jump",
+            "biome": "Jungle",
+            "uid": "e2a93504-b3e4-4511-91e6-f263174e7b24",
+            "income": 800,
+            "display": "Monkey",
+            "species": "Monkey",
+            "speed": 54.6875,
+            "location": "Pen"
+          },
+          {
+            "speed": 47.3125,
+            "uid": "d470615b-67e6-4e64-bd9e-cdab7af66847",
+            "rarity": "Common",
+            "location": "Pen",
+            "display": "Scarab",
+            "species": "Scarab",
+            "income": 150,
+            "biome": "Desert"
+          }
+        ],
+        "penCount": 20,
+        "stableCount": 0
+      },
+      "elapsed": 26.614385599968955,
+      "farStopped": true,
+      "incomeAfter": 1912207.5,
+      "incomeBefore": 1912207.5,
+      "samplingNote": "Movement/bounds/joints sampled on Heartbeat; use separate render pauseCheck for resting duration."
+    },
+    "pauseCheck": {
+      "threshold": 0.001,
+      "pausedSeconds": 8.270114783197641,
+      "elapsed": 12.05080179986544,
+      "distance": 4.026175874751061,
+      "frames": 181
+    },
+    "serverState": {
+      "maxDriftStuds": 0,
+      "penUidsUnchanged": true,
+      "incomeUnchanged": true,
+      "rootsAnchored": true,
+      "all20Noncolliding": true
+    },
+    "removeAndReadd": {
+      "beforePen": 20,
+      "afterRemovePen": 19,
+      "afterRemoveLocation": "Stable",
+      "oldModelsDestroyed": true,
+      "afterRemoveIncome": 1912200,
+      "afterReaddPen": 20,
+      "afterReaddLocation": "Pen",
+      "afterReaddIncome": 1912207.5
+    },
+    "mount": {
+      "mounts": 1,
+      "income": 1912200,
+      "penModels": 19,
+      "characterMount": true,
+      "mounted": true,
+      "pen": 19
+    },
+    "sell": {
+      "pen": 18,
+      "income": 1912192.5,
+      "chickAbsent": true,
+      "foxMounted": true,
+      "owned": 19
+    },
+    "fuse": {
+      "newBunny": {
+        "location": "Pen",
+        "uid": "746c801f-4d4b-4b36-aa9a-bf7f70c43d85",
+        "rarity": "Uncommon"
+      },
+      "foxMounted": true,
+      "income": 1912200,
+      "pen": 18,
+      "penModels": 18,
+      "originalsGone": true,
+      "owned": 19,
+      "initial3SecondSampleMoved": false,
+      "eventualMovementVerified": true,
+      "samplingNote": "The initial short sample ended during turn/rest; an eight-second render sample verified resumed roaming."
+    },
+    "fusedMovement": {
+      "path": 2.635460404184414,
+      "fusedCreatureMoves": true,
+      "primary": true,
+      "cameraDistance": 39.003719329833984,
+      "maxStep": 0.10737374424934387
+    },
+    "finalPenModels": 18,
+    "allRemainingNoncolliding": true,
+    "consoleGameErrors": 0
+  },
+  "review": "Read-only review: no actionable findings.",
+  "sourceLengths": {
+    "WalkCycle": 4892,
+    "Effects": 33077
+  },
+  "limitations": [
+    "Roaming is client cosmetic animation, so different clients can see different nearby wander paths.",
+    "Physical phone and published-session performance not tested."
+  ],
+  "cleanup": "Complete: Stop Play, exact production Config restored, test backup/probes/fixtures absent, HTTP false. No publishing performed.",
+  "completedDate": "2026-10-08",
+  "finalCheck": {
+    "testBackupAbsent": true,
+    "CreatureBuilder": 20568,
+    "UIController": 12111,
+    "WalkCycle": 4892,
+    "StableUI": 20246,
+    "Effects": 33077,
+    "Config": 29513,
+    "backupEffectsDisabled": true,
+    "ClientMain": 14436,
+    "testFixturesAbsent": true,
+    "productionRestored": true,
+    "http": false,
+    "allSevenSourcesMatchLocalInFull": true,
+    "studioMode": "Edit"
+  }
+}

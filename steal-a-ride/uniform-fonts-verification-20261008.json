@@ -1,0 +1,116 @@
+{
+  "date": "2026-10-08",
+  "task": "Uniform responsive Stable/Fuse typography",
+  "studio": "Steal a Mount",
+  "changes": [
+    "StableUI: replace per-label TextScaled with shared text roles and group fitting after layout",
+    "Rarity tabs: same 18px logical font for label/count; widths measured from complete text including selected brackets",
+    "Responsive compact/full card role sizes; Fuse roles share fitting behavior"
+  ],
+  "verification": {
+    "baseline": "Live rarity assertion failed on TextScaled; short and long tab labels had different rendered heights",
+    "offline": "Full feedback checks passed; 48 Luau sources compiled",
+    "live": [
+      {
+        "surface": "Stable All desktop",
+        "viewport": [
+          1920,
+          1022
+        ],
+        "categories": 7,
+        "cardLabels": 174,
+        "sameRoleSizes": true,
+        "boundsFit": true
+      },
+      {
+        "surface": "Stable selected Uncommon desktop",
+        "viewport": [
+          1920,
+          1022
+        ],
+        "categories": 7,
+        "cardLabels": 42,
+        "sizes": {
+          "Badge": 11,
+          "Stats": 14,
+          "Rarity": 14,
+          "Price": 11,
+          "Ability": 12,
+          "Action": 13,
+          "Name": 20
+        },
+        "boundsFit": true
+      },
+      {
+        "surface": "Stable iPhone7 landscape",
+        "viewport": [
+          665,
+          316
+        ],
+        "categories": 7,
+        "cardLabels": 42,
+        "sizes": {
+          "Badge": 10,
+          "Stats": 10,
+          "Rarity": 12,
+          "Price": 11,
+          "Ability": 8,
+          "Action": 14,
+          "Name": 16
+        },
+        "boundsFit": true
+      },
+      {
+        "surface": "Stable iPhone17Pro landscape",
+        "viewport": [
+          748,
+          323
+        ],
+        "categories": 7,
+        "cardLabels": 42,
+        "sameRoleSizes": true,
+        "boundsFit": true
+      },
+      {
+        "surface": "Stable iPhone17Pro portrait",
+        "viewport": [
+          401,
+          717
+        ],
+        "categories": 7,
+        "cardLabels": 42,
+        "sameRoleSizes": true,
+        "boundsFit": true
+      },
+      {
+        "surface": "Fuse iPhone17Pro portrait",
+        "checkedLabels": 73,
+        "sameRoleSizes": true,
+        "boundsFit": true
+      }
+    ],
+    "largeCounts": "Native TextService measurements verify selected Uncommon50 (136px), selected Legendary50 (132px), All50 (110px), all18px with horizontal padding",
+    "sourceEquality": true,
+    "originalConfigEquality": true
+  },
+  "fixtures": "GetInventory returned read-only25-creature preview in isolated SAMFonts_20261008 Play; no preview creatures written to saved inventories; stopped Play removes remote override",
+  "state": {
+    "mode": "Edit",
+    "datastore": "StealARide_v2",
+    "device": "HD1080",
+    "orientation": "LandscapeLeft",
+    "dpi": 96,
+    "scaling": "FitToWindow",
+    "temporaryConfigAbsent": true,
+    "published": false
+  },
+  "limits": [
+    "Studio emulator; physical phones not tested",
+    "Last additional high-price/selected-Legendary live pass was not executed because Studio had been stopped externally; large tab counts checked with native measurements",
+    "Concurrent HUD task appears active (test suite gained concurrent status check); preserved its sources"
+  ],
+  "backups": [
+    "steal-a-ride/before-uniform-fonts-20261008/StableUI.luau",
+    "ServerStorage.UniformFontsBackup20261008.StableUI"
+  ]
+}

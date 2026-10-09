@@ -1,0 +1,123 @@
+{
+  "date": "2026-10-08",
+  "status": "Installed, unpublished",
+  "authorization": "User agreed Blood Moon screenshot was too dark and requested ambient fill.",
+  "filesChanged": [
+    "src/StarterPlayer/StarterPlayerScripts/ClientMain.luau",
+    "tests/run_feedback_checks.py"
+  ],
+  "implementation": {
+    "baseline": "Captured initial Ambient and OutdoorAmbient; actual Studio RGB70,70,70",
+    "bloodAmbient": [
+      150,
+      130,
+      140
+    ],
+    "bloodOutdoorAmbient": [
+      160,
+      140,
+      150
+    ],
+    "clock": 21,
+    "moonSize": 16,
+    "tint": "255,120,120; brightness0.03 unchanged",
+    "transition": "Reuse existing cancellable2s Lighting tween; restore captured ambient values for all other/clear/unknown weather",
+    "initialTuning": "110,95,105 /135,115,125 was too subtle in Home; tuned after native preview"
+  },
+  "tests": {
+    "red": "before-blood-moon-visibility-20261008/red.txt: BloodMoon lifts surface visibility assertion failed against old source",
+    "green": "before-blood-moon-visibility-20261008/final-green.txt:27 groupsPASS +48 compile",
+    "coverage": "Active-weather join, lifts indoor/outdoor fill, exact restoration on Golden/Storm/clear/unknown with nonuniform independent baseline colors"
+  },
+  "studioTransitions": {
+    "clear": {
+      "ambient": {
+        "1": 0.27450981736183167,
+        "2": 0.27450981736183167,
+        "3": 0.27450981736183167
+      },
+      "outdoor": {
+        "1": 0.27450981736183167,
+        "2": 0.27450981736183167,
+        "3": 0.27450981736183167
+      }
+    },
+    "GoldenHour": {
+      "ambient": {
+        "1": 0.27450981736183167,
+        "2": 0.27450981736183167,
+        "3": 0.27450981736183167
+      },
+      "outdoor": {
+        "1": 0.27450981736183167,
+        "2": 0.27450981736183167,
+        "3": 0.27450981736183167
+      }
+    },
+    "Thunderstorm": {
+      "ambient": {
+        "1": 0.27450981736183167,
+        "2": 0.27450981736183167,
+        "3": 0.27450981736183167
+      },
+      "outdoor": {
+        "1": 0.27450981736183167,
+        "2": 0.27450981736183167,
+        "3": 0.27450981736183167
+      }
+    },
+    "baselineRestored": true,
+    "Unknown": {
+      "ambient": {
+        "1": 0.27450981736183167,
+        "2": 0.27450981736183167,
+        "3": 0.27450981736183167
+      },
+      "outdoor": {
+        "1": 0.27450981736183167,
+        "2": 0.27450981736183167,
+        "3": 0.27450981736183167
+      }
+    },
+    "BloodMoon": {
+      "ambient": {
+        "1": 0.5882353186607361,
+        "2": 0.5098039507865906,
+        "3": 0.5490196347236633
+      },
+      "outdoor": {
+        "1": 0.6274510025978088,
+        "2": 0.5490196347236633,
+        "3": 0.5882353186607361
+      }
+    },
+    "rapidCycles": 3
+  },
+  "console": "ContextActionService could not find the function passed in, doing nothing.\nContextActionService could not find the function passed in, doing nothing.\nContextActionService could not find the function passed in, doing nothing.\nContextActionService could not find the function passed in, doing nothing.\nContextActionService could not find the function passed in, doing nothing.\nAnalyticsService: LogOnboardingFunnelStepEvent event fired.",
+  "restoration": {
+    "sourceEqual": true,
+    "outdoor": "0.27450981736183167, 0.27450981736183167, 0.27450981736183167",
+    "ConfigRestored": true,
+    "temporaryBackup": false,
+    "clock": 14.5,
+    "ambient": "0.27450981736183167, 0.27450981736183167, 0.27450981736183167"
+  },
+  "preview": "Home, Forest, Tundra, Cosmic and native red moon inspected; sky remains dark.",
+  "screenshots": [
+    "C:/Users/Desktop/Documents/Roblox Games/steal-a-ride/blood-moon-visibility-20261008/home-before.png",
+    "C:/Users/Desktop/Documents/Roblox Games/steal-a-ride/blood-moon-visibility-20261008/home-after.png",
+    "C:/Users/Desktop/Documents/Roblox Games/steal-a-ride/blood-moon-visibility-20261008/forest-after.png",
+    "C:/Users/Desktop/Documents/Roblox Games/steal-a-ride/blood-moon-visibility-20261008/tundra-after.png",
+    "C:/Users/Desktop/Documents/Roblox Games/steal-a-ride/blood-moon-visibility-20261008/cosmic-after.png",
+    "C:/Users/Desktop/Documents/Roblox Games/steal-a-ride/blood-moon-visibility-20261008/red-moon.png"
+  ],
+  "backups": [
+    "before-blood-moon-visibility-20261008/ClientMain.luau",
+    "ServerStorage.BloodMoonVisibilityBackup20261008.ClientMain"
+  ],
+  "stores": [
+    "SAMBloodVisibility_1791435571",
+    "SAMBloodVisibilityFinal_1791435695"
+  ],
+  "noPublishCommitPush": true
+}

@@ -1,0 +1,173 @@
+{
+  "date": "2026-10-08",
+  "scope": "Device responsive Stable/Fuse typography; prior uniform text roles preserved",
+  "behavior": {
+    "touchScale": "clamp(shortest safe viewport side /768,0.875,0.95); desktop1",
+    "metadata": "Base sizes12 and below are not reduced by device factor; shared fitting still prevents overflow",
+    "compactAbility": "14px label height; position clears Stats and44px actions even in124px cards",
+    "layoutTiming": "Font fitting remains queued until newly rebuilt labels have measured layout"
+  },
+  "verification": {
+    "baseline": "New phone restraint assertion failed before implementation",
+    "finalNative": {
+      "phonePortrait": {
+        "categories": 7,
+        "sizes": {
+          "Badge": 11,
+          "Stats": 12,
+          "Rarity": 12,
+          "Price": 11,
+          "Ability": 12,
+          "Action": 12,
+          "Name": 18
+        },
+        "cardLabels": 174,
+        "tabSize": 16,
+        "compact": false,
+        "titleSize": 26,
+        "viewport": "401, 717"
+      },
+      "phoneLandscape": {
+        "categories": 7,
+        "sizes": {
+          "Badge": 10,
+          "Stats": 10,
+          "Rarity": 12,
+          "Price": 11,
+          "Ability": 10,
+          "Action": 12,
+          "Name": 14
+        },
+        "cardLabels": 174,
+        "tabSize": 16,
+        "compact": true,
+        "titleSize": 26,
+        "viewport": "665, 316"
+      },
+      "tablet13in": {
+        "categories": 7,
+        "sizes": {
+          "Badge": 11,
+          "Stats": 13,
+          "Rarity": 13,
+          "Price": 10,
+          "Ability": 12,
+          "Action": 13,
+          "Name": 19
+        },
+        "cardLabels": 174,
+        "tabSize": 17,
+        "compact": false,
+        "titleSize": 29,
+        "viewport": "1375, 971"
+      },
+      "desktop": {
+        "categories": 7,
+        "sizes": {
+          "Badge": 11,
+          "Stats": 14,
+          "Rarity": 14,
+          "Price": 10,
+          "Ability": 12,
+          "Action": 13,
+          "Name": 20
+        },
+        "cardLabels": 174,
+        "tabSize": 18,
+        "compact": false,
+        "titleSize": 30,
+        "viewport": "1920, 1022"
+      }
+    },
+    "otherNative": {
+      "smallTablet": {
+        "categories": 7,
+        "sizes": {
+          "Badge": 11,
+          "Stats": 13,
+          "Rarity": 13,
+          "Price": 10,
+          "Ability": 12,
+          "Action": 13,
+          "Name": 18
+        },
+        "cardLabels": 42,
+        "tabSize": 17,
+        "compact": false,
+        "titleSize": 28,
+        "viewport": "1021, 709"
+      },
+      "minimumCompactPhone": {
+        "categories": 7,
+        "sizes": {
+          "Badge": 10,
+          "Stats": 10,
+          "Rarity": 12,
+          "Price": 11,
+          "Ability": 10,
+          "Action": 12,
+          "Name": 14
+        },
+        "cardLabels": 174,
+        "tabSize": 16,
+        "compact": true,
+        "titleSize": 26,
+        "viewport": "665, 261"
+      },
+      "selectedUncommonPhone": {
+        "categories": 7,
+        "sizes": {
+          "Badge": 10,
+          "Stats": 10,
+          "Rarity": 12,
+          "Price": 11,
+          "Ability": 10,
+          "Action": 12,
+          "Name": 14
+        },
+        "cardLabels": 42,
+        "tabSize": 16,
+        "compact": true,
+        "titleSize": 26,
+        "viewport": "665, 316"
+      },
+      "fuseTablet": {
+        "viewport": "1021, 709",
+        "sizes": {
+          "Rules": 15,
+          "Action": 13,
+          "Close": 26,
+          "Recipe": 15,
+          "Name": 18,
+          "Location": 15,
+          "Empty": 17,
+          "Title": 28,
+          "Count": 15
+        },
+        "checked": 73
+      }
+    },
+    "checks": "33 groups PASS;48 Luau sources compiled",
+    "console": "Only known ContextActionService warnings during final Play verification; diagnostic desktop orientation setter failed during first cleanup attempt, then corrected using mobile device before desktop restoration",
+    "restore": {
+      "tempConfigAbsent": true,
+      "originalConfigEquality": true,
+      "resolution": "1920, 1080",
+      "orientation": "Enum.ScreenOrientation.LandscapeLeft",
+      "device": "hd_1080",
+      "scaling": "Enum.DeviceSimulatorScalingMode.FitToWindow",
+      "dpi": 96,
+      "sourceEquality": true
+    }
+  },
+  "fixtures": "read-only25-creature remote response in isolated SAMDeviceFonts_20261008; includes long mutated rarity/name, Mount/Pen/Full and$96M prices; no saved preview creatures",
+  "backups": [
+    "before-device-fonts-20261008/StableUI.luau",
+    "ServerStorage.UniformFontsBackup20261008.BeforeDeviceTypography"
+  ],
+  "state": "Studio Edit; original production Config restored exactly; HD1080/LandscapeLeft/1920x1080/DPI96/FitToWindow; no publish/commit/push",
+  "limits": [
+    "Physical phones/tablets not tested",
+    "Existing movement controls remain active per user's earlier decision"
+  ]
+}
