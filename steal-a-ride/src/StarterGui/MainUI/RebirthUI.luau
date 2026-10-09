@@ -72,6 +72,7 @@ local function titleLine(rebirths)
 end
 local armed = false
 local picking, picked, limit = false, {}, 1
+local fees = {} -- uid -> keep fee (server-computed, inventory keepFee)
 
 local function pickedList()
 	local uids = {}
@@ -84,9 +85,12 @@ local function refresh()
 	local need = Config.rebirth(n)
 	body.Visible, counter.Visible, list.Visible = not picking, picking, picking
 	if picking then
-		local count = #pickedList()
-		counter.Text = ("Pick creatures to keep: %d / %d"):format(count, limit)
-		go.BackgroundColor3 = rgb(170, 90, 240)
+		local count, fee = #pickedList(), 0
+		for uid in picked do fee += fees[uid] or 0 end
+		local afford = need ~= nil and (player:GetAttribute("Cash") or 0) >= need.cash + fee
+		counter.Text = ("Pick creatures to keep: %d / %d   ·   keep fee %s$%s</font>"):format(count, limit,
+			afford and '<font color="#7CFC9A">' or '<font color="#FF7B7B">', Format.number(fee))
+		go.BackgroundColor3 = afford and rgb(170, 90, 240) or rgb(110, 115, 140)
 		go.Text = armed and "Are you sure?" or ("Rebirth, keep %d"):format(count)
 		return
 	end
@@ -101,7 +105,7 @@ local function refresh()
 	local hasBiome = (player:GetAttribute("BestBiome") or 0) >= Config.BiomeById[need.biome].index
 	local cashOk = cash >= need.cash
 	local function mark(ok) return ok and '<font color="#7CFC9A">✓</font>' or '<font color="#FF7B7B">✗</font>' end
-	body.Text = titleLine(n - 1) .. "\n\n" .. ("<b>Rebirth %d needs:</b>\n%s $%s cash\n%s a creature from the %s (or deeper)\n\n<b>You get:</b> income x%.1f, %s, +10 s base lock\n<b>You keep:</b> %d creatures you pick\n<b>You lose:</b> cash, other creatures, eggs, saddle, gear")
+	body.Text = titleLine(n - 1) .. "\n\n" .. ("<b>Rebirth %d needs:</b>\n%s $%s cash\n%s a creature from the %s (or deeper)\n\n<b>You get:</b> income x%.1f, %s, +10 s base lock\n<b>You keep:</b> %d creatures you pick (fee: 1 h of what they'll earn)\n<b>You lose:</b> cash, other creatures, eggs, saddle, gear")
 		:format(n, mark(cashOk), Format.number(need.cash), mark(hasBiome), need.biome, 1 + Config.RebirthIncomeStep * n, rewardText(n, need.reward), Config.rebirthKeep(n))
 	local ready = cashOk and hasBiome
 	go.BackgroundColor3 = ready and rgb(170, 90, 240) or rgb(110, 115, 140)
@@ -118,12 +122,14 @@ local function showPicker()
 	end
 	limit = Config.rebirthKeep((player:GetAttribute("Rebirths") or 0) + 1)
 	table.clear(picked)
+	table.clear(fees)
 	-- ridden first, then best income
 	table.sort(inv.creatures, function(a, b)
 		if (a.location == "Mount") ~= (b.location == "Mount") then return a.location == "Mount" end
 		return a.income > b.income
 	end)
 	for i, c in inv.creatures do
+		fees[c.uid] = c.keepFee
 		if c.location == "Mount" and #pickedList() < limit then picked[c.uid] = true end
 		local rarity = Config.RarityById[c.rarity]
 		local row = styled(new("TextButton", { LayoutOrder = i, Size = UDim2.new(1, -12, 0, 44), BackgroundColor3 = rgb(52, 56, 80),

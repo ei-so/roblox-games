@@ -19,7 +19,17 @@ local lastNet = {}
 local traps = {} -- { part, owner, expires }
 
 function GearService.price(player): number
-	return math.max(G.minPrice, math.floor(G.priceSeconds * CreatureService.incomeOf(player)))
+	return math.max(G.minPrice, math.floor(G.priceSeconds * CreatureService.priceIncomeOf(player)))
+end
+
+-- this gear's buy record; a finished restock wait clears it (count back to 0)
+function GearService.buys(data, gear: string, now: number)
+	local b = data.GearBuys[gear]
+	if b and b.wait and now >= b.wait then
+		data.GearBuys[gear] = nil
+		return nil
+	end
+	return b
 end
 
 function GearService.sync(player)
@@ -29,6 +39,11 @@ function GearService.sync(player)
 		player:SetAttribute("GearTrap", data.Gear.trap)
 		player:SetAttribute("GearSoda", data.Gear.soda)
 		player:SetAttribute("GearPrice", GearService.price(player))
+		for _, gear in { "net", "trap", "soda" } do -- Shop rows: buys left, and when a sold-out gear restocks (0 = not waiting)
+			local b = GearService.buys(data, gear, os.time())
+			player:SetAttribute("GearLeft_" .. gear, G.buyLimit - (b and b.n or 0))
+			player:SetAttribute("GearRestock_" .. gear, b and b.wait or 0)
+		end
 	end
 end
 
@@ -88,8 +103,21 @@ end
 function GearService.start()
 	for _, gear in { "net", "trap", "soda" } do
 		ShopService.extraItems[gear] = function(player, data)
+			local now = os.time()
+			local b = GearService.buys(data, gear, now)
+			if b and b.wait then
+				local left = b.wait - now
+				Notify:FireClient(player, "toast", ("Sold out! Restocks in %d:%02d"):format(left // 60, left % 60))
+				return nil
+			end
 			return GearService.price(player), function()
 				data.Gear[gear] += 1
+				b = b or { n = 0 }
+				b.n += 1
+				if b.n >= G.buyLimit then
+					b.wait = now + G.restockSeconds
+				end
+				data.GearBuys[gear] = b
 				GearService.sync(player)
 			end
 		end
@@ -132,7 +160,7 @@ function GearService.start()
 			for _, player in Players:GetPlayers() do
 				if DataService.get(player) then
 					player:SetAttribute("GearPrice", GearService.price(player))
-					player:SetAttribute("Income", CreatureService.incomeOf(player)) -- Base panel prices income-scaled stick tiers
+					player:SetAttribute("Income", CreatureService.priceIncomeOf(player)) -- price income for the Base panel stick tiers and the Shop saddle
 				end
 			end
 		end

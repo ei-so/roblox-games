@@ -1,8 +1,9 @@
--- Rebirth: needs cash + a creature from a biome. Resets cash, creatures (except the ones picked to keep), pen,
+-- Rebirth: needs cash (+ a keep fee for the picked creatures) + a creature from a biome. Resets cash, creatures (except the ones picked to keep), pen,
 -- incubator contents, saddle, gear. Keeps picked creatures, rebirth rewards, bought incubators/pen slots and the Index.
 -- An incubator/pen reward that is already maxed becomes a Lucky Egg.
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Config = require(ReplicatedStorage.Shared.Config)
+local Format = require(ReplicatedStorage.Shared.Format)
 local DataService = require(script.Parent.DataService)
 local CreatureService = require(script.Parent.CreatureService)
 local HatchService = require(script.Parent.HatchService)
@@ -67,6 +68,15 @@ function RebirthService.rebirth(player, picked): boolean
 	local keep = keepSet(data, n, picked)
 	if not keep then
 		Notify:FireClient(player, "toast", ("You can keep %d creatures"):format(Config.rebirthKeep(n)))
+		return false
+	end
+	local kept = {}
+	for uid in keep do
+		table.insert(kept, data.Creatures[uid])
+	end
+	local fee = Config.rebirthKeepFee(kept, n, data.Index)
+	if data.Cash < Config.rebirth(n).cash + fee then
+		Notify:FireClient(player, "toast", ("Keeping these creatures costs $%s more"):format(Format.number(fee)))
 		return false
 	end
 	local best = player:GetAttribute("BestBiome") or 0 -- before the reset, for a Lucky Egg

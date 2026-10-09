@@ -18,6 +18,7 @@ local function defaults()
 		PendingEggs = {}, -- eggs waiting for a free incubator
 		IncubatorCount = Config.Plot.startIncubators, PenSlots = Config.Plot.startPen, SaddleLevel = 0,
 		Gear = { net = 0, trap = 0, soda = 0 },
+		GearBuys = {}, -- [gear] = { n = buys since the last restock, wait = os.time() it restocks (set at the limit) }
 		Index = {}, -- ["Fox_Rare"] = true
 		DailyStreak = 0, LastDaily = 0,
 		LuckUntil = 0, -- free luck (day-7 daily reward)

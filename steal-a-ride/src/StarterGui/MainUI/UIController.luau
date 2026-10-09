@@ -23,18 +23,60 @@ perSecLabel.Position = UDim2.fromOffset(10, 30)
 perSecLabel.Size = UDim2.new(1, -20, 0, 16)
 perSecLabel.TextScaled = false
 perSecLabel.TextSize = 18
-top.SpeedPill.Size = UDim2.fromOffset(94, 44)
+top.SpeedPill.Size = UDim2.fromOffset(112, 44)
+top.Size = UDim2.fromOffset(304, 48)
 speedLabel.TextScaled = false
 speedLabel.TextSize = 24
 local layout = top:FindFirstChildOfClass("UIListLayout")
 if layout then layout.Padding = UDim.new(0, 8) end
 
+-- Boost timer: a gold chip under the speed pill while a Speed Soda / Mama speed-up runs (server attr BoostUntil)
+local boostChip = Instance.new("TextLabel")
+boostChip.Name = "BoostTimer"
+boostChip.Position = UDim2.fromOffset(16 + 180 + 8, 8 + 48 + 6)
+boostChip.Size = UDim2.fromOffset(150, 26)
+boostChip.BackgroundColor3 = Color3.fromRGB(255, 176, 46)
+boostChip.Font = Enum.Font.FredokaOne
+boostChip.TextSize = 17
+boostChip.TextColor3 = Color3.new(1, 1, 1)
+boostChip.Visible = false
+Instance.new("UICorner", boostChip).CornerRadius = UDim.new(1, 0)
+local chipBorder = Instance.new("UIStroke")
+chipBorder.Color, chipBorder.Thickness, chipBorder.ApplyStrokeMode = Color3.new(1, 1, 1), 2, Enum.ApplyStrokeMode.Border
+chipBorder.Parent = boostChip
+local chipText = Instance.new("UIStroke")
+chipText.Color, chipText.Thickness = Color3.fromRGB(110, 60, 0), 1.5
+chipText.Parent = boostChip
+boostChip.Parent = gui
+
+local function speedText(speed: number): string -- one decimal only when it matters, to compare with guardian speeds
+	return speed % 1 == 0 and tostring(speed) or ("%.1f"):format(speed)
+end
+
+local boostTicking = false
+local function tickBoost()
+	local left = (player:GetAttribute("BoostUntil") or 0) - workspace:GetServerTimeNow()
+	boostChip.Visible = left > 0
+	if left <= 0 then
+		boostTicking = false
+		return
+	end
+	local s = math.ceil(left)
+	boostChip.Text = ("Speed Boost %d:%02d"):format(s // 60, s % 60)
+	task.delay(0.25, tickBoost)
+end
+
 local function refresh()
 	cashLabel.Text = "$" .. Format.number(player:GetAttribute("Cash") or 0)
 	perSecLabel.Text = "+$" .. Format.number(player:GetAttribute("CashPerSecond") or 0) .. "/s"
-	local speed = player:GetAttribute("CarryingEgg") and player:GetAttribute("CurrentSpeed") or player:GetAttribute("Speed")
-	speedLabel.Text = "⚡ " .. Format.number(speed or 20) -- while carrying: the weighed-down speed
+	-- always the real speed right now (mount, saddle, boosts, Dash, carrying, water), same units as guardian speeds
+	local speed = player:GetAttribute("CurrentSpeed") or player:GetAttribute("Speed") or 20
+	speedLabel.Text = "⚡ " .. speedText(speed)
 	warning.Visible = player:GetAttribute("DataLoadFailed") == true
+	if not boostTicking and (player:GetAttribute("BoostUntil") or 0) > workspace:GetServerTimeNow() then
+		boostTicking = true
+		tickBoost()
+	end
 end
 player.AttributeChanged:Connect(refresh)
 refresh()

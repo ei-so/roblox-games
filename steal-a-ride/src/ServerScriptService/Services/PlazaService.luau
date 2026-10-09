@@ -1,4 +1,4 @@
--- Plaza: Gear Shop / Index Board prompts, global leaderboards, the server showcase, the free reward chest,
+-- Plaza: Gear Shop / Upgrades / Index Board prompts, global leaderboards, the server showcase, the free reward chest,
 -- shopkeeper animations and bench seats.
 -- The structures are map parts (ServerStorage.BuildTools.BuildPlaza); this service makes them work.
 local Players = game:GetService("Players")
@@ -49,6 +49,19 @@ end
 -- Most Rebirths rows: "12 · Emerald Lord"
 function PlazaService.rebirthText(v: number): string
 	return Format.number(v) .. " · " .. Config.rebirthTitle(v)
+end
+
+-- Top Collectors: discovered species + rarity combos (keys of data.Index)
+function PlazaService.indexCount(index): number
+	local n = 0
+	for _ in index or {} do
+		n += 1
+	end
+	return n
+end
+
+function PlazaService.collectorText(v: number): string
+	return Format.number(v) .. (v == 1 and " entry" or " entries")
 end
 
 local function prompt(part, name, action, object)
@@ -227,7 +240,7 @@ end
 -- Shopkeepers idle behind their counters and wave when someone uses their stall (Roblox's default R15 animations)
 local function startKeepers(plaza)
 	local waves = {}
-	for _, shop in { plaza.GearShop, plaza.FuseMachine, plaza.IndexBoard } do
+	for _, shop in { plaza.GearShop, plaza.UpgradeShop, plaza.FuseMachine, plaza.IndexBoard } do
 		local hum = shop:FindFirstChild("Keeper") and shop.Keeper:FindFirstChildOfClass("Humanoid")
 		local animator = hum and hum:FindFirstChildOfClass("Animator")
 		if animator then
@@ -272,6 +285,7 @@ function PlazaService.start()
 	guardSeats(plaza)
 	-- the client opens the matching panel when these are triggered (like the Fuse Machine)
 	prompt(plaza.GearShop.Body, "GearShopPrompt", "Open Gear Shop", "Nets, traps, speed soda")
+	prompt(plaza.UpgradeShop.Body, "UpgradeShopPrompt", "Open Upgrades", "Saddle, incubators, pen slots")
 	prompt(plaza.IndexBoard.Body, "IndexBoardPrompt", "Open Index", "Every creature you've found")
 	local chest = plaza.RewardChest.Body
 	prompt(chest, "RewardChestPrompt", "Open Chest", "Free cash every 4 hours").Triggered:Connect(openChest)
@@ -293,6 +307,10 @@ function PlazaService.start()
 			store = DataStoreService:GetOrderedDataStore(Config.DataStoreName .. "_TopLikes"),
 			valueOf = function(_, data) return data.Likes or 0 end,
 			format = function(v) return Format.number(v) .. (v == 1 and " like" or " likes") end },
+		{ rows = buildBoard(plaza.Leaderboards.TopCollectors, "Top Collectors"), written = {}, monotonic = true, -- Index survives rebirth
+			store = DataStoreService:GetOrderedDataStore(Config.DataStoreName .. "_TopIndex"),
+			valueOf = function(_, data) return PlazaService.indexCount(data.Index) end,
+			format = PlazaService.collectorText },
 	}
 	task.spawn(function()
 		while true do

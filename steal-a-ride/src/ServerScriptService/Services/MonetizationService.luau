@@ -40,18 +40,34 @@ end
 function MonetizationService.onPlayerReady(player)
 	-- Paid luck (Lucky pass, Luck Potion, Server Luck) is a paid random item: off where the player's policy restricts it.
 	-- Fails closed: if the policy can't be read, paid luck stays off.
-	local ok, policy = pcall(PolicyService.GetPolicyInfoForPlayerAsync, PolicyService, player)
-	player:SetAttribute("PaidLuckBlocked", not ok or policy.ArePaidRandomItemsRestricted == true)
+	-- The policy and pass lookups are web calls: run them all at once (join waits for the slowest, not the sum),
+	-- then apply owned passes one by one.
+	local pending, owned = 1, {}
+	task.spawn(function()
+		local ok, policy = pcall(PolicyService.GetPolicyInfoForPlayerAsync, PolicyService, player)
+		player:SetAttribute("PaidLuckBlocked", not ok or policy.ArePaidRandomItemsRestricted == true)
+		pending -= 1
+	end)
+	for key, pass in M.passes do
+		if pass.id ~= 0 then
+			pending += 1
+			task.spawn(function()
+				local ok, owns = pcall(MarketplaceService.UserOwnsGamePassAsync, MarketplaceService, player.UserId, pass.id)
+				owned[key] = ok and owns
+				pending -= 1
+			end)
+		end
+	end
 	local data = DataService.get(player)
 	if data then
 		player:SetAttribute("PaidLuckUntil", data.PaidLuckUntil)
 	end
-	for key, pass in M.passes do
-		if pass.id ~= 0 then
-			local ok, owns = pcall(MarketplaceService.UserOwnsGamePassAsync, MarketplaceService, player.UserId, pass.id)
-			if ok and owns then
-				applyPass(player, key)
-			end
+	while pending > 0 do
+		task.wait()
+	end
+	for key in M.passes do
+		if owned[key] then
+			applyPass(player, key)
 		end
 	end
 end

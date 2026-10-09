@@ -47,6 +47,25 @@ function CreatureService.incomeOf(player): number
 	return total * (player:GetAttribute("VIPPass") and 1.5 or 1) * (1 + 0.1 * math.clamp(player:GetAttribute("FriendCount") or 0, 0, 3))
 end
 
+-- Income of the best pen the player could fill (top PenSlots creatures in pen, Stable or riding).
+-- Shop prices use this so moving creatures out of the pen can't make gear/saddle/sticks cheaper.
+function CreatureService.priceIncomeOf(player): number
+	local data = DataService.get(player)
+	if not data then
+		return 0
+	end
+	local incomes = {}
+	for _, c in data.Creatures do
+		table.insert(incomes, Config.income(c, data.Rebirths, data.Index))
+	end
+	table.sort(incomes, function(a, b) return a > b end)
+	local total = 0
+	for i = 1, math.min(data.PenSlots, #incomes) do
+		total += incomes[i]
+	end
+	return total * (player:GetAttribute("VIPPass") and 1.5 or 1) * (1 + 0.1 * math.clamp(player:GetAttribute("FriendCount") or 0, 0, 3))
+end
+
 local function renderPen(player)
 	local plot = PlotService.get(player)
 	local data = DataService.get(player)
@@ -167,6 +186,7 @@ function CreatureService.inventory(player)
 			uid = uid, species = c.species, display = spec.display, rarity = c.rarity, mutation = c.mutation,
 			biome = spec.biome, ability = spec.ability, income = Config.income(c, data.Rebirths, data.Index),
 			speed = Config.mountSpeed(c), location = locationOf(data, uid),
+			keepFee = Config.rebirthKeepFee({ c }, data.Rebirths + 1, data.Index), -- Rebirth picker
 		})
 	end
 	local index = {}

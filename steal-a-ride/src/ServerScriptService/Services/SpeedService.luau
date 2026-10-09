@@ -47,7 +47,15 @@ end
 function SpeedService.refresh(player)
 	player:SetAttribute("Speed", SpeedService.base(player))
 	local current = SpeedService.current(player)
-	player:SetAttribute("CurrentSpeed", math.floor(current * 10 + 0.5) / 10) -- what the HUD shows while carrying
+	player:SetAttribute("CurrentSpeed", math.floor(current * 10 + 0.5) / 10) -- what the HUD speed pill shows
+	-- HUD boost timer: server time the last active speed-up (Soda, Mama reward) ends, 0 when none
+	local now, left = os.clock(), 0
+	for _, m in multipliers[player] or {} do
+		if m[1] > 1 and m[2] > now then
+			left = math.max(left, m[2] - now)
+		end
+	end
+	player:SetAttribute("BoostUntil", left > 0 and workspace:GetServerTimeNow() + left or 0)
 	local humanoid = player.Character and player.Character:FindFirstChildOfClass("Humanoid")
 	if humanoid then
 		humanoid.WalkSpeed = current

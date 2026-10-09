@@ -334,6 +334,7 @@ end
 
 Config.Gear = {
 	priceSeconds = 300, minPrice = 500, -- five minutes of income
+	buyLimit = 5, restockSeconds = 600, -- per gear type: the 5th buy starts a 10-minute wait, then the count resets
 	net = { range = 40, slow = 0.5, duration = 3, cooldown = 20 },
 	trap = { slow = 0.7, duration = 2, maxPlaced = 2, lifetime = 60 },
 	soda = { boost = 0.10, duration = 20 },
@@ -353,7 +354,7 @@ end
 -- Plaza: free chest (every chestCooldown s, pays chestSeconds of income, at least chestMin), global boards, server showcase
 Config.Plaza = { chestCooldown = 4 * 3600, chestSeconds = 600, chestMin = 1000, boardRefresh = 120, showcaseRefresh = 10 }
 -- Top Players board (Plaza centre): this server's best 3, refreshed every `refresh` s; a failed avatar load retries after `retry` s
-Config.TopPlayers = { refresh = 3, retry = 30, waiting = "Waiting for a challenger" }
+Config.TopPlayers = { refresh = 3, globalRefresh = 120, retry = 30, waiting = "Waiting for a challenger" }
 
 -- Three distinct goals from each pool. Income targets are fixed when assigned; cash rewards scale at claim.
 Config.Quests = {
@@ -446,6 +447,16 @@ Config.MountSlotRebirth = 6 -- the free 2nd mount slot
 -- creatures kept through rebirth n: 1, +1 every 4 rebirths (ridden ones are pre-picked)
 function Config.rebirthKeep(n: number): number
 	return 1 + n // 4
+end
+-- keep fee: rebirth n also costs this many seconds of what the kept creatures earn after it,
+-- so keeping Mythics/Legendaries can't make the next rebirth take minutes
+Config.RebirthKeepFeeSeconds = 3600
+function Config.rebirthKeepFee(kept, n: number, index): number
+	local total = 0
+	for _, c in kept do
+		total += Config.income(c, n, index)
+	end
+	return math.floor(total * Config.RebirthKeepFeeSeconds)
 end
 -- permanent rebirth luck: this share of normal hatches roll one rarity higher (added to the Lucky pass chance)
 Config.RebirthLuck = { { at = 20, chance = 0.10 }, { at = 10, chance = 0.05 } }
@@ -572,9 +583,17 @@ Config.WhatsNew = {
 		version = 5,
 		title = "Top players",
 		lines = {
-			"A new <b>Top Players</b> board in the Plaza shows this server's best three, in their own outfits",
+			"A new <b>Top Players</b> board in the Plaza shows the best three in the <b>whole game</b>, in their own outfits: top income, then rebirths, then Index",
 			"New players are now <b>Squires</b> until their first title at 2 rebirths",
 			"The Plaza leaderboards have a fresh wooden look",
+			"Rebirthing now has a <b>keep fee</b>: about 1 hour of what the creatures you keep will earn",
+			"Shop prices no longer drop when you move creatures out of your pen",
+			"The Plaza got a festive makeover, and the shop stalls moved to the sides",
+			"Gear sells out after <b>5 buys</b> of each kind and restocks 10 minutes later",
+			"The speed meter now always shows your <b>real speed</b>, so you can check it against a guardian's",
+			"A timer shows how long your <b>Speed Boost</b> lasts",
+			"New <b>Top Collectors</b> board in the Plaza: the most Index entries in the whole game",
+			"Upgrades moved to their own stall: <b>Sam the Saddler</b> sells Saddles, incubators and pen slots next to Gus's Gear Shop",
 		},
 	},
 }
@@ -831,7 +850,7 @@ Config.Tips = {
 	{ key = "basics", title = "How to play", body = "Steal an egg from a biome nest and run it home before the guardian catches you. Eggs incubate at home; when one says Ready, tap it to hatch. Creatures in your pen earn cash every second, and the one you ride sets your speed." },
 	{ key = "controls", title = "Controls", body = "PC: F gets off all mounts, Q uses Dash, R takes off or lands a flying mount (Space up, Ctrl down). Phone/tablet: use the Get off, Fly and Dash buttons. Flyers: Vulture, Parrot, Snow Owl, Ember Bat and Baby Dragon. Carrying an egg forces a landing; deliver or drop it to fly again." },
 	{ key = "creatures", title = "Stable, Pen and riding", body = "New creatures go to your Stable (holds 50), which earns nothing. Open the Stable and press Pen to put one to work, or Ride to mount it. Sell gives 60 seconds of its income. Mounted creatures don't earn." },
-	{ key = "upgrades", title = "Saddle and upgrades", body = "At the Gear Shop, each Saddle level adds +1 speed to whatever you ride (up to 20). Buy more incubators to hatch more eggs at once, and more pen slots to earn from more creatures." },
+	{ key = "upgrades", title = "Saddle and upgrades", body = "At Sam's Upgrades stall in the Plaza, each Saddle level adds +1 speed to whatever you ride (up to 20). Buy more incubators to hatch more eggs at once, and more pen slots to earn from more creatures." },
 	{ key = "nests", title = "Nests and guardians", body = "Every nest refills with new eggs every 5 minutes (the timer is top right). Deeper biomes give better creatures but heavier eggs: you carry slower and sharp turns slow you more. Leave a guardian's biome with its egg and it follows you all the way home, enraged and never far behind: outrun it, Dash when it closes in, or catch your breath on an escape patch." },
 	{ key = "patches", when = "first visit to the Lake or deeper", title = "Escape patches", body = "From the Lake onward, each biome has patches the guardian can't reach you on, if you ride the right ability (Swim, Jump, Glide, Fireproof, Phase). Don't stay on one for more than 4 seconds or you sink and get stuck for 2." },
 	{ key = "gear", title = "Gear", body = "Buy gear at the Gear Shop in the Plaza. Net Gun slows a player, Slip Trap slows whoever steps on it (guardians too), Speed Soda makes you faster for 20 seconds." },
@@ -842,7 +861,7 @@ Config.Tips = {
 	{ key = "secret", when = "the first Secret Egg", title = "Secret Egg", body = "Every 7 minutes, a glowing egg appears from the Desert onward. It hatches Epic or better; deeper biomes give better Legendary and Mythic chances. Secret Eggs cut ordinary egg carry speed by another 20%, and carrying any egg grounds flyers. Every guardian in its biome hunts whoever takes it." },
 	{ key = "fuse", title = "Fuse and Index", body = "At the Fuse Machine in the Plaza, fuse 3 of the same creature and rarity into 1 of the next rarity (not Legendary or Mythic). Each new Index entry pays cash; collect every rarity of a species to Master it for 1.25x income forever." },
 	{ key = "rewards", title = "Free rewards", body = "Do Quests (daily and weekly) and claim your Daily streak (day 7 is a Luck Potion). Open the free Plaza chest every 4 hours. While you're offline, your pen earns at half rate for up to 8 hours." },
-	{ key = "rebirth", when = "you can afford a rebirth", title = "Rebirth", body = "Rebirth needs cash and a creature from a deeper biome (shown in the Rebirth menu). It resets your cash, eggs, creatures, Saddle and gear for a permanent income boost and a reward. You keep bought incubators and pen slots, your Index, and the creatures you pick (1, +1 every 4 rebirths). Every 2 rebirths earns a Lord title; rebirths 10 and 20 add permanent hatch luck." },
+	{ key = "rebirth", when = "you can afford a rebirth", title = "Rebirth", body = "Rebirth needs cash and a creature from a deeper biome (shown in the Rebirth menu). It resets your cash, eggs, creatures, Saddle and gear for a permanent income boost and a reward. You keep bought incubators and pen slots, your Index, and the creatures you pick (1, +1 every 4 rebirths) for a keep fee of about 1 hour of their income. Every 2 rebirths earns a Lord title; rebirths 10 and 20 add permanent hatch luck." },
 }
 -- guided-step keys the client may also mark done
 Config.TutorialSteps = { "rode", "saddle", "lock", "gear", "done" }

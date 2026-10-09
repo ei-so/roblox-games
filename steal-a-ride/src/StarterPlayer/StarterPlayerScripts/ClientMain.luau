@@ -330,13 +330,18 @@ workspace:GetAttributeChangedSignal("Weather"):Connect(syncWeather)
 syncWeather()
 
 -- Plaza machines open their panels; UIController closes the previous tab.
-local PLAZA_PANELS = { FuseMachinePrompt = "FusePanel", GearShopPrompt = "ShopPanel", IndexBoardPrompt = "IndexPanel" }
+local PLAZA_PANELS = { FuseMachinePrompt = "FusePanel", GearShopPrompt = "ShopPanel", UpgradeShopPrompt = "ShopPanel",
+	IndexBoardPrompt = "IndexPanel" }
+local SHOP_MODES = { GearShopPrompt = "gear", UpgradeShopPrompt = "upgrades" } -- the Shop panel shows one stall's items
 game:GetService("ProximityPromptService").PromptTriggered:Connect(function(prompt)
 	local panelName = PLAZA_PANELS[prompt.Name]
 	if panelName then
 		local main = player.PlayerGui:FindFirstChild("MainUI")
 		local panel = main and main:FindFirstChild(panelName)
 		if panel then
+			if SHOP_MODES[prompt.Name] then
+				panel:SetAttribute("Mode", SHOP_MODES[prompt.Name])
+			end
 			panel:SetAttribute("OpenRequest", os.clock())
 		end
 	end
@@ -463,7 +468,7 @@ local function tutorialStep()
 			if (player:GetAttribute("Cash") or 0) < price then
 				return nil, ("Your pen is earning! Save $%.0f for your first Saddle upgrade."):format(price)
 			end
-			return workspace.Plaza.GearShop:GetPivot().Position, "Visit the Gear Shop in the Plaza for your first Saddle upgrade!"
+			return workspace.Plaza.UpgradeShop:GetPivot().Position, "Visit Sam's Upgrades stall in the Plaza for your first Saddle!"
 		end
 		mark("saddle")
 	end

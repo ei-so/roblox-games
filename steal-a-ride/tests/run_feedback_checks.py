@@ -278,9 +278,11 @@ def movement_harness():
 local Color3={fromRGB=function(r,g,b) return {R=r/255,G=g/255,B=b/255} end}
 local Enum=setmetatable({},{__index=function() return setmetatable({},{__index=function(_,k) return k end}) end})
 local task={delay=function() end}
+local workspace={GetServerTimeNow=function() return 1000 end}
 local data={SaddleLevel=2}
 local DataService={get=function() return data end}
-local player={Parent=true,SetAttribute=function() end,Character={FindFirstChildOfClass=function() return {} end}}
+local speedAttrs={}
+local player={Parent=true,SetAttribute=function(_,k,v) speedAttrs[k]=v end,Character={FindFirstChildOfClass=function() return {} end}}
 """
     checks=r"""
 assert(Config.WalkSpeed==25,"walking starts at 25")
@@ -311,6 +313,11 @@ SpeedService.mountSpeedOf=function() return riding end
 assert(SpeedService.base(player)==riding+2,"saddle still adds to mount speed")
 SpeedService.multiply(player,"soda",1.25,20)
 assert(SpeedService.current(player)==(riding+2)*1.25,"soda multiplier survives")
+assert(math.abs(speedAttrs.BoostUntil-1020)<0.1,"HUD boost timer ends when the soda does (server time)")
+assert(math.abs(speedAttrs.CurrentSpeed-math.floor((riding+2)*1.25*10+.5)/10)<1e-9,"speed pill gets the boosted speed")
+SpeedService.multiply(player,"net",0.5,3)
+assert(math.abs(speedAttrs.BoostUntil-1020)<0.1,"a slow-down is not a boost and doesn't move the timer")
+assert(Config.Gear.buyLimit==5 and Config.Gear.restockSeconds==600,"gear: 5 buys per type, then a 10-minute restock")
 assert(SpeedService.allowed(player)>=SpeedService.current(player),"carrier allowance covers legitimate boosted speed")
 SpeedService.setInWater(player,true)
 assert(SpeedService.current(player)<(riding+2)*1.25,"water penalty survives")
@@ -430,18 +437,18 @@ local flags={}
 local done=function(k) return flags[k] end
 local mark=function(k) flags[k]=true end
 local myPlot=function() return nil end
-local workspace={Plaza={GearShop={GetPivot=function() return {Position="GearStall"} end}}}
+local workspace={Plaza={GearShop={GetPivot=function() return {Position="GearStall"} end},UpgradeShop={GetPivot=function() return {Position="UpgradeStall"} end}}}
 local nestPosition=function(id) return id end
 local Config={Costs={saddle=function() return 180 end},Plot={joinLock=30}}
 local finishedAt
 """
     checks=r"""
 local goal,msg=tutorialStep()
-assert(msg and not msg:find("Shop"),"a player with no pen income should get an earning goal before shopping")
+assert(msg and not msg:find("Upgrades"),"a player with no pen income should get an earning goal before shopping")
 attrs.CashPerSecond=5; goal,msg=tutorialStep()
 assert(msg and not msg:find("buy"),"a player below the upgrade price should not be told to buy it")
 attrs.Cash=200; goal,msg=tutorialStep()
-assert(msg and msg:find("Shop"),"an affordable upgrade points to the existing Shop")
+assert(msg and msg:find("Upgrades") and goal=="UpgradeStall","an affordable Saddle points to Sam's Upgrades stall")
 flags.done=true; goal,msg=tutorialStep()
 assert(goal==nil and msg==nil,"completed tutorials stay completed")
 print("PASS: earning-first tutorial, upgrade affordability, preserved saved completion")
@@ -823,7 +830,7 @@ def gear_harness():
 local Color3={fromRGB=function(r,g,b) return {R=r/255,G=g/255,B=b/255} end}
 local Enum=setmetatable({},{__index=function() return setmetatable({},{__index=function(_,k) return k end}) end})
 local income=0
-local CreatureService={incomeOf=function() return income end}
+local CreatureService={priceIncomeOf=function() return income end} -- prices use the best-pen income
 local DataService,SpeedService,ShopService,GuardianService={}, {}, {extraItems={}}, {}
 local game={GetService=function() return {Remotes={Notify={}}} end}
 """
@@ -833,6 +840,12 @@ income=1; assert(GearService.price({})==500,"low income still pays the floor")
 income=10; assert(GearService.price({})==3000,"price is five minutes of income")
 income=8000.5; assert(GearService.price({})==2400150,"high income: floor(income * 300)")
 print("PASS: cash gear costs five minutes of income with a $500 floor")
+local data={GearBuys={net={n=5,wait=100},soda={n=3}}}
+assert(GearService.buys(data,"net",99).n==5,"sold out until the restock time")
+assert(GearService.buys(data,"soda",99).n==3,"under the limit: no wait")
+assert(GearService.buys(data,"net",100)==nil and data.GearBuys.net==nil,"restock clears the count")
+assert(GearService.buys(data,"trap",0)==nil,"never bought: no record")
+print("PASS: gear restock wait ends on time and resets the buy count")
 """
     return pre+"local Config="+cfg+"\nlocal GearService="+gear+checks
 
@@ -944,7 +957,9 @@ assert(PlazaService.chestReward(0)==1000 and PlazaService.chestReward(1)==1000,"
 assert(PlazaService.chestReward(100)==60000,"chest pays 10 minutes of income")
 assert(Config.Plaza.chestCooldown==4*3600,"chest every 4 hours")
 assert(PlazaService.rebirthText(12)=="12 · Emerald Lord" and PlazaService.rebirthText(1)=="1 · Squire","Most Rebirths rows: count and title")
-print("PASS: Plaza showcase picks rarest per owner then fills; chest pays 10 min of income (min $1000) every 4 h; rebirth rows with titles")
+assert(PlazaService.indexCount({Fox_Rare=true,Fox_Epic=true,Chick_Common=true})==3 and PlazaService.indexCount(nil)==0,"Top Collectors counts Index entries")
+assert(PlazaService.collectorText(1)=="1 entry" and PlazaService.collectorText(26)=="26 entries","Top Collectors rows")
+print("PASS: Plaza showcase picks rarest per owner then fills; chest pays 10 min of income (min $1000) every 4 h; rebirth rows with titles; Top Collectors")
 """
     return pre+"local Config="+cfg+"\nlocal PlazaService="+mod+checks
 
@@ -955,6 +970,7 @@ def top_players_harness():
     mod=module("ServerScriptService/Services/TopPlayersService.luau",{
         'local Players = game:GetService("Players")':'local Players = {}',
         'local PhysicsService = game:GetService("PhysicsService")':'local PhysicsService = {}',
+        'local DataStoreService = game:GetService("DataStoreService")':'local DataStoreService = {}',
         'local ReplicatedStorage = game:GetService("ReplicatedStorage")':'local ReplicatedStorage = {}',
         'local Config = require(ReplicatedStorage.Shared.Config)':'',
         'local Format = require(ReplicatedStorage.Shared.Format)':'',
@@ -967,13 +983,15 @@ local Enum=setmetatable({},{__index=function() return setmetatable({},{__index=f
     checks=r"""
 local T=TopPlayersService
 local function e(key,r,i,inc,o) return {key=key,rebirths=r,index=i,income=inc,order=o} end
-local top=T.rank({e("a",2,10,5,1),e("b",5,1,1,2),e("c",2,30,1,3),e("d",0,99,999,4)})
-assert(#top==3 and top[1].key=="b" and top[2].key=="c" and top[3].key=="a","rebirths first, then index; only 3 shown")
-top=T.rank({e("a",1,5,10,1),e("b",1,5,20,2)})
-assert(#top==2 and top[1].key=="b" and top[2].key=="a","same rebirths and index: higher income first; 2 players fill 2 cards")
+local top=T.rank({e("a",9,99,5,1),e("b",0,1,50,2),e("c",1,1,20,3),e("d",0,0,1,4)})
+assert(#top==3 and top[1].key=="b" and top[2].key=="c" and top[3].key=="a","income first; only 3 shown")
+top=T.rank({e("a",1,9,10,1),e("b",2,1,10,2)})
+assert(#top==2 and top[1].key=="b" and top[2].key=="a","same income: more rebirths first; 2 players fill 2 cards")
+top=T.rank({e("a",1,5,10,1),e("b",1,6,10,2)})
+assert(top[1].key=="b","same income and rebirths: higher index first")
 top=T.rank({e("a",1,5,10,2),e("b",1,5,10,1)})
-assert(top[1].key=="b","full tie: whoever joined first")
-assert(#T.rank({})==0,"empty server: nobody on the board")
+assert(top[1].key=="b","full tie: lower order first")
+assert(#T.rank({})==0,"nobody: empty board")
 local input={e("a",1,1,1,1),e("b",2,1,1,2)}
 T.rank(input)
 assert(input[1].key=="a","rank never reorders the caller's list")
@@ -981,8 +999,9 @@ assert(T.indexCount({Fox_Rare=true,Fox_Epic=true,Chick_Common=true})==3 and T.in
 local t=T.cardText({name="KuroZen",rebirths=20,index=318,income=126400000})
 assert(t.name=="KuroZen" and t.title=="Divine Overlord" and t.index=="Index 318" and t.income=="$126.40M/s","card rows: name, title, index, income")
 assert(T.cardText({name="New",rebirths=1,index=0,income=0}).title=="Squire","0-1 rebirths: Squire")
+assert(T.cardText({name="Old",rebirths=14,index=0,noIndex=true,income=5}).index=="","offline player with no saved info: index row left blank")
 assert(Config.TopPlayers.refresh==3 and Config.TopPlayers.retry==30 and Config.TopPlayers.waiting=="Waiting for a challenger","board settings")
-print("PASS: Top Players rank (rebirths > index > income > join order, top 3), index count, card text")
+print("PASS: Top Players rank (income > rebirths > index > order, top 3), index count, card text")
 """
     return pre+"local Config="+cfg+"\nlocal Format="+fmt+"\nlocal TopPlayersService="+mod+checks
 
@@ -1210,11 +1229,13 @@ def rebirth_harness():
     mod=module("ServerScriptService/Services/RebirthService.luau",{
         'local ReplicatedStorage = game:GetService("ReplicatedStorage")':'',
         'local Config = require(ReplicatedStorage.Shared.Config)':'',
+        'local Format = require(ReplicatedStorage.Shared.Format)':'',
         'local DataService = require(script.Parent.DataService)':'',
         'local CreatureService = require(script.Parent.CreatureService)':'',
         'local HatchService = require(script.Parent.HatchService)':'',
         'local MountService = require(script.Parent.MountService)':'',
         'local ShopService = require(script.Parent.ShopService)':''})
+    fmt=module("ReplicatedStorage/Shared/Format.luau",{})
     pre=r"""
 local Color3={fromRGB=function(r,g,b) return {R=r/255,G=g/255,B=b/255} end}
 local Enum=setmetatable({},{__index=function() return setmetatable({},{__index=function(_,k) return k end}) end})
@@ -1309,9 +1330,20 @@ assert(not Config.mastered(index,sp) and Config.income(c,0,index)==Config.income
 index[sp.."_Mythic"]=true
 assert(Config.mastered(index,sp) and math.abs(Config.income(c,0,index)-Config.income(c,0)*1.25)<1e-6,"all 6: +25% income")
 assert(Config.income(c,0,nil)==Config.income(c,0,{}),"no index = no mastery")
-print("PASS: 20 rebirths, keep 1 +1 per 4, mount slot at 6, luck 10/20, Lord titles, income saddle; keep picker; capped rewards give a Lucky Egg; Species Mastery")
+-- keep fee: 1 h of what the kept creatures earn after the rebirth
+local m1={species=sp,rarity="Common"}
+assert(Config.rebirthKeepFee({},3,nil)==0,"keeping nothing: no fee")
+assert(Config.rebirthKeepFee({m1},3,nil)==math.floor(Config.income(m1,3)*3600),"fee = 3600 s of the kept creature's post-rebirth income")
+fresh(0,2,6); data.Cash=Config.rebirth(1).cash
+assert(not RebirthService.rebirth(player,{"m1"}) and data.Rebirths==0 and data.Creatures.m2,"cash for the rebirth but not the fee: refused, nothing resets")
+assert(table.concat(toasts," | "):find("Keeping these creatures costs",1,true),"the toast names the fee")
+fresh(0,2,6); data.Cash=Config.rebirth(1).cash
+assert(RebirthService.rebirth(player,{}) and data.Rebirths==1,"keeping nothing needs only the rebirth cash")
+fresh(0,2,6); data.Cash=Config.rebirth(1).cash+Config.rebirthKeepFee({data.Creatures.m1},1,nil)
+assert(RebirthService.rebirth(player,{"m1"}) and data.Creatures.m1,"rebirth cash + fee: allowed")
+print("PASS: 20 rebirths, keep 1 +1 per 4, mount slot at 6, luck 10/20, Lord titles, income saddle; keep picker + keep fee; capped rewards give a Lucky Egg; Species Mastery")
 """
-    return pre+"local Config="+cfg+"\nlocal RebirthService="+mod+checks
+    return pre+"local Config="+cfg+"\nlocal Format="+fmt+"\nlocal RebirthService="+mod+checks
 
 
 def whats_new_harness():

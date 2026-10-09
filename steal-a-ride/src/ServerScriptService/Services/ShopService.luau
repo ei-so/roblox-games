@@ -27,7 +27,7 @@ local ITEMS = {
 		if level > Config.Costs.saddleMax then
 			return nil
 		end
-		return Config.Costs.saddle(level, CreatureService.incomeOf(player)), function()
+		return Config.Costs.saddle(level, CreatureService.priceIncomeOf(player)), function()
 			data.SaddleLevel = level
 			SpeedService.refresh(player)
 		end

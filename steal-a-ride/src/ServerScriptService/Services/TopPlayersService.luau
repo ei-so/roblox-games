@@ -1,8 +1,10 @@
--- Top Players board (Plaza centre back): the 3 best players in this server by rebirths, then creature index, then
--- income. The board is map parts (ServerStorage.BuildTools.BuildTopPlayers); this service writes each card and stands
+-- Top Players board (Plaza centre back): the 3 best players in the whole game by income, then rebirths, then creature
+-- index. Candidates are the global Top Income store's top 10 (PlazaService writes it) plus everyone in this server, who
+-- use their live numbers; offline players' rebirths/index/name come from a small info store (or Roblox name + Most Rebirths, no index, until they next play). The board is map parts (ServerStorage.BuildTools.BuildTopPlayers); this service writes each card and stands
 -- the player's own avatar on their card's ledge.
 local Players = game:GetService("Players")
 local PhysicsService = game:GetService("PhysicsService")
+local DataStoreService = game:GetService("DataStoreService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Config = require(ReplicatedStorage.Shared.Config)
 local Format = require(ReplicatedStorage.Shared.Format)
@@ -15,9 +17,9 @@ local TopPlayersService = {}
 function TopPlayersService.rank(entries)
 	local list = table.clone(entries)
 	table.sort(list, function(a, b)
+		if a.income ~= b.income then return a.income > b.income end
 		if a.rebirths ~= b.rebirths then return a.rebirths > b.rebirths end
 		if a.index ~= b.index then return a.index > b.index end
-		if a.income ~= b.income then return a.income > b.income end
 		return a.order < b.order
 	end)
 	local top = {}
@@ -37,7 +39,7 @@ function TopPlayersService.indexCount(index): number
 end
 
 function TopPlayersService.cardText(e)
-	return { name = e.name, title = Config.rebirthTitle(e.rebirths), index = "Index " .. e.index,
+	return { name = e.name, title = Config.rebirthTitle(e.rebirths), index = e.noIndex and "" or "Index " .. e.index,
 		income = "$" .. Format.number(e.income) .. "/s" }
 end
 
@@ -50,6 +52,9 @@ local figures = {} -- [userId] = Model standing on a ledge
 local building, retryAt = {}, {} -- [userId] = true while CreateHumanoidModelFromUserId runs / os.clock() of the next try
 local joined, joinCount = {}, 0
 local current = {} -- [rank] = userId on the board
+local global = {} -- last read of the global top: { userId, income, rebirths, index, name }
+local written = {} -- [userId] = info string last saved to the info store
+local incomeStore, infoStore, rebirthStore -- set in start (DataStores need a running server)
 
 local function label(parent, props)
 	local t = Instance.new("TextLabel")
@@ -122,8 +127,7 @@ local function place(userId)
 	fig:PivotTo(CFrame.new(top.X, top.Y + pivotToBottom, top.Z)) -- default orientation looks -Z, at the arch
 end
 
-local function build(player)
-	local userId = player.UserId
+local function build(userId)
 	if figures[userId] or building[userId] or os.clock() < (retryAt[userId] or 0) then return end
 	building[userId] = true
 	task.spawn(function()
@@ -163,17 +167,66 @@ local function build(player)
 	end)
 end
 
+-- everyone here (live numbers) plus the global top players who aren't here; key = userId
 local function entries()
-	local list = {}
+	local list, here = {}, {}
 	for _, player in Players:GetPlayers() do
 		local data = DataService.get(player)
 		if data then
-			table.insert(list, { key = player, name = player.DisplayName, rebirths = data.Rebirths or 0,
-				index = TopPlayersService.indexCount(data.Index), income = CreatureService.incomeOf(player),
+			here[player.UserId] = true
+			table.insert(list, { key = player.UserId, name = player.DisplayName, rebirths = data.Rebirths or 0,
+				index = TopPlayersService.indexCount(data.Index), income = math.floor(CreatureService.incomeOf(player)),
 				order = joined[player] or math.huge })
 		end
 	end
+	for i, g in global do
+		if not here[g.userId] then
+			table.insert(list, { key = g.userId, name = g.name, rebirths = g.rebirths, index = g.index, noIndex = g.noIndex,
+				income = g.income, order = 1e6 + i })
+		end
+	end
 	return list
+end
+
+-- save this player's rebirths/index/name for other servers' boards (only when they changed)
+local function writeInfo(player)
+	local data = DataService.get(player)
+	if not infoStore or not data or player:GetAttribute("DataLoadFailed") then return end
+	local info = { r = data.Rebirths or 0, i = TopPlayersService.indexCount(data.Index), n = player.DisplayName }
+	local key = ("%d|%d|%s"):format(info.r, info.i, info.n)
+	if written[player.UserId] == key then return end
+	if pcall(function() infoStore:SetAsync(tostring(player.UserId), info) end) then
+		written[player.UserId] = key
+	end
+end
+
+-- no info entry yet (hasn't played since the board went global): Roblox name + Most Rebirths value; index unknown
+local names = {} -- [userId] = name (usernames rarely change; cached for the server's life)
+local function fallbackInfo(key: string, userId: number)
+	if not names[userId] then
+		local ok, name = pcall(Players.GetNameFromUserIdAsync, Players, userId)
+		names[userId] = ok and name or nil
+	end
+	local ok, rebirths = pcall(function() return rebirthStore:GetAsync(key) end)
+	return { r = ok and rebirths or 0, n = names[userId] }
+end
+
+-- read the global Top Income top 10 and each one's info; keeps the last good read on errors
+local function readGlobal()
+	local ok, page = pcall(function() return incomeStore:GetSortedAsync(false, 10):GetCurrentPage() end)
+	if not ok then return end
+	local list = {}
+	for _, entry in page do
+		local userId = tonumber(entry.key)
+		local got, info = pcall(function() return infoStore:GetAsync(entry.key) end)
+		if userId and got then
+			local known = type(info) == "table"
+			info = known and info or fallbackInfo(entry.key, userId)
+			table.insert(list, { userId = userId, income = entry.value, rebirths = tonumber(info.r) or 0,
+				index = tonumber(info.i) or 0, noIndex = not known, name = type(info.n) == "string" and info.n or "Player" })
+		end
+	end
+	global = list
 end
 
 function TopPlayersService.refresh()
@@ -183,7 +236,7 @@ function TopPlayersService.refresh()
 	current = {}
 	for rank = 1, 3 do
 		local e = top[rank]
-		current[rank] = e and e.key.UserId
+		current[rank] = e and e.key
 		setText(cards[rank], e and TopPlayersService.cardText(e))
 	end
 	for _, userId in was do
@@ -195,8 +248,8 @@ function TopPlayersService.refresh()
 	for rank = 1, 3 do
 		local e = top[rank]
 		if e then
-			if figures[e.key.UserId] then
-				if was[rank] ~= e.key.UserId then place(e.key.UserId) end
+			if figures[e.key] then
+				if was[rank] ~= e.key then place(e.key) end
 			else
 				build(e.key)
 			end
@@ -216,8 +269,12 @@ function TopPlayersService.start()
 		join(player)
 		TopPlayersService.refresh()
 	end)
+	incomeStore = DataStoreService:GetOrderedDataStore(Config.DataStoreName .. "_TopIncome") -- same store as PlazaService
+	infoStore = DataStoreService:GetDataStore(Config.DataStoreName .. "_TopPlayersInfo")
+	rebirthStore = DataStoreService:GetOrderedDataStore(Config.DataStoreName .. "_TopRebirths") -- same store as PlazaService
 	Players.PlayerRemoving:Connect(function(player)
-		joined[player], retryAt[player.UserId] = nil, nil
+		writeInfo(player) -- before Main releases the profile
+		joined[player], written[player.UserId] = nil, nil
 		task.defer(TopPlayersService.refresh) -- after the player is gone from GetPlayers
 	end)
 	task.spawn(function() -- waits for the board off the startup path, so a missing board never delays Main
@@ -232,6 +289,13 @@ function TopPlayersService.start()
 		while true do
 			TopPlayersService.refresh()
 			task.wait(T.refresh)
+		end
+	end)
+	task.spawn(function() -- global read + info writes on the slow cadence (DataStore budgets)
+		while true do
+			for _, player in Players:GetPlayers() do writeInfo(player) end
+			readGlobal()
+			task.wait(T.globalRefresh)
 		end
 	end)
 end

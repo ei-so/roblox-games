@@ -90,7 +90,7 @@ EggService.onOrphanDrop = function(_player, egg)
 	end
 end
 GearService.isShielded = StealService.shielded
-BaseService.incomeOf = CreatureService.incomeOf
+BaseService.incomeOf = CreatureService.priceIncomeOf
 RebirthService.afterRebirth = function(player)
 	GearService.sync(player)
 	BaseService.apply(player) -- rebirth tiers upgrade the base

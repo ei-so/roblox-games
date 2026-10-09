@@ -165,6 +165,15 @@ FriendService.refresh(p)
 assert(p:GetAttribute("FriendCount")==1 and math.abs(CreatureService.incomeOf(p)-6.6)<1e-9,"leave removes bonus")
 FriendService.refresh(p,b)
 assert(p:GetAttribute("FriendCount")==0 and CreatureService.incomeOf(p)==6,"departing friend excluded before removal")
+local pf=profiles[p]
+pf.PenSlots=1
+pf.Creatures.y={species="Chick",rarity="Rare"}
+local best=CreatureService.priceIncomeOf(p)
+assert(best>6 and math.abs(best-Config.income(pf.Creatures.y,0,{})*1.5)<1e-9,"price income = best PenSlots creatures anywhere (Stable Rare beats pen Common), with VIP")
+table.clear(pf.Pen)
+assert(CreatureService.incomeOf(p)==0 and CreatureService.priceIncomeOf(p)==best,"emptying the pen drops real income but not price income")
+pf.PenSlots=5
+assert(math.abs(CreatureService.priceIncomeOf(p)-(Config.income(pf.Creatures.x,0,{})+Config.income(pf.Creatures.y,0,{}))*1.5)<1e-9,"fewer creatures than slots: all count")
 p.IsFriendsWithAsync=function() error("network outage") end
 FriendService.refresh(p)
 assert(p:GetAttribute("FriendCount")==0,"lookup failure grants no bonus")
