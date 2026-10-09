@@ -19,6 +19,7 @@ end
 
 local carried = {} -- [player] = { biome, mutation, secret, spot, model, diedConn }
 local nests = {} -- [biomeId] = { [spotPart] = eggModel | false }
+local spotOrder = {} -- [biomeId] = { spotPart }: the nest's spots in fill order
 local lastFullWarning = {}
 local lastPos = {} -- [carrier] = { pos, t }: anti speed-hack samples, cleared whenever an egg leaves a player
 
@@ -201,15 +202,22 @@ local function insidePlot(plot, pos: Vector3): boolean
 	return math.abs(offset.X) < floor.Size.X / 2 and math.abs(offset.Z) < floor.Size.Z / 2
 end
 
-local function refill(biomeId: string, maxEggs: number): number
-	local added = 0
-	for spot, egg in nests[biomeId] do
-		if not egg and added < maxEggs then
+-- fill empty spots (in spot order) until the nest holds as many eggs as the server's player count allows.
+-- Never removes eggs: a nest left over-full by players leaving shrinks at the next refill.
+local function refill(biomeId: string)
+	local target = math.min(Config.nestEggs(biomeId, #Players:GetPlayers()), #spotOrder[biomeId])
+	local stock = 0
+	for _, model in nests[biomeId] do
+		if model then stock += 1 end
+	end
+	for _, spot in spotOrder[biomeId] do
+		if stock >= target then break end
+		if not nests[biomeId][spot] then
 			spawnNestEgg(biomeId, spot)
-			added += 1
+			stock += 1
 		end
 	end
-	return added
+	workspace.Biomes[biomeId].Nest:SetAttribute("EggCapacity", target)
 end
 
 function EggService.registerNest(biomeId: string)
@@ -218,15 +226,18 @@ function EggService.registerNest(biomeId: string)
 		return
 	end
 	nests[biomeId] = {}
+	spotOrder[biomeId] = {}
 	local spots = nest.EggSpots:GetChildren()
 	table.sort(spots, function(a, b) return a.Name < b.Name end)
 	local capacity = biomeId == "Forest" and Config.Nests.forestEggs or Config.Nests.eggs
 	for i, spot in spots do
-		if i <= capacity then nests[biomeId][spot] = false end
+		if i <= capacity then
+			nests[biomeId][spot] = false
+			table.insert(spotOrder[biomeId], spot)
+		end
 	end
-	nest:SetAttribute("EggCapacity", math.min(capacity, #spots))
 	nest:SetAttribute("NextRefill", workspace:GetAttribute("NextNestRefill"))
-	refill(biomeId, math.huge)
+	refill(biomeId)
 end
 
 function EggService.start()
@@ -297,10 +308,17 @@ function EggService.start()
 						spots[spot] = false
 					end
 				end
-				refill(biomeId, math.huge)
+				refill(biomeId)
 				workspace.Biomes[biomeId].Nest:SetAttribute("NextRefill", workspace:GetAttribute("NextNestRefill"))
 			end
 			Notify:FireAllClients("toast", "Nests refilled with new eggs!")
+		end
+	end)
+
+	-- a join raises the egg count right away (a leave waits for the next refill)
+	Players.PlayerAdded:Connect(function()
+		for biomeId in nests do
+			refill(biomeId)
 		end
 	end)
 

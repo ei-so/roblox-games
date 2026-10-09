@@ -200,7 +200,19 @@ Config.Guardian = { wakeDelay = 0.2, sleepDistance = 12, catchRadius = 5, stun =
 	-- (30: a rider survives a ~0.25 s bump at spider speed; tools/pacing-sim/leash_bumps_pacing.py)
 	snapMin = 3 } -- leash jumps longer than this puff and re-path (a faster rider only gets silent per-frame pulls)
 Config.Nests = { forestEggs = 8, eggs = 6, refillInterval = 300, -- every nest restocks and reshuffles species together
-	depth = 0.7 } -- nests sit at x = 0, this far from the biome entrance toward its far end
+	depth = 0.7, -- nests sit at x = 0, this far from the biome entrance toward its far end
+	-- quieter servers stock fewer eggs: [players] = { Forest, other nests }; more players than rows = full nests
+	byPlayers = { { 4, 3 }, { 5, 4 }, { 6, 5 }, { 6, 5 } } }
+
+-- eggs a nest stocks with this many players in the server (never more than forestEggs / eggs)
+function Config.nestEggs(biomeId: string, players: number): number
+	local forest = biomeId == "Forest"
+	local row = Config.Nests.byPlayers[math.max(1, players)]
+	if not row then
+		return forest and Config.Nests.forestEggs or Config.Nests.eggs
+	end
+	return forest and row[1] or row[2]
+end
 
 Config.Plot = {
 	count = 8, startIncubators = 2, maxIncubators = 6, startPen = 6, maxPen = 20, stableSize = 50,
@@ -594,6 +606,7 @@ Config.WhatsNew = {
 			"A timer shows how long your <b>Speed Boost</b> lasts",
 			"New <b>Top Collectors</b> board in the Plaza: the most Index entries in the whole game",
 			"Upgrades moved to their own stall: <b>Sam the Saddler</b> sells Saddles, incubators and pen slots next to Gus's Gear Shop",
+			"Nests hold <b>fewer eggs in quieter servers</b> and fill back up as players join",
 		},
 	},
 }
