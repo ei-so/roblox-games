@@ -10,7 +10,7 @@ Updated 2026-10-09 by Codex (GitHub setup; gameplay checkpoint preserved). Follo
 
 - **Top Players verification IN PROGRESS (2026-10-09, Codex). Active writer: Codex.** User asked to resume the completed implementation at testing/review. Ledger confirms Tasks 1-5 installed and Task 6 previous 63/63 sweep; root checkpoint was stale. Next: fresh seven-runner checks, Studio source/map verification, remaining lifecycle/visual checks and independent read-only review. No publication or commits requested.
 
-- **GitHub setup IN PROGRESS (2026-10-09, Codex). Active writer: Codex.** User explicitly requested private ei-so/roblox-games; repository created and Private verified in Chrome/API. Git authentication verified as ei-so; prior THESYSplus credential was not used for upload. .gitignore now excludes .env variants, key files and machine caches; local files retained. Staged content scanned for known token patterns and exact local .env values: PASS (612 files; ~87.79 MB); .env/cache exclusions and required instructions verified. Existing whitespace warnings in source/history retained; no gameplay edits. Added SYNC.md with clone/push/pull instructions and live Studio/local-only limits. Next: commit project, push main and verify remote commit plus clean working tree. No game source or Studio changes.
+- **GitHub setup COMPLETE (2026-10-09, Codex). Active writer: none.** Private repository https://github.com/ei-so/roblox-games; main initial commit a75d2ca pushed and local/remote hash equality verified. 612 files (~87.79 MB) include source/assets/backup places/plans/shared instructions. Staged scan of token patterns plus exact local .env values PASS; .env and Python caches retained locally and excluded. Added SYNC.md; .gitignore excludes local credentials/caches. Repository-local Git identity and credential username set to ei-so; old account not used for upload. API verified owner ei-so, Private=true, default main; working tree clean before this closing checkpoint. Existing whitespace warnings retained; gameplay tests skipped because no game code changed; Studio untouched. Next: on another computer clone this repo while signed into ei-so, read AGENTS.md/HANDOFF.md, open cloud game as eisoisoo. Push before switching computers and pull before editing; local .env and external agent memory do not transfer. Prior Top Players plan remains pending execution choice.
 
 - **Top Players board SPEC WRITTEN (2026-10-09, Claude Code), awaiting user review; nothing implemented. Active writer: none.** steal-a-ride/docs/superpowers/specs/2026-10-09-top-players-board-design.md. User decisions: current-server top 3; rank rebirths > index count > income; podium 2-1-3 like user's mockup; style B wooden notice board (also restyle the 3 existing leaderboards); real 3D avatar figures (full outfit); new title "Squire" for 0-1 rebirths everywhere; board at the centre back where the Index stall is (Index stall -> back-left), leaderboards keep 1 left / 2 right, all facing the arch; spawn keeps facing the arch, yellow pad made invisible. Studio "Steal a Mount" reopened read-only to read Plaza positions (Index stall (0,208), boards z 211 x -30/30/60, spawn (0,190), fountain (0,160)). Spec APPROVED by user. PLAN WRITTEN: steal-a-ride/docs/superpowers/plans/2026-10-09-top-players-board.md (6 tasks: 1 Squire; 2 TopPlayersService rank/cardText + tests; 3 runtime cards/figures/loop + Main; 4 BuildTopPlayers tool + PlazaService wood panel + rebirthText; 5 What's New v5 + Studio install + build + Play checks; 6 sweep + handoff). Next: user reviews plan + picks execution method.
 
@@ -294,14 +294,3 @@ Guardian speed below is **after** the existing 1.25 scale. The raw column is the
 - Previous complete checkpoint and working notes: **docs/handoff-before-egg-mobile-wrap-20261007.md**.
 - Piece 4 wrap/history: **docs/handoff-before-mama-entrance-wrap-20261007.md**, **docs/handoff-history-before-feedback-wrap-20261007.md**.
 - Earlier feedback spec/plan: docs/superpowers/{specs,plans}/2026-10-07-steal-a-mount-feedback*.md. Historical evidence, not current instructions.
-
-
-
-
-
-
-
-
-
-
-
