@@ -17,6 +17,7 @@ function ShopService.sync(player)
 		player:SetAttribute("SaddleLevel", data.SaddleLevel)
 		player:SetAttribute("IncubatorCount", data.IncubatorCount)
 		player:SetAttribute("PenSlots", data.PenSlots)
+		player:SetAttribute("BaseExpanded", data.BaseExpanded == true) -- Sam's rows and the lot sign
 	end
 end
 
@@ -34,6 +35,9 @@ local ITEMS = {
 	end,
 	incubator = function(player, data)
 		local n = data.IncubatorCount + 1
+		if n > Config.incubatorMax(data.BaseExpanded) then -- 7-8 need the base expansion
+			return nil
+		end
 		local cost = Config.Costs.incubators[n]
 		return cost, function()
 			data.IncubatorCount = n
@@ -42,7 +46,7 @@ local ITEMS = {
 	end,
 	pen = function(player, data)
 		local slot = data.PenSlots + 1
-		if slot > Config.Plot.maxPen then
+		if slot > Config.penMax(data.BaseExpanded) then -- 21-30 need the base expansion
 			return nil
 		end
 		return Config.Costs.penSlot(slot), function()

@@ -92,7 +92,7 @@ local workspace={GetAttribute=function() return nil end}
 local Config={Steal={robCooldown=60,catchGrace=3,shieldSeconds=0,carrierRange=8},Plot={lockSeconds=60,lockPerRebirth=0},
     Stick={range=7,stun=2,cooldown=0.8},Base={itemById={stickWood={color={},burst=10}}}}
 local DataService={get=function() return {Rebirths=0} end,playtime=function() return 99999 end}
-local plot={Floor={Position=vec(0,0),Size={X=40,Z=40}}}
+local plot={Floor={Position=vec(0,0),Size={X=40,Z=40}},GetAttribute=function() return nil end} -- no base expansion
 local PlotService={get=function(p) if p==owner then return plot end end}
 local carriers={}
 local EggService={carriers=function() return carriers end,isCarrying=function(p) return carriers[p]~=nil end,

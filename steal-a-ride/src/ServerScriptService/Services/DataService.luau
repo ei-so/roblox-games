@@ -29,6 +29,7 @@ local function defaults()
 		LastChest = 0, -- os.time() the Plaza reward chest was last opened
 		Likes = 0, LikesGiven = {}, -- total received; [ownerId string] = last UTC day liked
 		Quests = {}, -- current UTC daily and Monday weekly assignments
+		BaseExpanded = false, -- bought the lot behind the base (Rebirth 10); kept through rebirth
 		Base = { owned = {}, equipped = {} }, -- base cosmetics: owned[itemId] = true, equipped[slot] = itemId (kept through rebirth)
 		LegacyChecked = false, OG = false, -- OG = had a save in the pre-reset store
 		LegacyGift = false, -- best old biome index, waiting to be granted once (Main)

@@ -420,11 +420,31 @@ Config.Costs = {
 	saddle = function(level: number, income: number?): number -- cost of reaching this saddle level
 		return math.max(100 * 1.85 ^ level, (income or 0) * Config.Costs.saddleIncomeSeconds * 1.15 ^ level)
 	end,
-	incubators = { [3] = 1e3, [4] = 25e3, [5] = 5e5, [6] = 1e7 },
-	penSlot = function(slot: number): number -- slots 7..20
+	incubators = { [3] = 1e3, [4] = 25e3, [5] = 5e5, [6] = 1e7, [7] = 10e9, [8] = 20e9 }, -- 7-8 need the base expansion
+	penSlot = function(slot: number): number -- slots 7..20; 21..30 (base expansion) grow x1.5 from $1.75B (~$198B for all ten)
+		if slot > 20 then
+			return 1.75e9 * 1.5 ^ (slot - 21)
+		end
 		return 250 * 3 ^ (slot - 7)
 	end,
 }
+
+-- Base expansion: the lot behind a base (Rebirth 10). Its price uses price income (best pen anywhere), so moving
+-- creatures out of the pen can't make it cheaper. The lot raises the pen / incubator limits; slots are bought at Sam's.
+Config.Expansion = { rebirth = 10, minPrice = 50e9, incomeSeconds = 6 * 3600, maxPen = 30, maxIncubators = 8, gap = 20 }
+function Config.expansionPrice(priceIncome: number): number
+	return math.max(Config.Expansion.minPrice, priceIncome * Config.Expansion.incomeSeconds)
+end
+function Config.penMax(expanded: boolean?): number
+	return expanded and Config.Expansion.maxPen or Config.Plot.maxPen
+end
+function Config.incubatorMax(expanded: boolean?): number
+	return expanded and Config.Expansion.maxIncubators or Config.Plot.maxIncubators
+end
+-- lot pens (21+) and incubator pads (7+) stay fully hidden until the owner bought the lot
+function Config.hiddenSlot(slot: number, kind: string, expanded: boolean?): boolean
+	return not expanded and slot > (kind == "pen" and Config.Plot.maxPen or Config.Plot.maxIncubators)
+end
 
 Config.RebirthIncomeStep = 0.5
 -- Rebirths: docs/superpowers/specs/2026-10-09-rebirth-20-design.md (tools/pacing-sim/rebirth.py: R20 ~31 h of play)
@@ -606,6 +626,7 @@ Config.WhatsNew = {
 			"A timer shows how long your <b>Speed Boost</b> lasts",
 			"New <b>Top Collectors</b> board in the Plaza: the most Index entries in the whole game",
 			"Upgrades moved to their own stall: <b>Sam the Saddler</b> sells Saddles, incubators and pen slots next to Gus's Gear Shop",
+			"Rebirth 10 unlocks a <b>Base Expansion</b> behind your base: 10 more pen spots and 2 more incubators",
 			"Nests hold <b>fewer eggs in quieter servers</b> and fill back up as players join",
 		},
 	},
@@ -863,7 +884,7 @@ Config.Tips = {
 	{ key = "basics", title = "How to play", body = "Steal an egg from a biome nest and run it home before the guardian catches you. Eggs incubate at home; when one says Ready, tap it to hatch. Creatures in your pen earn cash every second, and the one you ride sets your speed." },
 	{ key = "controls", title = "Controls", body = "PC: F gets off all mounts, Q uses Dash, R takes off or lands a flying mount (Space up, Ctrl down). Phone/tablet: use the Get off, Fly and Dash buttons. Flyers: Vulture, Parrot, Snow Owl, Ember Bat and Baby Dragon. Carrying an egg forces a landing; deliver or drop it to fly again." },
 	{ key = "creatures", title = "Stable, Pen and riding", body = "New creatures go to your Stable (holds 50), which earns nothing. Open the Stable and press Pen to put one to work, or Ride to mount it. Sell gives 60 seconds of its income. Mounted creatures don't earn." },
-	{ key = "upgrades", title = "Saddle and upgrades", body = "At Sam's Upgrades stall in the Plaza, each Saddle level adds +1 speed to whatever you ride (up to 20). Buy more incubators to hatch more eggs at once, and more pen slots to earn from more creatures." },
+	{ key = "upgrades", title = "Saddle and upgrades", body = "At Sam's Upgrades stall in the Plaza, each Saddle level adds +1 speed to whatever you ride (up to 20). Buy more incubators to hatch more eggs at once, and more pen slots to earn from more creatures. From Rebirth 10 you can buy the lot behind your base for 10 more pen slots and 2 more incubators." },
 	{ key = "nests", title = "Nests and guardians", body = "Every nest refills with new eggs every 5 minutes (the timer is top right). Deeper biomes give better creatures but heavier eggs: you carry slower and sharp turns slow you more. Leave a guardian's biome with its egg and it follows you all the way home, enraged and never far behind: outrun it, Dash when it closes in, or catch your breath on an escape patch." },
 	{ key = "patches", when = "first visit to the Lake or deeper", title = "Escape patches", body = "From the Lake onward, each biome has patches the guardian can't reach you on, if you ride the right ability (Swim, Jump, Glide, Fireproof, Phase). Don't stay on one for more than 4 seconds or you sink and get stuck for 2." },
 	{ key = "gear", title = "Gear", body = "Buy gear at the Gear Shop in the Plaza. Net Gun slows a player, Slip Trap slows whoever steps on it (guardians too), Speed Soda makes you faster for 20 seconds." },

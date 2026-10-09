@@ -148,11 +148,20 @@ local function prompt(parent, name, action, hold, range, owner)
 	return p
 end
 
-local function insidePlot(plot, pos)
-	local floor = plot.Floor
+local function onFloor(floor, pos)
 	local offset = pos - floor.Position
 	return math.abs(offset.X) < floor.Size.X / 2 + 0.5 and math.abs(offset.Z) < floor.Size.Z / 2 + 0.5
 end
+
+-- inside the base: its floor, plus the lot behind it once the owner bought the base expansion (ExpansionService)
+function StealService.insidePlot(plot, pos): boolean
+	if onFloor(plot.Floor, pos) then
+		return true
+	end
+	local lot = plot:GetAttribute("Expanded") and plot.Expansion
+	return lot ~= nil and lot ~= false and onFloor(lot.Floor, pos)
+end
+local insidePlot = StealService.insidePlot
 
 -- Base stun stick: owners hold it only inside their own plot. A hit on someone carrying an egg stolen from the owner
 -- (directly or further down a chain of steals) stuns them, sends the egg home and clears the robbed cooldown.

@@ -54,6 +54,7 @@ new("UIListLayout", { Padding = UDim.new(0, 10), SortOrder = Enum.SortOrder.Layo
 
 -- each item: id (server item), title, description, level text, cost (nil = maxed)
 -- gear (the hotbar shows how many you own): 5 buys per type, then a 10-minute restock (server attrs GearLeft_<id>, GearRestock_<id> = server time, 0 = none)
+local lotLocked = "Needs the base expansion (Rebirth 10)" -- pen 21+ / incubator 7+ (the lot behind the base)
 local function gearInfo(id, desc)
 	local wait = (player:GetAttribute("GearRestock_" .. id) or 0) - workspace:GetServerTimeNow()
 	if wait > 0 then
@@ -72,11 +73,21 @@ local ITEMS = {
 	end },
 	{ id = "incubator", title = "Incubator", info = function()
 		local n = player:GetAttribute("IncubatorCount") or Config.Plot.startIncubators
-		return ("Hatch more eggs at once  ·  %d/%d"):format(n, Config.Plot.maxIncubators), Config.Costs.incubators[n + 1]
+		local expanded = player:GetAttribute("BaseExpanded")
+		if not expanded and n >= Config.Plot.maxIncubators then
+			return lotLocked, nil, "LOCKED"
+		end
+		local max = Config.incubatorMax(expanded)
+		return ("Hatch more eggs at once  ·  %d/%d"):format(n, max), n < max and Config.Costs.incubators[n + 1] or nil
 	end },
 	{ id = "pen", title = "Pen Slot", info = function()
 		local n = player:GetAttribute("PenSlots") or Config.Plot.startPen
-		return ("Earn from more creatures  ·  %d/%d"):format(n, Config.Plot.maxPen), n < Config.Plot.maxPen and Config.Costs.penSlot(n + 1) or nil
+		local expanded = player:GetAttribute("BaseExpanded")
+		if not expanded and n >= Config.Plot.maxPen then
+			return lotLocked, nil, "LOCKED"
+		end
+		local max = Config.penMax(expanded)
+		return ("Earn from more creatures  ·  %d/%d"):format(n, max), n < max and Config.Costs.penSlot(n + 1) or nil
 	end },
 	{ id = "net", title = "Net Gun", info = function()
 		return gearInfo("net", "Slow a player 50% for 3 s")

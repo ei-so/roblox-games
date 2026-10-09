@@ -111,8 +111,9 @@ local function render(player)
 	for _, pad in plot.Incubators:GetChildren() do
 		local slot = pad:GetAttribute("Slot")
 		local egg = data.Incubators[slot]
-		pad.Transparency = slot <= data.IncubatorCount and 0 or 0.7
-		pad.Ring.Transparency = slot <= data.IncubatorCount and 0 or 0.8
+		local hidden = Config.hiddenSlot(slot, "incubator", plot:GetAttribute("Expanded")) -- lot pads (7+) before the lot
+		pad.Transparency = hidden and 1 or slot <= data.IncubatorCount and 0 or 0.7
+		pad.Ring.Transparency = hidden and 1 or slot <= data.IncubatorCount and 0 or 0.8
 		if egg then
 			incubating += 1
 			local model = CreatureBuilder.buildEgg(egg.biome, egg.mutation, egg.secret, egg.species)
@@ -140,7 +141,7 @@ local function render(player)
 			model.Parent = folder
 		else
 			-- Empty/Locked hints are only for new (shielded) players
-			pad.Timer.Text.Text = not player:GetAttribute("Shielded") and "" or slot <= data.IncubatorCount and "Empty" or "Locked"
+			pad.Timer.Text.Text = (hidden or not player:GetAttribute("Shielded")) and "" or slot <= data.IncubatorCount and "Empty" or "Locked"
 		end
 	end
 	player:SetAttribute("Incubating", incubating)

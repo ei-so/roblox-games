@@ -1292,6 +1292,9 @@ assert(#data.Mounts==1 and data.Mounts[1]=="m1" and #data.Pen==0 and data.Incuba
 fresh(3,6,6)
 assert(RebirthService.rebirth(player,{"p1","s1"}),"rebirth 4 with a pick works")
 assert(data.Creatures.p1 and data.Creatures.s1 and not data.Creatures.m1 and #data.Mounts==0,"picked creatures stay, unpicked mounts go")
+-- the base expansion survives rebirth (spec 2026-10-10)
+fresh(9,6,20); data.BaseExpanded=true
+assert(RebirthService.rebirth(player) and data.Rebirths==10 and data.BaseExpanded==true,"the base expansion is kept through rebirth")
 -- too many picks or bogus uids
 fresh(2,6,6)
 assert(not RebirthService.rebirth(player,{"m1","m2","p1"}) and data.Rebirths==2 and data.Creatures.s1,"over the limit is refused and nothing resets")
@@ -1433,6 +1436,259 @@ print("PASS: OG check (pre-reset save -> tag + one gift, retried on outage)")
     return pre+"local Config="+cfg+"\nlocal DataService="+mod+checks
 
 
+def expansion_harness():
+    cfg=module("ReplicatedStorage/Shared/Config.luau",{})
+    checks=r"""
+-- Task 1: price, limits, slot prices
+assert(Config.expansionPrice(0)==50e9 and Config.expansionPrice(2e6)==50e9,"lot price floor $50B")
+assert(Config.expansionPrice(1e7)==1e7*21600,"lot price = 6 h of price income above the floor")
+assert(Config.penMax(false)==20 and Config.penMax(true)==30 and Config.penMax(nil)==20,"pen limit")
+assert(Config.incubatorMax(false)==6 and Config.incubatorMax(true)==8,"incubator limit")
+assert(Config.Costs.penSlot(20)==250*3^13,"slots 7-20 unchanged")
+assert(math.abs(Config.Costs.penSlot(21)-1.75e9)<1 and math.abs(Config.Costs.penSlot(30)-1.75e9*1.5^9)<1,"slots 21-30")
+local total=0 for s=21,30 do total+=Config.Costs.penSlot(s) end
+assert(total>190e9 and total<205e9,"all ten ~ $200B")
+assert(Config.Costs.incubators[7]==10e9 and Config.Costs.incubators[8]==20e9,"incubators 7/8")
+assert(Config.Plot.maxPen==20 and Config.Plot.maxIncubators==6,"pass caps stay at the base limits")
+print("PASS: base expansion price, limits and slot prices")
+"""
+    shop_src=(ROOT/"src/ServerScriptService/Services/ShopService.luau").read_text(encoding="utf-8-sig")
+    shop_items=shop_src[shop_src.index("local ITEMS = {"):shop_src.index("function ShopService.start()")]
+    shop_checks=r"""
+-- Task 2: Sam's pen/incubator limits follow the lot
+local sdata={PenSlots=20,IncubatorCount=6,Cash=1e12,BaseExpanded=false,SaddleLevel=0}
+local DataService={get=function() return sdata end,addCash=function(_,n) sdata.Cash+=n end}
+local CreatureService={priceIncomeOf=function() return 0 end,changed=function() end}
+local HatchService={onPlayerReady=function() end}
+local SpeedService={refresh=function() end}
+local sattrs={}
+local splayer={SetAttribute=function(_,k,v) sattrs[k]=v end}
+local ShopService={extraItems={},sync=function() end}
+"""+shop_items+r"""
+assert(ShopService.buy(splayer,"pen")==false and sdata.PenSlots==20,"pen slot 21 needs the lot")
+assert(ShopService.buy(splayer,"incubator")==false and sdata.IncubatorCount==6,"incubator 7 needs the lot")
+sdata.BaseExpanded=true
+local before=sdata.Cash
+assert(ShopService.buy(splayer,"pen") and sdata.PenSlots==21 and math.abs(before-sdata.Cash-1.75e9)<1,"slot 21 costs $1.75B")
+before=sdata.Cash
+assert(ShopService.buy(splayer,"incubator") and sdata.IncubatorCount==7 and before-sdata.Cash==10e9,"incubator 7 costs $10B")
+sdata.PenSlots=30; sdata.IncubatorCount=8
+assert(ShopService.buy(splayer,"pen")==false and ShopService.buy(splayer,"incubator")==false,"30 / 8 is the top")
+print("PASS: Sam sells slots 21-30 and incubators 7-8 only after the lot")
+"""
+    ui_src=(ROOT/"src/StarterGui/MainUI/ShopUI.luau").read_text(encoding="utf-8-sig")
+    ui_items=ui_src[ui_src.index("local lotLocked"):ui_src.index("local rows = {}")]
+    ui_checks=r"""
+-- Task 2: Sam's rows show the lot lock
+local uattrs={PenSlots=20,IncubatorCount=6,BaseExpanded=false,Rebirths=12}
+local player={GetAttribute=function(_,k) return uattrs[k] end}
+local workspace={GetServerTimeNow=function() return 0 end}
+"""+ui_items+r"""
+local rowOf={} for _,it in ITEMS do rowOf[it.id]=it end
+local desc,cost,locked=rowOf.pen.info()
+assert(locked=="LOCKED" and desc:find("Needs the base expansion %(Rebirth 10%)"),"pen row locked without the lot")
+desc,cost,locked=rowOf.incubator.info()
+assert(locked=="LOCKED" and desc:find("Needs the base expansion"),"incubator row locked without the lot")
+uattrs.BaseExpanded=true
+desc,cost,locked=rowOf.pen.info()
+assert(locked==nil and math.abs(cost-1.75e9)<1 and desc:find("20/30"),"pen row sells slot 21 after the lot")
+desc,cost,locked=rowOf.incubator.info()
+assert(locked==nil and cost==10e9 and desc:find("6/8"),"incubator row sells #7 after the lot")
+uattrs.PenSlots=10; uattrs.BaseExpanded=false
+desc,cost,locked=rowOf.pen.info()
+assert(locked==nil and desc:find("10/20"),"below the base limit nothing changes")
+print("PASS: Sam's rows say LOCKED until the base expansion, then sell up to 30 / 8")
+"""
+    steal_src=(ROOT/"src/ServerScriptService/Services/StealService.luau").read_text(encoding="utf-8-sig")
+    inside=steal_src[steal_src.index("local function onFloor"):steal_src.index("local insidePlot = StealService.insidePlot")]
+    inside_checks=r"""
+-- Task 3: the lot counts as inside the base only once bought
+local V={} V.__index=V
+V.__sub=function(a,b) return setmetatable({X=a.X-b.X,Y=a.Y-b.Y,Z=a.Z-b.Z},V) end
+local function v(x,y,z) return setmetatable({X=x,Y=y,Z=z},V) end
+local StealService={}
+"""+inside+r"""
+assert(StealService.insidePlot,"StealService.insidePlot is exported")
+local expanded=false
+local plot={Floor={Position=v(-50,0,105),Size=v(58,1,58)},Expansion={Floor={Position=v(-95,0,105),Size=v(28,1,58)}},
+    GetAttribute=function(_,k) if k=="Expanded" then return expanded end end}
+assert(StealService.insidePlot(plot,v(-50,3,105)),"base floor is inside")
+assert(not StealService.insidePlot(plot,v(-95,3,105)),"the lot is outside before it is bought")
+expanded=true
+assert(StealService.insidePlot(plot,v(-95,3,105)),"the bought lot is inside")
+assert(StealService.insidePlot(plot,v(-50,3,105)),"base floor still inside")
+assert(not StealService.insidePlot(plot,v(-120,3,105)) and not StealService.insidePlot(plot,v(-95,3,40)),"beyond the lot is outside")
+plot.Expansion=nil
+assert(not StealService.insidePlot(plot,v(-95,3,105)),"a plot without lot parts never counts the strip")
+print("PASS: the base expansion counts as inside the base once bought")
+"""
+    exp_path=ROOT/"src/ServerScriptService/Services/ExpansionService.luau"
+    exp=module("ServerScriptService/Services/ExpansionService.luau",{
+        'local Players = game:GetService("Players")':'',
+        'local ReplicatedStorage = game:GetService("ReplicatedStorage")':'',
+        'local Config = require(ReplicatedStorage.Shared.Config)':'',
+        'local Format = require(ReplicatedStorage.Shared.Format)':'',
+        'local DataService = require(script.Parent.DataService)':'',
+        'local CreatureService = require(script.Parent.CreatureService)':'',
+        'local PlotService = require(script.Parent.PlotService)':'',
+        'local ShopService = require(script.Parent.ShopService)':'',
+        'local HatchService = require(script.Parent.HatchService)':''}) if exp_path.exists() else "nil"
+    exp_checks=r"""
+-- Task 5: ExpansionService (sign, buy, locked/bought state)
+local Format={number=function(n) return tostring(n) end}
+local V3={} V3.__index=V3
+V3.__sub=function(a,b) return setmetatable({X=a.X-b.X,Y=a.Y-b.Y,Z=a.Z-b.Z},V3) end
+local function v3(x,y,z) return setmetatable({X=x,Y=y,Z=z},V3) end
+local CFrame={new=function(x,y,z) return {X=x,Y=y,Z=z} end}
+local edata={Rebirths=10,Cash=0}
+local DataService={get=function() return edata end,addCash=function(_,n) edata.Cash+=n end}
+local CreatureService={priceIncomeOf=function() return 0 end,changed=function() end}
+local HatchService={onPlayerReady=function() end}
+local ShopService={sync=function() end}
+local Players={GetPlayers=function() return {} end}
+local Notify={FireClient=function() end}
+local ReplicatedStorage={Remotes={Notify=Notify}}
+local function inst(name,class,props,kids)
+    local o={Name=name,ClassName=class,_kids=kids or {},_attrs={}}
+    for k,v in props or {} do o[k]=v end
+    for _,c in o._kids do o[c.Name]=c end
+    function o:GetChildren() return self._kids end
+    function o:GetDescendants() local t={} for _,c in self._kids do table.insert(t,c) for _,d in c:GetDescendants() do table.insert(t,d) end end return t end
+    function o:FindFirstChild(n) return self[n] ~= nil and type(self[n])=="table" and self[n]._kids and self[n] or nil end
+    function o:FindFirstChildWhichIsA(c) for _,k in self._kids do if k:IsA(c) then return k end end end
+    function o:IsA(c) return c==class or (c=="BasePart" and class=="Part") or (c=="Light" and class=="PointLight") end
+    function o:Destroy() self.Destroyed=true end
+    function o:GetBoundingBox() return self.BoxCF, self.BoxSize end
+    function o:GetAttribute(k) return self._attrs[k] end
+    function o:SetAttribute(k,v) self._attrs[k]=v end
+    return o
+end
+local function part(name,props,kids) return inst(name,"Part",props or {Transparency=0,CanCollide=true},kids) end
+local label=inst("Line1","TextLabel",{Text=""})
+local board=inst("Board","SurfaceGui",{Enabled=true},{label})
+local prompt=inst("ExpansionPrompt","ProximityPrompt",{Enabled=true})
+local sign=part("Sign",{Transparency=0,CanCollide=true},{board,prompt})
+local lot=inst("Expansion","Model",{},{part("Floor",{Color="grey",Material="Concrete",Position=v3(-94,0.3,105),Size=v3(28,0.6,58)}),part("BackGap"),part("GapFence",{Transparency=0.3,CanCollide=true}),
+    part("GapInvisible",{Transparency=1,CanCollide=true}),inst("Fence","Model",{},{part("Post"),part("Rail")}),sign,part("SignPost"),
+    part("LotWall",{Color="grey",Material="Plastic",Transparency=0}),part("LotFence",{Color="grey",Transparency=0.3})})
+local ped21=part("Pen21",{Transparency=0}); ped21._attrs.Slot=21
+local ped20=part("Pen20",{Transparency=0}); ped20._attrs.Slot=20
+local pad7=part("Incubator7",{Transparency=0,Position=v3(-102.5,1.2,96)},{part("Ring",{Transparency=0})}); pad7._attrs.Slot=7
+local pad3=part("Incubator3",{Transparency=0,Position=v3(-33,1.2,100)},{part("Ring",{Transparency=0})}); pad3._attrs.Slot=3
+local function box(x,y,z) return {Position=v3(x,y,z),XVector=v3(1,0,0),YVector=v3(0,1,0),ZVector=v3(0,0,1)} end
+local dome7=part("Part",{Transparency=0.75,CanCollide=false,Position=v3(-102.5,3.6,96),CFrame=box(-102.5,3.6,96),Size=v3(6.6,6.6,6.6)})
+local dome3=part("Part",{Transparency=0.75,CanCollide=false,Position=v3(-33,3.6,100),CFrame=box(-33,3.6,100),Size=v3(6.6,6.6,6.6)})
+local doorBanner=part("Part",{Transparency=0,CanCollide=true,Position=v3(-78.8,6.6,105),CFrame=box(-78.8,6.6,105),Size=v3(0.2,6,4)})
+local sideBanner=part("Part",{Transparency=0,CanCollide=true,Position=v3(-78.8,6.6,85),CFrame=box(-78.8,6.6,85),Size=v3(0.2,6,4)})
+local wideBanner=part("Part",{Transparency=0,CanCollide=true,Position=v3(-78.8,6.6,92),CFrame=box(-78.8,6.6,92),Size=v3(0.2,6,8)})
+local lampLight=inst("PointLight","PointLight",{Enabled=true})
+local lampSwitch=inst("ProximityPrompt","ProximityPrompt",{Enabled=true})
+local lampMusic=inst("Music","Sound",{Playing=true})
+local lampPole=part("Pole",{Transparency=0,CanCollide=true,Position=v3(-78,5,108),CFrame=box(-78,5,108),Size=v3(0.6,9,0.6)},{lampLight,lampSwitch,lampMusic})
+local lamp=inst("Lamp","Model",{BoxCF=box(-78,5,108),BoxSize=v3(1,9,1)},{lampPole})
+local plot=inst("Plot1","Model",{},{lot,inst("BaseDecor","Folder",{},{doorBanner,sideBanner,wideBanner,lamp,dome7,dome3}),
+    part("Floor",{Color="sand",Material="Marble",Position=v3(-50,0.3,105),Size=v3(58,0.6,58)}),part("Wall",{Color="red",Material="WoodPlanks",Transparency=0}),
+    inst("Enclosure","Folder",{},{part("Fence",{Color="blue"})}),inst("Pen","Folder",{},{ped20,ped21}),inst("Incubators","Folder",{},{pad7,pad3})})
+plot._attrs.OwnerUserId=7
+plot._attrs.Side=-1
+local moved={}
+local PlotService={get=function() return plot end,teleport=function(character,cf) moved[character]=cf end}
+local player={UserId=7,GetAttribute=function() return nil end,SetAttribute=function() end}
+local visitorChar={FindFirstChild=function(_,n) return n=="HumanoidRootPart" and {Position=v3(-94,3,110)} or nil end}
+local bystanderChar={FindFirstChild=function(_,n) return n=="HumanoidRootPart" and {Position=v3(-50,3,105)} or nil end}
+Players.GetPlayers=function() return {{Character=visitorChar},{Character=bystanderChar},{Character=nil}} end
+local ExpansionService="""+exp+r"""
+assert(ExpansionService,"ExpansionService exists")
+-- canBuy
+local ok,why=ExpansionService.canBuy({Rebirths=9,Cash=1e12},50e9); assert(not ok and why=="rebirth","Rebirth 9 refused")
+ok,why=ExpansionService.canBuy({Rebirths=10,Cash=49e9},50e9); assert(not ok and why=="cash","short of cash refused")
+assert(ExpansionService.canBuy({Rebirths=10,Cash=50e9},50e9),"exact cash at Rebirth 10 buys")
+ok,why=ExpansionService.canBuy({Rebirths=12,Cash=1e12,BaseExpanded=true},50e9); assert(not ok and why=="owned","second buy refused")
+-- hidden lot slots
+assert(Config.hiddenSlot(21,"pen",false) and not Config.hiddenSlot(21,"pen",true) and not Config.hiddenSlot(20,"pen",false),"pen 21+ hidden until the lot")
+assert(Config.hiddenSlot(7,"incubator",false) and not Config.hiddenSlot(6,"incubator",false) and not Config.hiddenSlot(8,"incubator",true),"incubator 7+ hidden until the lot")
+-- bought state
+ExpansionService.setState(plot,true)
+assert(plot:GetAttribute("Expanded")==true,"plot marked expanded")
+assert(lot.BackGap.CanCollide==false and lot.BackGap.Transparency==1 and lot.GapInvisible.CanCollide==false and lot.GapFence.CanCollide==false,"the opening is open")
+assert(lot.Fence.Post.Transparency==1 and lot.Sign.Transparency==1 and board.Enabled==false and lot.SignPost.Transparency==1,"fence and sign gone")
+assert(lot.Floor.Color=="sand" and lot.Floor.Material=="Marble" and lot.LotWall.Color=="red" and lot.LotFence.Color=="blue","the lot takes the base's floor, wall and fence look")
+assert(doorBanner.Transparency==1 and doorBanner.CanCollide==false,"base decor hanging in the new opening is cleared")
+assert(sideBanner.Transparency==0 and sideBanner.CanCollide==true,"decor beside the opening stays")
+assert(wideBanner.Transparency==1 and wideBanner.CanCollide==false,"wide decor reaching into the opening is cleared even when centred outside it")
+assert(lampPole.Transparency==1 and lampLight.Enabled==false and lampMusic.Playing==false and lampSwitch.Destroyed and lamp.Name~="Lamp",
+    "a lamp in the opening goes dark, loses its switch and is no longer relit by the Lights toggle")
+-- reset (plot freed): locked again whatever the last owner had (Review Focus 1)
+ExpansionService.reset(plot)
+assert(moved[visitorChar] and moved[visitorChar].X==-50+36 and moved[visitorChar].Z==105,"someone standing in the lot is moved out to the front before it closes")
+assert(moved[bystanderChar]==nil,"people in the base itself are not moved")
+assert(prompt:GetAttribute("OnlyFor")==0,"a freed plot's buy prompt shows to nobody")
+assert(plot:GetAttribute("Expanded")==false and lot.BackGap.CanCollide==true and lot.BackGap.Transparency==0 and lot.GapInvisible.CanCollide==true,"reset closes the opening")
+assert(lot.Fence.Post.Transparency==0 and lot.Sign.Transparency==0 and board.Enabled==true and label.Text=="Unlocks at Rebirth 10","reset shows the For Sale sign")
+assert(ped21.Transparency==1 and pad7.Transparency==1 and pad7.Ring.Transparency==1 and ped20.Transparency==0,"lot pens/pads hidden while locked, base pens untouched")
+assert(dome7.Transparency==1 and dome3.Transparency==0.75,"a glass dome over a hidden lot pad is hidden too; base pad domes stay")
+-- apply reads only the save flag, on whatever plot the player got (Review Focus 2)
+edata={Rebirths=10,Cash=0,BaseExpanded=true}
+ExpansionService.apply(player)
+assert(plot:GetAttribute("Expanded")==true,"a returning owner's plot opens on join")
+edata={Rebirths=3,Cash=0,BaseExpanded=false}
+ExpansionService.apply(player)
+assert(plot:GetAttribute("Expanded")==false and label.Text=="Unlocks at Rebirth 10","an owner without the lot sees it locked")
+assert(prompt:GetAttribute("OnlyFor")==0,"below Rebirth 10 the prompt shows to nobody")
+edata={Rebirths=10,Cash=0,BaseExpanded=false}
+ExpansionService.apply(player)
+assert(prompt:GetAttribute("OnlyFor")==7,"at Rebirth 10 only the owner sees the buy prompt")
+-- the sign follows the price at once when VIP / friends / rebirths change (join sets VIP after the first apply)
+local handlers={}
+player.GetAttributeChangedSignal=function(_,name) return {Connect=function(_,f) handlers[name]=f end} end
+ExpansionService.watch(player)
+assert(handlers.VIPPass and handlers.FriendCount and handlers.Rebirths,"the sign watches VIP, friends and rebirths")
+CreatureService.priceIncomeOf=function() return 1e7 end
+handlers.VIPPass()
+assert(label.Text=="Base Expansion  $"..tostring(1e7*21600),"VIP arriving after join updates the sign price immediately")
+CreatureService.priceIncomeOf=function() return 0 end
+-- buy: price from price income at trigger time, charged once (Review Focus 3)
+edata={Rebirths=10,Cash=60e9,BaseExpanded=false}
+local repaints=0
+ExpansionService.onBought=function() repaints+=1 end
+assert(ExpansionService.buy(player)==true and edata.BaseExpanded==true and edata.Cash==10e9,"buy charges the $50B floor once")
+assert(repaints==1,"buying repaints the whole base (domes over the new pads come back)")
+ExpansionService.setState(plot,true)
+assert(prompt:GetAttribute("OnlyFor")==0,"a bought lot's prompt shows to nobody")
+assert(ExpansionService.buy(player)==false and edata.Cash==10e9,"a second trigger charges nothing")
+plot._attrs.OwnerUserId=8
+edata={Rebirths=10,Cash=60e9,BaseExpanded=false}
+assert(ExpansionService.buy(player)==false and edata.Cash==60e9,"only the plot owner can buy")
+print("PASS: base expansion sign, buy once, bought/locked states, hidden lot slots")
+"""
+    mon_src=(ROOT/"src/ServerScriptService/Services/MonetizationService.luau").read_text(encoding="utf-8-sig")
+    apply_pass=mon_src[mon_src.index("local function applyPass"):mon_src.index("function MonetizationService.onPlayerReady")]
+    pass_checks=r"""
+-- final review: a pass bought after the lot must never take slots away (cap +2 / +5 at 6 / 20, never lower)
+local pdata={IncubatorCount=8,PenSlots=25,PassesApplied={}}
+local DataService={get=function() return pdata end}
+local HatchService={onPlayerReady=function() end}
+local ShopService={sync=function() end}
+local CreatureService={changed=function() end}
+local MountService={apply=function() end}
+local pplayer={SetAttribute=function() end}
+"""+apply_pass+r"""
+applyPass(pplayer,"Incubators"); applyPass(pplayer,"PenSlots")
+assert(pdata.IncubatorCount==8 and pdata.PenSlots==25,"passes keep an expanded player's 8 incubators / 25 pen slots")
+pdata={IncubatorCount=5,PenSlots=17,PassesApplied={}}
+applyPass(pplayer,"Incubators"); applyPass(pplayer,"PenSlots")
+assert(pdata.IncubatorCount==6 and pdata.PenSlots==20,"passes still cap at the base 6 / 20")
+print("PASS: Incubators / Pen Slots passes never lower slots bought with the base expansion")
+"""
+    shop_checks=shop_checks+"\nend\ndo\n"+ui_checks+"\nend\ndo\n"+inside_checks+"\nend\ndo\n"+exp_checks+"\nend\ndo\n"+pass_checks
+    pre=r"""
+local Color3={fromRGB=function(r,g,b) return {R=r/255,G=g/255,B=b/255} end}
+local Enum=setmetatable({},{__index=function() return setmetatable({},{__index=function(_,k) return k end}) end})
+local workspace={FindFirstChild=function() return nil end}
+"""
+    return pre+"local Config="+cfg+"\n"+checks+"\ndo\n"+shop_checks+"\nend\n"
+
+
 def main():
     from run_flight_checks import harness as flight_harness
     from run_secret_checks import harness as secret_harness
@@ -1455,7 +1711,7 @@ def main():
         subprocess.run([str(args.runtime / ("luau" + exe)), str(script)], check=True)
         script.write_text(mama_harness(), encoding="utf-8")
         subprocess.run([str(args.runtime / ("luau" + exe)), str(script)], check=True)
-        for extra in (flight_harness, secret_harness, seat_harness, movement_harness, pen_roam_harness, tutorial_harness, mount_harness, get_off_harness, storm_harness, guardian_harness, guardian_fx_harness, mama_fx_harness, egg_fx_harness, fuse_ui_harness, gear_harness, touch_buttons_harness, pacing_harness, plaza_harness, top_players_harness, base_harness, rebirth_harness, whats_new_harness, legacy_harness, likes, quests, friends, popups, leaderboard, steal_success, menu, hints, shop, popup, shield, event_layout):
+        for extra in (flight_harness, secret_harness, seat_harness, movement_harness, pen_roam_harness, tutorial_harness, mount_harness, get_off_harness, storm_harness, guardian_harness, guardian_fx_harness, mama_fx_harness, egg_fx_harness, fuse_ui_harness, gear_harness, touch_buttons_harness, pacing_harness, plaza_harness, top_players_harness, base_harness, rebirth_harness, whats_new_harness, expansion_harness, legacy_harness, likes, quests, friends, popups, leaderboard, steal_success, menu, hints, shop, popup, shield, event_layout):
             script.write_text(extra(), encoding="utf-8")
             subprocess.run([str(args.runtime / ("luau" + exe)), str(script)], check=True)
     scripts = sorted((ROOT / "src").rglob("*.luau"))

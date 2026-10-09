@@ -85,7 +85,8 @@ local function renderPen(player)
 		local slot = pedestal:GetAttribute("Slot")
 		local uid = data.Pen[slot]
 		local c = uid and data.Creatures[uid]
-		pedestal.Transparency = slot <= data.PenSlots and 0 or 0.75
+		-- lot pedestals (21+) stay invisible until the base expansion is bought
+		pedestal.Transparency = Config.hiddenSlot(slot, "pen", plot:GetAttribute("Expanded")) and 1 or slot <= data.PenSlots and 0 or 0.75
 		local label = pedestal.Info.Text
 		if c then
 			local model = CreatureBuilder.build(c.species, c.rarity, c.mutation)

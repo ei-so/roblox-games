@@ -25,11 +25,12 @@ local function applyPass(player, key)
 	player:SetAttribute(key .. "Pass", true)
 	if key == "Incubators" and not data.PassesApplied.Incubators then
 		data.PassesApplied.Incubators = true
-		data.IncubatorCount = math.min(Config.Plot.maxIncubators, data.IncubatorCount + 2)
+		-- capped at the base 6, but never lowers incubators bought with the base expansion
+		data.IncubatorCount = math.max(data.IncubatorCount, math.min(Config.Plot.maxIncubators, data.IncubatorCount + 2))
 		HatchService.onPlayerReady(player)
 	elseif key == "PenSlots" and not data.PassesApplied.PenSlots then
 		data.PassesApplied.PenSlots = true
-		data.PenSlots = math.min(Config.Plot.maxPen, data.PenSlots + 5)
+		data.PenSlots = math.max(data.PenSlots, math.min(Config.Plot.maxPen, data.PenSlots + 5)) -- same for pen slots 21-30
 	elseif key == "ExtraMount" then
 		MountService.apply(player)
 	end

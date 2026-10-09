@@ -13,6 +13,7 @@ local PlotService = require(script.Parent.PlotService)
 
 local BaseService = {}
 BaseService.incomeOf = function(_player) return 0 end -- set by Main (CreatureService): income-priced items
+BaseService.afterApply = function(_player) end -- set by Main (ExpansionService): the lot behind the base follows the look
 local Base = Config.Base
 local rgb = Color3.fromRGB
 local DEFAULTS = {} -- [slot] = free default item id
@@ -777,6 +778,7 @@ function BaseService.apply(player)
 	if data and plot then
 		paint(plot, Config.baseTier(data.Rebirths), data)
 		sync(player, data)
+		BaseService.afterApply(player)
 	end
 end
 

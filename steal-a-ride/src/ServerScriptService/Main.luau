@@ -35,6 +35,7 @@ local LikeService = require(Services.LikeService)
 local QuestService = require(Services.QuestService)
 local FriendService = require(Services.FriendService)
 local TopPlayersService = require(Services.TopPlayersService)
+local ExpansionService = require(Services.ExpansionService)
 
 CreatureService.start()
 HatchService.start()
@@ -45,6 +46,7 @@ AbilityService.start()
 FlightService.start()
 ShopService.start()
 BaseService.start(ShopService)
+ExpansionService.start()
 LikeService.start()
 QuestService.start()
 FriendService.start()
@@ -91,6 +93,8 @@ EggService.onOrphanDrop = function(_player, egg)
 end
 GearService.isShielded = StealService.shielded
 BaseService.incomeOf = CreatureService.priceIncomeOf
+BaseService.afterApply = ExpansionService.apply -- join, rebirth and cosmetics all re-apply the lot
+ExpansionService.onBought = BaseService.apply -- repaint (domes over the new pads), then afterApply re-applies the lot
 RebirthService.afterRebirth = function(player)
 	GearService.sync(player)
 	BaseService.apply(player) -- rebirth tiers upgrade the base
@@ -227,6 +231,10 @@ Players.PlayerRemoving:Connect(function(player)
 	CreatureService.cleanup(player)
 	HatchService.cleanup(player)
 	BaseService.reset(player)
+	local plot = PlotService.get(player)
+	if plot then
+		ExpansionService.reset(plot) -- after the cleanups (they show every pad); the next owner sees the lot for sale
+	end
 	PlotService.release(player)
 	SpeedService.release(player)
 	DataService.release(player)
