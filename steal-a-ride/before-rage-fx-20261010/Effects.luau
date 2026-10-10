@@ -502,13 +502,6 @@ player:GetAttributeChangedSignal("LockLeft"):Connect(function()
 	lastLock = left
 end)
 
--- each guardian's enraged package (shared + its biome's additions), built once
-local rageCache = {}
-local function rageOf(biomeId: string)
-	rageCache[biomeId] = rageCache[biomeId] or Config.guardianRage(biomeId)
-	return rageCache[biomeId]
-end
-
 -- the hunting guardian's chase loop: fades in when it starts hunting you, louder as it closes in, out when it stops
 local chaseLoop, chaseBiome
 local function setHunter(biomeId)
@@ -533,7 +526,7 @@ end
 RunService.Heartbeat:Connect(function()
 	local carrying = player:GetAttribute("CarryingEgg")
 	local root = player.Character and player.Character:FindFirstChild("HumanoidRootPart")
-	local intensity, raging, hunter, hunterIntensity, hunterRaging = 0, false, nil, -1, false
+	local intensity, raging, hunter, hunterIntensity = 0, false, nil, -1
 	if carrying and root then -- any guardian may be hunting a carrier: react to the nearest one
 		for _, b in Config.Biomes do
 			local g = guardianOf(b.id)
@@ -542,19 +535,13 @@ RunService.Heartbeat:Connect(function()
 				local closeness = math.clamp(1 - (d.Magnitude - 8) / 70, 0, 1)
 				intensity = math.max(intensity, closeness)
 				raging = raging or g:GetAttribute("Raging") == true
-				if closeness > hunterIntensity then
-					hunter, hunterIntensity, hunterRaging = b.id, closeness, g:GetAttribute("Raging") == true
-				end
+				if closeness > hunterIntensity then hunter, hunterIntensity = b.id, closeness end
 			end
 		end
 	end
 	setHunter(hunter)
 	if chaseLoop then
-		local entry, rc = GS[chaseBiome].chase, rageOf(chaseBiome).chase
-		local volume = entry[3] * (0.35 + 0.65 * hunterIntensity)
-		-- enraged: faster and never quieter than the shared floor (quiet mixes like the spider's stay audible)
-		chaseLoop.Volume = hunterRaging and math.max(volume, rc.volume) or volume
-		chaseLoop.PlaybackSpeed = entry[2] * (hunterRaging and rc.pitch or 1)
+		chaseLoop.Volume = GS[chaseBiome].chase[3] * (0.35 + 0.65 * hunterIntensity)
 	end
 	if raging then -- enraged: a stronger pulsing edge however far behind it is
 		intensity = math.max(intensity, 0.6)
@@ -639,10 +626,8 @@ local function guardianFX(g: Model, biomeId: string, size: Vector3)
 		return a
 	end
 	-- emitters parented straight to a guardian MeshPart don't render, so every layer emits from attachments
-	local rage = rageOf(biomeId)
-	local layers, defs = {}, table.clone(set.layers)
-	table.move(rage.layers, 1, #rage.layers, #defs + 1, defs)
-	for _, def in defs do
+	local layers = {}
+	for _, def in set.layers do
 		local points = def.at and { def.at } or BODY_POINTS
 		for _, at in points do
 			local e = fxEmitter(def, attach(Vector3.new(table.unpack(at))))
@@ -655,11 +640,6 @@ local function guardianFX(g: Model, biomeId: string, size: Vector3)
 		light.Color, light.Range, light.Brightness, light.Shadows = set.light.color, set.light.range, 0, false
 		light.Parent = body
 	end
-	-- every guardian gets the rage light, lit and pulsing only while enraged
-	local rageLight, ragePulse = Instance.new("PointLight"), nil
-	rageLight.Name, rageLight.Color, rageLight.Range, rageLight.Brightness, rageLight.Shadows =
-		"RageLight", rage.light.color, rage.light.range, 0, false
-	rageLight.Parent = body
 	local trails = {}
 	if set.trail then -- a streak off each wingtip
 		for _, side in { -1, 1 } do
@@ -692,22 +672,6 @@ local function guardianFX(g: Model, biomeId: string, size: Vector3)
 				end
 				for _, t in trails do
 					t.Enabled = shown and tier >= set.trail.minTier
-				end
-				local raging = shown and tier == 4
-				if ragePulse then ragePulse:Cancel(); ragePulse = nil end
-				if raging then
-					local peak = rage.light.brightness * T.light[4]
-					rageLight.Brightness = peak * (1 - rage.light.pulse)
-					ragePulse = TweenService:Create(rageLight, TweenInfo.new(0.35, Enum.EasingStyle.Sine,
-						Enum.EasingDirection.InOut, -1, true), { Brightness = peak })
-					ragePulse:Play()
-				else
-					TweenService:Create(rageLight, TweenInfo.new(0.4), { Brightness = 0 }):Play()
-				end
-				if raging and rose then -- it just snapped: shockwave + its rage voice, for everyone nearby
-					local center = g:GetPivot().Position
-					for _, o in rage.onsets do fxBurst(o, center, o.count) end
-					voice(rage.sound, body)
 				end
 			end
 			task.wait(0.15)
@@ -742,12 +706,7 @@ local function watchGuardian(g: Model, biomeId: string)
 		local pos = g:GetPivot().Position
 		if near(pos, 160) then
 			local feet = Vector3.new(pos.X, pos.Y - size.Y / 2 + 0.5, pos.Z)
-			local puff = math.clamp(size.Y * 0.18, 1.5, 4)
-			if guardianTier(g) == 4 then -- enraged: every guardian stomps up heavy dust, light-footed ones too
-				dustPuff(feet, puff * rageOf(biomeId).stepDust, 22)
-			elseif biomeId ~= "MysticGrove" then
-				dustPuff(feet, puff, 14)
-			end
+			if biomeId ~= "MysticGrove" then dustPuff(feet, math.clamp(size.Y * 0.18, 1.5, 4), 14) end
 			if stepFX then
 				if biomeId == "MysticGrove" then
 					-- Tiny spore taps at the actual scuttling feet, instead of a heavy central stomp.

@@ -628,7 +628,6 @@ Config.WhatsNew = {
 			"Upgrades moved to their own stall: <b>Sam the Saddler</b> sells Saddles, incubators and pen slots next to Gus's Gear Shop",
 			"Rebirth 10 unlocks a <b>Base Expansion</b> behind your base: 10 more pen spots and 2 more incubators",
 			"Nests hold <b>fewer eggs in quieter servers</b> and fill back up as players join",
-			"<b>Enraged guardians</b> now flash a pulsing glow, kick up dust and let out a roar, and the Giant Spider drips venom",
 		},
 	},
 }
@@ -753,26 +752,10 @@ Config.EggFX = {
 -- minTier, flare = extra particles when the tier rises, drag, trans = start transparency, locked = move with the body
 -- (otherwise particles stream behind it).
 -- step: burst at the feet on each footfall (count x tier); linger = seconds it keeps burning there from lingerTier.
--- rage: the enraged (tier 4) package EVERY guardian gets, so a new biome never ships without it. A biome's own
--- `rage` block only adds to it: extra layers, light color, its own roar sound and onset burst (Config.guardianRage).
 local fx = "rbxasset://textures/particles/"
 Config.GuardianFX = {
 	distance = 260,
 	tiers = { rate = { 1, 1.8, 2.7, 3.8 }, size = { 1, 1.12, 1.25, 1.45 }, light = { 1, 1.5, 2.2, 3.2 } },
-	rage = {
-		layers = { -- added to the guardian's own layers, tier 4 only (tier rate x3.8 applies)
-			{ texture = fx .. "fire_sparks_main.dds", color = rgb(255, 210, 90), color2 = rgb(255, 40, 30), size = { 0.45, 0 },
-				rate = 4, life = 1.3, speed = 6, spread = 180, accel = 5, light = 1, minTier = 4, flare = 40 },
-			{ texture = fx .. "smoke_main.dds", color = rgb(150, 20, 20), color2 = rgb(60, 10, 10), size = { 2.4, 5 },
-				rate = 0.8, life = 1.8, speed = 1, spread = 180, accel = 1, trans = 0.6, light = 0.2, locked = true, minTier = 4 },
-		},
-		light = { color = rgb(255, 50, 40), range = 30, brightness = 0.6, pulse = 0.4 }, -- pulses while enraged
-		onset = { texture = fx .. "SquareParticle.png", color = rgb(255, 80, 50), color2 = rgb(255, 220, 120), size = { 1.6, 0 },
-			count = 40, life = 0.6, speed = 45, spread = 180, drag = 5, light = 1, squash = 3 }, -- shockwave as it snaps
-		sound = { 9113980319, 1.35, 0.55, 1.6 }, -- 3D roar from the guardian, heard by everyone nearby
-		stepDust = 1.4, -- heavy dust under every footfall while enraged (x the guardian's normal puff), even light-footed ones
-		chase = { pitch = 1.1, volume = 0.6 }, -- the chase loop speeds up and gets at least this loud
-	},
 	guardians = { -- sizes are tier 1; tier 4 is x1.45
 		MysticGrove = { -- Spider: silk at the fangs, glowing spores around the abdomen, tiny chitin footsteps.
 			layers = {
@@ -788,19 +771,6 @@ Config.GuardianFX = {
 			trail = { color = rgb(205, 255, 225), color2 = rgb(165, 105, 230), life = 0.65, minTier = 2 },
 			step = { texture = fx .. "sparkles_main.dds", color = rgb(145, 225, 195), size = { 0.35, 0 }, count = 3,
 				life = 0.55, speed = 4, spread = 35, accel = -4, light = 0.4 },
-			rage = { -- venom drips off the fangs, a toxic violet haze, torn silk flung out as it snaps; a deep hiss
-				layers = {
-					{ texture = fx .. "sparkles_main.dds", color = rgb(170, 255, 90), color2 = rgb(60, 200, 80), size = { 0.6, 0.15 },
-						rate = 6, life = 1, speed = 3, spread = 25, accel = -18, light = 1, at = { 0, 0.05, -0.36 }, face = true,
-						minTier = 4, flare = 12 },
-					{ texture = fx .. "smoke_main.dds", color = rgb(150, 60, 220), color2 = rgb(70, 220, 120), size = { 3, 7 },
-						rate = 1.2, life = 2.2, speed = 1.5, spread = 180, accel = 0.5, trans = 0.55, light = 0.6, minTier = 4 },
-				},
-				light = { color = rgb(200, 60, 255) },
-				onset = { texture = fx .. "SquareParticle.png", color = rgb(235, 255, 240), color2 = rgb(150, 255, 120), size = { 1.2, 0.2 },
-					count = 36, life = 0.9, speed = 38, spread = 180, drag = 4, accel = -10, spin = 120, squash = 4 },
-				sound = { 9125917896, 0.5, 0.8, 1.8 }, -- its own chitter, slowed into a hiss
-			},
 		},
 		Forest = { -- Chicken: loose feathers drifting down
 			layers = {
@@ -875,18 +845,6 @@ Config.GuardianFX = {
 		},
 	},
 }
-
--- a guardian's full enraged package: the shared one, plus (never instead of) its biome's own rage block
-function Config.guardianRage(biomeId: string)
-	local base, own = Config.GuardianFX.rage, (Config.GuardianFX.guardians[biomeId] or {}).rage or {}
-	local layers = table.clone(base.layers)
-	for _, l in own.layers or {} do table.insert(layers, l) end
-	local light = table.clone(base.light)
-	for k, v in own.light or {} do light[k] = v end
-	-- the red shockwave always plays (the universal "it's enraged" read); its own voice replaces the generic roar
-	return { layers = layers, light = light, onsets = { base.onset, own.onset }, sound = own.sound or base.sound,
-		stepDust = own.stepDust or base.stepDust, chase = own.chase or base.chase }
-end
 
 -- Mama entrance (Pro Sound Effects). Sound entries: { assetId, pitch, volume, maxSeconds? }.
 Config.MamaFX = {

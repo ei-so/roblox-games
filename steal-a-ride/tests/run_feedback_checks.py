@@ -1069,7 +1069,16 @@ for _,b in Config.Biomes do
     for _,l in s.layers do
         assert(l.texture~="" and l.rate>=0 and l.life>0 and (l.minTier or 1)<=4,b.id.." layer is complete")
     end
+    -- every guardian, including any biome added later, inherits the whole shared enraged package
+    local r=Config.guardianRage(b.id)
+    assert(#r.layers>=#FX.rage.layers and r.onsets[1]==FX.rage.onset,b.id.." keeps the shared rage layers and shockwave")
+    for _,l in r.layers do assert(l.minTier==4 and l.texture~="" and l.life>0,b.id.." rage layer is tier-4 only and complete") end
+    assert(r.light.color and r.light.range>0 and r.light.brightness>0 and r.light.pulse>0,b.id.." has a pulsing rage light")
+    assert(r.sound and r.sound[1]>0 and r.sound[3]>0 and r.stepDust>1 and r.chase.pitch>1 and r.chase.volume>0,b.id.." has rage sound, stomp and chase boost")
 end
+local mg=Config.guardianRage("MysticGrove")
+assert(#mg.layers==#FX.rage.layers+2 and mg.onsets[2] and mg.sound~=FX.rage.sound,"Mystic Grove adds venom, haze, silk burst and its own hiss on top")
+assert(#FX.rage.layers==2 and FX.rage.layers[1].minTier==4,"the shared rage package itself is untouched by a biome's additions")
 assert(guardianTier(model({}))==1,"patrolling = tier 1")
 assert(guardianTier(model({OutOfBiome=true}))==1,"walking home outside its biome stays calm")
 assert(guardianTier(model({ChaseTarget=1}))==2,"chasing in its biome = tier 2")
