@@ -438,14 +438,11 @@ local ICONS = {
 		dot(p, Color3.fromRGB(255, 214, 90), 18, 17, 17, 3)
 		dot(p, Color3.fromRGB(255, 244, 190), 6, 13, 13, 4)
 	end,
-	Bolt = function(p)
-		for i, s in { { 19, 10, 6, 13, 20 }, { 17, 17, 13, 5, -20 }, { 15, 24, 6, 13, 20 } } do
-			local f = Instance.new("Frame")
-			f.AnchorPoint = Vector2.new(0.5, 0.5)
-			f.Position, f.Size, f.Rotation = UDim2.fromOffset(s[1], s[2]), UDim2.fromOffset(s[3], s[4]), s[5]
-			f.BackgroundColor3, f.BorderSizePixel, f.ZIndex = Color3.fromRGB(255, 220, 70), 0, 2 + i
-			f.Parent = p
-		end
+	Bolt = function(p) -- the speed pill's familiar lightning glyph
+		local t = Instance.new("TextLabel")
+		t.BackgroundTransparency, t.Size, t.ZIndex = 1, UDim2.fromScale(1, 1), 2
+		t.Text, t.TextSize = "⚡", 22
+		t.Parent = p
 	end,
 	Menu = function(p)
 		for _, y in { 11, 17, 23 } do
