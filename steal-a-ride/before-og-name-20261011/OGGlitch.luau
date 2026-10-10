@@ -1,6 +1,6 @@
--- OG nametags (built by Main): every 1.5-3 s each one glitches briefly — red/cyan ghosts split apart
--- and a letter or two of the name corrupts, then snaps back. Client-only; tags out of view range are skipped.
-local CORRUPT = { "▓", "▒", "#", "0", "Ø", "%", "_" }
+-- OG overhead tags (built by Main): every 1.5-3 s each one glitches briefly — red/cyan ghosts split apart
+-- and the letters corrupt, then snap back. Client-only; tags out of view range are skipped.
+local CORRUPT = { "0G", "O#", "▓G", "QG", "O▒", "Ø6" }
 
 local tags = {} -- [BillboardGui] = next glitch os.clock()
 
@@ -10,30 +10,20 @@ local function track(gui)
 	end
 end
 
--- usernames are ASCII, so string.sub swaps whole characters
-local function corrupt(text)
-	for _ = 1, math.random(1, 2) do
-		local i = math.random(#text)
-		text = text:sub(1, i - 1) .. CORRUPT[math.random(#CORRUPT)] .. text:sub(i + 1)
-	end
-	return text
-end
-
 local function glitch(gui)
 	local red, cyan, main = gui:FindFirstChild("Red"), gui:FindFirstChild("Cyan"), gui:FindFirstChild("Main")
-	local text = gui:GetAttribute("Text")
-	if not (red and cyan and main and text and #text > 0) then
+	if not (red and cyan and main) then
 		return
 	end
 	for _ = 1, 3 do
 		local dx, dy = math.random(2, 5), math.random(-2, 2)
 		red.Position = UDim2.fromOffset(-dx, dy)
 		cyan.Position = UDim2.fromOffset(dx, -dy)
-		main.Text = math.random() < 0.6 and corrupt(text) or text
+		main.Text = math.random() < 0.6 and CORRUPT[math.random(#CORRUPT)] or "OG"
 		task.wait(0.06)
 	end
 	red.Position, cyan.Position = UDim2.new(), UDim2.new()
-	main.Text = text
+	main.Text = "OG"
 end
 
 for _, d in workspace:GetDescendants() do

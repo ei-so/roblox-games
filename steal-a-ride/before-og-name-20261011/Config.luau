@@ -656,14 +656,6 @@ Config.WhatsNew = {
 			"<b>Enraged guardians</b> now flash a pulsing glow, kick up dust and let out a roar, and the Giant Spider drips venom",
 		},
 	},
-	{
-		version = 6,
-		title = "Event timers",
-		lines = {
-			"New <b>event cards</b> on the right count down to the next weather, Mama Dragon and Secret Egg",
-			"The OG badge is now your <b>username</b>, glitching right above your head",
-		},
-	},
 }
 
 -- the updates newer than `seen` (nil = never saw any), newest first

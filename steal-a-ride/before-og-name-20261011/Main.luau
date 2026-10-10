@@ -115,7 +115,7 @@ local function syncShieldTag(player)
 	tag = Instance.new("BillboardGui")
 	tag.Name = "ShieldedTag"
 	tag.Size = UDim2.fromScale(8, 1.1)
-	tag.StudsOffset = Vector3.new(0, 3.2, 0)
+	tag.StudsOffset = Vector3.new(0, player:GetAttribute("OG") and 4.4 or 3.2, 0)
 	tag.MaxDistance = 80
 	local label = Instance.new("TextLabel")
 	label.Size = UDim2.fromScale(1, 1)
@@ -134,15 +134,12 @@ local function onCharacter(player, character)
 	character:WaitForChild("HumanoidRootPart")
 	PlotService.spawn(player, character)
 	if player:GetAttribute("OG") then
-		-- OG players' nametag: their username in the "corrupted" look from the buggy pre-reset build (red/cyan
-		-- ghost copies); OGGlitch (client) animates it. Replaces the default Roblox name so it isn't shown twice.
-		character.Humanoid.DisplayDistanceType = Enum.HumanoidDisplayDistanceType.None
 		local tag = Instance.new("BillboardGui")
 		tag.Name = "OGTag"
-		tag.Size = UDim2.fromScale(6, 0.8)
-		tag.StudsOffset = Vector3.new(0, 2, 0)
+		tag.Size = UDim2.fromScale(2.4, 0.9)
+		tag.StudsOffset = Vector3.new(0, 3.2, 0)
 		tag.MaxDistance = 80
-		tag:SetAttribute("Text", player.Name)
+		-- "corrupted" look from the buggy pre-reset build: red/cyan ghost copies + scanlines; OGGlitch (client) animates it
 		for i, layer in { { "Red", Color3.fromRGB(255, 42, 79) }, { "Cyan", Color3.fromRGB(37, 232, 255) }, { "Main", Color3.new(1, 1, 1) } } do
 			local label = Instance.new("TextLabel")
 			label.Name = layer[1]
@@ -150,12 +147,22 @@ local function onCharacter(player, character)
 			label.BackgroundTransparency = 1
 			label.Font = Enum.Font.FredokaOne
 			label.TextScaled = true
-			label.Text = player.Name
+			label.Text = "OG"
 			label.TextColor3 = layer[2]
 			label.TextTransparency = i < 3 and 0.2 or 0
 			label.TextStrokeTransparency = i < 3 and 1 or 0.1
 			label.ZIndex = i
 			label.Parent = tag
+		end
+		for y = 0.3, 0.8, 0.25 do
+			local line = Instance.new("Frame")
+			line.Position = UDim2.fromScale(0.15, y)
+			line.Size = UDim2.fromScale(0.7, 0.05)
+			line.BackgroundColor3 = Color3.new(0, 0, 0)
+			line.BackgroundTransparency = 0.75
+			line.BorderSizePixel = 0
+			line.ZIndex = 4
+			line.Parent = tag
 		end
 		tag.Parent = character:WaitForChild("Head")
 	end
