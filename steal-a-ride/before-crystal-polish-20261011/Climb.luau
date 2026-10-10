@@ -40,10 +40,4 @@ function Climb.lift(rideSpeed: number): number
 	return math.max(12, rideSpeed * Config.Abilities.Climb.speedMult)
 end
 
--- upward speed kept when the climb ends at the top: only what lifts the rider `rise` studs over the edge, so a fast
--- climber (lift ~180 studs/s) lands on the wall top instead of being launched over the next walls; never speeds up
-function Climb.crestSpeed(vy: number, rise: number, gravity: number): number
-	return math.min(vy, math.sqrt(2 * gravity * rise))
-end
-
 return Climb

@@ -28,10 +28,10 @@ def mat(name, rgb, transmission=0.0, rough=0.3, emit=0.0, coat=0.6):
     return m
 
 M = {
-    "quartz": mat("Quartz", (196, 222, 255), transmission=0.35, rough=0.1),     # clear blue-white crystal
-    "milky": mat("MilkyQuartz", (236, 238, 250), rough=0.25),                  # body quartz
-    "lilac": mat("LilacQuartz", (214, 200, 250), rough=0.2),                   # second crystal tint
-    "shade": mat("QuartzShade", (150, 158, 198), rough=0.35),                  # joints, bellies, bands
+    "quartz": mat("Quartz", (140, 192, 252), transmission=0.35, rough=0.1),     # clear blue-white crystal
+    "milky": mat("MilkyQuartz", (188, 212, 242), rough=0.25),                  # body quartz
+    "lilac": mat("LilacQuartz", (186, 168, 246), rough=0.2),                   # second crystal tint
+    "shade": mat("QuartzShade", (104, 122, 184), rough=0.35),                  # joints, bellies, bands
     "stone": mat("CaveStone", (112, 114, 128), rough=0.8, coat=0),
     "dark": mat("Dark", (34, 36, 52), rough=0.25),
     "white": mat("EyeWhite", (252, 252, 255), rough=0.2),

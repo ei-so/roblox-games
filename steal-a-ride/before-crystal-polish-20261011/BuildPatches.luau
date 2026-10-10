@@ -103,7 +103,6 @@ end
 return function()
 	local out = {}
 	for _, b in Config.Biomes do
-		if b.shortcuts then continue end -- Crystal Caverns: quartz walls (Climb) replace patches
 		if b.lane then table.insert(out, build(b.id)) else backup(workspace.Biomes[b.id]) end
 	end
 	return table.concat(out, "\n")

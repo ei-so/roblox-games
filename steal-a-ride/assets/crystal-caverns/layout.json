@@ -1,0 +1,4731 @@
+{
+ "W": 220,
+ "D": 700,
+ "H": 92,
+ "NEST_Y": 489.99999999999994,
+ "WALL_YS": [
+  98,
+  196,
+  294,
+  392
+ ],
+ "GAP": 28,
+ "walls": [
+  {
+   "row": 1,
+   "y": 98,
+   "gap_side": 1,
+   "gap": 28,
+   "x0": -110.0,
+   "x1": 82.0
+  },
+  {
+   "row": 2,
+   "y": 196,
+   "gap_side": -1,
+   "gap": 28,
+   "x0": -82.0,
+   "x1": 110.0
+  },
+  {
+   "row": 3,
+   "y": 294,
+   "gap_side": 1,
+   "gap": 28,
+   "x0": -110.0,
+   "x1": 82.0
+  },
+  {
+   "row": 4,
+   "y": 392,
+   "gap_side": -1,
+   "gap": 28,
+   "x0": -82.0,
+   "x1": 110.0
+  }
+ ],
+ "items": [
+  {
+   "asset": "QuartzWallA",
+   "x": -78.0,
+   "y": 98,
+   "z": 0,
+   "rot": 0,
+   "scale": 1,
+   "kind": "wall",
+   "sx": 1.0667,
+   "row": 1
+  },
+  {
+   "asset": "WallCrest",
+   "x": -78.0,
+   "y": 98,
+   "z": 40,
+   "rot": 0,
+   "scale": 1,
+   "kind": "glow",
+   "sx": 1.0667,
+   "color": "cyan",
+   "row": 1
+  },
+  {
+   "asset": "Handhold",
+   "x": -103.28,
+   "y": 93.1,
+   "z": 6.1,
+   "rot": 0,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 1
+  },
+  {
+   "asset": "Handhold",
+   "x": -101.16,
+   "y": 93.1,
+   "z": 13.54,
+   "rot": 0,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 1
+  },
+  {
+   "asset": "Handhold",
+   "x": -98.93,
+   "y": 93.1,
+   "z": 20.17,
+   "rot": 0,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 1
+  },
+  {
+   "asset": "Handhold",
+   "x": -97.55,
+   "y": 93.1,
+   "z": 27.23,
+   "rot": 0,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 1
+  },
+  {
+   "asset": "Handhold",
+   "x": -95.56,
+   "y": 93.1,
+   "z": 34.63,
+   "rot": 0,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 1
+  },
+  {
+   "asset": "Handhold",
+   "x": -51.76,
+   "y": 102.9,
+   "z": 6.37,
+   "rot": 180,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 1
+  },
+  {
+   "asset": "Handhold",
+   "x": -54.18,
+   "y": 102.9,
+   "z": 12.42,
+   "rot": 180,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 1
+  },
+  {
+   "asset": "Handhold",
+   "x": -57.06,
+   "y": 102.9,
+   "z": 20.96,
+   "rot": 180,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 1
+  },
+  {
+   "asset": "Handhold",
+   "x": -58.18,
+   "y": 102.9,
+   "z": 27.61,
+   "rot": 180,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 1
+  },
+  {
+   "asset": "Handhold",
+   "x": -60.27,
+   "y": 102.9,
+   "z": 34.03,
+   "rot": 180,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 1
+  },
+  {
+   "asset": "QuartzWallB",
+   "x": -14.0,
+   "y": 98,
+   "z": 0,
+   "rot": 0,
+   "scale": 1,
+   "kind": "wall",
+   "sx": 1.0667,
+   "row": 1
+  },
+  {
+   "asset": "WallCrest",
+   "x": -14.0,
+   "y": 98,
+   "z": 40,
+   "rot": 0,
+   "scale": 1,
+   "kind": "glow",
+   "sx": 1.0667,
+   "color": "cyan",
+   "row": 1
+  },
+  {
+   "asset": "Handhold",
+   "x": -40.39,
+   "y": 93.1,
+   "z": 6.08,
+   "rot": 0,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 1
+  },
+  {
+   "asset": "Handhold",
+   "x": -37.87,
+   "y": 93.1,
+   "z": 12.28,
+   "rot": 0,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 1
+  },
+  {
+   "asset": "Handhold",
+   "x": -35.1,
+   "y": 93.1,
+   "z": 20.43,
+   "rot": 0,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 1
+  },
+  {
+   "asset": "Handhold",
+   "x": -33.44,
+   "y": 93.1,
+   "z": 27.7,
+   "rot": 0,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 1
+  },
+  {
+   "asset": "Handhold",
+   "x": -31.14,
+   "y": 93.1,
+   "z": 33.92,
+   "rot": 0,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 1
+  },
+  {
+   "asset": "Handhold",
+   "x": -39.11,
+   "y": 102.9,
+   "z": 6.11,
+   "rot": 180,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 1
+  },
+  {
+   "asset": "Handhold",
+   "x": -36.95,
+   "y": 102.9,
+   "z": 12.85,
+   "rot": 180,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 1
+  },
+  {
+   "asset": "Handhold",
+   "x": -34.85,
+   "y": 102.9,
+   "z": 20.73,
+   "rot": 180,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 1
+  },
+  {
+   "asset": "Handhold",
+   "x": -32.53,
+   "y": 102.9,
+   "z": 26.8,
+   "rot": 180,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 1
+  },
+  {
+   "asset": "Handhold",
+   "x": -30.89,
+   "y": 102.9,
+   "z": 34.69,
+   "rot": 180,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 1
+  },
+  {
+   "asset": "QuartzWallC",
+   "x": 50.0,
+   "y": 98,
+   "z": 0,
+   "rot": 0,
+   "scale": 1,
+   "kind": "wall",
+   "sx": 1.0667,
+   "row": 1
+  },
+  {
+   "asset": "WallCrest",
+   "x": 50.0,
+   "y": 98,
+   "z": 40,
+   "rot": 0,
+   "scale": 1,
+   "kind": "glow",
+   "sx": 1.0667,
+   "color": "cyan",
+   "row": 1
+  },
+  {
+   "asset": "Handhold",
+   "x": 75.85,
+   "y": 93.1,
+   "z": 6.53,
+   "rot": 0,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 1
+  },
+  {
+   "asset": "Handhold",
+   "x": 74.04,
+   "y": 93.1,
+   "z": 13.93,
+   "rot": 0,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 1
+  },
+  {
+   "asset": "Handhold",
+   "x": 71.37,
+   "y": 93.1,
+   "z": 20.34,
+   "rot": 0,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 1
+  },
+  {
+   "asset": "Handhold",
+   "x": 69.48,
+   "y": 93.1,
+   "z": 26.86,
+   "rot": 0,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 1
+  },
+  {
+   "asset": "Handhold",
+   "x": 66.36,
+   "y": 93.1,
+   "z": 34.77,
+   "rot": 0,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 1
+  },
+  {
+   "asset": "Handhold",
+   "x": 24.55,
+   "y": 102.9,
+   "z": 6.43,
+   "rot": 180,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 1
+  },
+  {
+   "asset": "Handhold",
+   "x": 27.2,
+   "y": 102.9,
+   "z": 13.96,
+   "rot": 180,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 1
+  },
+  {
+   "asset": "Handhold",
+   "x": 28.27,
+   "y": 102.9,
+   "z": 19.8,
+   "rot": 180,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 1
+  },
+  {
+   "asset": "Handhold",
+   "x": 31.66,
+   "y": 102.9,
+   "z": 27.1,
+   "rot": 180,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 1
+  },
+  {
+   "asset": "Handhold",
+   "x": 33.3,
+   "y": 102.9,
+   "z": 34.4,
+   "rot": 180,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 1
+  },
+  {
+   "asset": "GlowClusterBig",
+   "x": 80.0,
+   "y": 90.5,
+   "z": 0,
+   "rot": 289.8,
+   "scale": 1.2,
+   "kind": "glow",
+   "color": "amber"
+  },
+  {
+   "asset": "GlowClusterBig",
+   "x": 80.0,
+   "y": 105.5,
+   "z": 0,
+   "rot": 144.7,
+   "scale": 1.2,
+   "kind": "glow",
+   "color": "amber"
+  },
+  {
+   "asset": "light",
+   "x": 96.0,
+   "y": 98,
+   "z": 14,
+   "rot": 0.0,
+   "scale": 1.0,
+   "kind": "light",
+   "color": "amber",
+   "range": 26,
+   "brightness": 1.2
+  },
+  {
+   "asset": "QuartzWallA",
+   "x": -50.0,
+   "y": 196,
+   "z": 0,
+   "rot": 0,
+   "scale": 1,
+   "kind": "wall",
+   "sx": 1.0667,
+   "row": 2
+  },
+  {
+   "asset": "WallCrest",
+   "x": -50.0,
+   "y": 196,
+   "z": 40,
+   "rot": 0,
+   "scale": 1,
+   "kind": "glow",
+   "sx": 1.0667,
+   "color": "cyan",
+   "row": 2
+  },
+  {
+   "asset": "Handhold",
+   "x": -67.49,
+   "y": 191.1,
+   "z": 6.76,
+   "rot": 0,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 2
+  },
+  {
+   "asset": "Handhold",
+   "x": -68.4,
+   "y": 191.1,
+   "z": 13.61,
+   "rot": 0,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 2
+  },
+  {
+   "asset": "Handhold",
+   "x": -70.65,
+   "y": 191.1,
+   "z": 19.72,
+   "rot": 0,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 2
+  },
+  {
+   "asset": "Handhold",
+   "x": -74.01,
+   "y": 191.1,
+   "z": 27.39,
+   "rot": 0,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 2
+  },
+  {
+   "asset": "Handhold",
+   "x": -75.79,
+   "y": 191.1,
+   "z": 34.53,
+   "rot": 0,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 2
+  },
+  {
+   "asset": "Handhold",
+   "x": -32.97,
+   "y": 200.9,
+   "z": 6.81,
+   "rot": 180,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 2
+  },
+  {
+   "asset": "Handhold",
+   "x": -30.34,
+   "y": 200.9,
+   "z": 12.63,
+   "rot": 180,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 2
+  },
+  {
+   "asset": "Handhold",
+   "x": -28.0,
+   "y": 200.9,
+   "z": 19.2,
+   "rot": 180,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 2
+  },
+  {
+   "asset": "Handhold",
+   "x": -26.16,
+   "y": 200.9,
+   "z": 27.57,
+   "rot": 180,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 2
+  },
+  {
+   "asset": "Handhold",
+   "x": -24.24,
+   "y": 200.9,
+   "z": 33.91,
+   "rot": 180,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 2
+  },
+  {
+   "asset": "QuartzWallB",
+   "x": 14.0,
+   "y": 196,
+   "z": 0,
+   "rot": 0,
+   "scale": 1,
+   "kind": "wall",
+   "sx": 1.0667,
+   "row": 2
+  },
+  {
+   "asset": "WallCrest",
+   "x": 14.0,
+   "y": 196,
+   "z": 40,
+   "rot": 0,
+   "scale": 1,
+   "kind": "glow",
+   "sx": 1.0667,
+   "color": "cyan",
+   "row": 2
+  },
+  {
+   "asset": "Handhold",
+   "x": -11.19,
+   "y": 191.1,
+   "z": 5.96,
+   "rot": 0,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 2
+  },
+  {
+   "asset": "Handhold",
+   "x": -10.23,
+   "y": 191.1,
+   "z": 12.53,
+   "rot": 0,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 2
+  },
+  {
+   "asset": "Handhold",
+   "x": -7.34,
+   "y": 191.1,
+   "z": 19.19,
+   "rot": 0,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 2
+  },
+  {
+   "asset": "Handhold",
+   "x": -4.74,
+   "y": 191.1,
+   "z": 26.82,
+   "rot": 0,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 2
+  },
+  {
+   "asset": "Handhold",
+   "x": -3.01,
+   "y": 191.1,
+   "z": 33.03,
+   "rot": 0,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 2
+  },
+  {
+   "asset": "Handhold",
+   "x": -11.6,
+   "y": 200.9,
+   "z": 6.86,
+   "rot": 180,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 2
+  },
+  {
+   "asset": "Handhold",
+   "x": -10.2,
+   "y": 200.9,
+   "z": 13.59,
+   "rot": 180,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 2
+  },
+  {
+   "asset": "Handhold",
+   "x": -7.74,
+   "y": 200.9,
+   "z": 20.24,
+   "rot": 180,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 2
+  },
+  {
+   "asset": "Handhold",
+   "x": -4.73,
+   "y": 200.9,
+   "z": 27.91,
+   "rot": 180,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 2
+  },
+  {
+   "asset": "Handhold",
+   "x": -2.66,
+   "y": 200.9,
+   "z": 34.27,
+   "rot": 180,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 2
+  },
+  {
+   "asset": "QuartzWallC",
+   "x": 78.0,
+   "y": 196,
+   "z": 0,
+   "rot": 0,
+   "scale": 1,
+   "kind": "wall",
+   "sx": 1.0667,
+   "row": 2
+  },
+  {
+   "asset": "WallCrest",
+   "x": 78.0,
+   "y": 196,
+   "z": 40,
+   "rot": 0,
+   "scale": 1,
+   "kind": "glow",
+   "sx": 1.0667,
+   "color": "cyan",
+   "row": 2
+  },
+  {
+   "asset": "Handhold",
+   "x": 60.77,
+   "y": 191.1,
+   "z": 6.17,
+   "rot": 0,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 2
+  },
+  {
+   "asset": "Handhold",
+   "x": 59.3,
+   "y": 191.1,
+   "z": 13.9,
+   "rot": 0,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 2
+  },
+  {
+   "asset": "Handhold",
+   "x": 56.65,
+   "y": 191.1,
+   "z": 20.44,
+   "rot": 0,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 2
+  },
+  {
+   "asset": "Handhold",
+   "x": 53.88,
+   "y": 191.1,
+   "z": 26.45,
+   "rot": 0,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 2
+  },
+  {
+   "asset": "Handhold",
+   "x": 52.41,
+   "y": 191.1,
+   "z": 34.92,
+   "rot": 0,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 2
+  },
+  {
+   "asset": "Handhold",
+   "x": 103.6,
+   "y": 200.9,
+   "z": 5.32,
+   "rot": 180,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 2
+  },
+  {
+   "asset": "Handhold",
+   "x": 100.95,
+   "y": 200.9,
+   "z": 13.56,
+   "rot": 180,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 2
+  },
+  {
+   "asset": "Handhold",
+   "x": 99.47,
+   "y": 200.9,
+   "z": 20.02,
+   "rot": 180,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 2
+  },
+  {
+   "asset": "Handhold",
+   "x": 96.96,
+   "y": 200.9,
+   "z": 26.3,
+   "rot": 180,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 2
+  },
+  {
+   "asset": "Handhold",
+   "x": 95.42,
+   "y": 200.9,
+   "z": 33.75,
+   "rot": 180,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 2
+  },
+  {
+   "asset": "GlowClusterBig",
+   "x": -80.0,
+   "y": 188.5,
+   "z": 0,
+   "rot": 345.2,
+   "scale": 1.2,
+   "kind": "glow",
+   "color": "amber"
+  },
+  {
+   "asset": "GlowClusterBig",
+   "x": -80.0,
+   "y": 203.5,
+   "z": 0,
+   "rot": 140.2,
+   "scale": 1.2,
+   "kind": "glow",
+   "color": "amber"
+  },
+  {
+   "asset": "light",
+   "x": -96.0,
+   "y": 196,
+   "z": 14,
+   "rot": 0.0,
+   "scale": 1.0,
+   "kind": "light",
+   "color": "amber",
+   "range": 26,
+   "brightness": 1.2
+  },
+  {
+   "asset": "QuartzWallA",
+   "x": -78.0,
+   "y": 294,
+   "z": 0,
+   "rot": 0,
+   "scale": 1,
+   "kind": "wall",
+   "sx": 1.0667,
+   "row": 3
+  },
+  {
+   "asset": "WallCrest",
+   "x": -78.0,
+   "y": 294,
+   "z": 40,
+   "rot": 0,
+   "scale": 1,
+   "kind": "glow",
+   "sx": 1.0667,
+   "color": "cyan",
+   "row": 3
+  },
+  {
+   "asset": "Handhold",
+   "x": -53.03,
+   "y": 289.1,
+   "z": 5.95,
+   "rot": 0,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 3
+  },
+  {
+   "asset": "Handhold",
+   "x": -54.17,
+   "y": 289.1,
+   "z": 12.9,
+   "rot": 0,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 3
+  },
+  {
+   "asset": "Handhold",
+   "x": -56.0,
+   "y": 289.1,
+   "z": 20.0,
+   "rot": 0,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 3
+  },
+  {
+   "asset": "Handhold",
+   "x": -58.92,
+   "y": 289.1,
+   "z": 27.24,
+   "rot": 0,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 3
+  },
+  {
+   "asset": "Handhold",
+   "x": -61.59,
+   "y": 289.1,
+   "z": 34.18,
+   "rot": 0,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 3
+  },
+  {
+   "asset": "Handhold",
+   "x": -103.54,
+   "y": 298.9,
+   "z": 5.92,
+   "rot": 180,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 3
+  },
+  {
+   "asset": "Handhold",
+   "x": -101.96,
+   "y": 298.9,
+   "z": 13.42,
+   "rot": 180,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 3
+  },
+  {
+   "asset": "Handhold",
+   "x": -99.26,
+   "y": 298.9,
+   "z": 19.07,
+   "rot": 180,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 3
+  },
+  {
+   "asset": "Handhold",
+   "x": -96.9,
+   "y": 298.9,
+   "z": 26.35,
+   "rot": 180,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 3
+  },
+  {
+   "asset": "Handhold",
+   "x": -94.7,
+   "y": 298.9,
+   "z": 34.86,
+   "rot": 180,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 3
+  },
+  {
+   "asset": "QuartzWallC",
+   "x": -14.0,
+   "y": 294,
+   "z": 0,
+   "rot": 0,
+   "scale": 1,
+   "kind": "wall",
+   "sx": 1.0667,
+   "row": 3
+  },
+  {
+   "asset": "WallCrest",
+   "x": -14.0,
+   "y": 294,
+   "z": 40,
+   "rot": 0,
+   "scale": 1,
+   "kind": "glow",
+   "sx": 1.0667,
+   "color": "cyan",
+   "row": 3
+  },
+  {
+   "asset": "Handhold",
+   "x": -39.14,
+   "y": 289.1,
+   "z": 6.28,
+   "rot": 0,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 3
+  },
+  {
+   "asset": "Handhold",
+   "x": -37.56,
+   "y": 289.1,
+   "z": 13.36,
+   "rot": 0,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 3
+  },
+  {
+   "asset": "Handhold",
+   "x": -36.1,
+   "y": 289.1,
+   "z": 20.29,
+   "rot": 0,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 3
+  },
+  {
+   "asset": "Handhold",
+   "x": -33.58,
+   "y": 289.1,
+   "z": 27.77,
+   "rot": 0,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 3
+  },
+  {
+   "asset": "Handhold",
+   "x": -30.3,
+   "y": 289.1,
+   "z": 33.28,
+   "rot": 0,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 3
+  },
+  {
+   "asset": "Handhold",
+   "x": -40.1,
+   "y": 298.9,
+   "z": 6.07,
+   "rot": 180,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 3
+  },
+  {
+   "asset": "Handhold",
+   "x": -36.94,
+   "y": 298.9,
+   "z": 12.77,
+   "rot": 180,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 3
+  },
+  {
+   "asset": "Handhold",
+   "x": -35.83,
+   "y": 298.9,
+   "z": 19.35,
+   "rot": 180,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 3
+  },
+  {
+   "asset": "Handhold",
+   "x": -33.19,
+   "y": 298.9,
+   "z": 28.0,
+   "rot": 180,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 3
+  },
+  {
+   "asset": "Handhold",
+   "x": -30.43,
+   "y": 298.9,
+   "z": 33.58,
+   "rot": 180,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 3
+  },
+  {
+   "asset": "QuartzWallB",
+   "x": 50.0,
+   "y": 294,
+   "z": 0,
+   "rot": 0,
+   "scale": 1,
+   "kind": "wall",
+   "sx": 1.0667,
+   "row": 3
+  },
+  {
+   "asset": "WallCrest",
+   "x": 50.0,
+   "y": 294,
+   "z": 40,
+   "rot": 0,
+   "scale": 1,
+   "kind": "glow",
+   "sx": 1.0667,
+   "color": "cyan",
+   "row": 3
+  },
+  {
+   "asset": "Handhold",
+   "x": 24.3,
+   "y": 289.1,
+   "z": 5.89,
+   "rot": 0,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 3
+  },
+  {
+   "asset": "Handhold",
+   "x": 26.51,
+   "y": 289.1,
+   "z": 13.05,
+   "rot": 0,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 3
+  },
+  {
+   "asset": "Handhold",
+   "x": 28.3,
+   "y": 289.1,
+   "z": 19.19,
+   "rot": 0,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 3
+  },
+  {
+   "asset": "Handhold",
+   "x": 30.41,
+   "y": 289.1,
+   "z": 26.01,
+   "rot": 0,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 3
+  },
+  {
+   "asset": "Handhold",
+   "x": 32.42,
+   "y": 289.1,
+   "z": 33.91,
+   "rot": 0,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 3
+  },
+  {
+   "asset": "Handhold",
+   "x": 67.01,
+   "y": 298.9,
+   "z": 6.67,
+   "rot": 180,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 3
+  },
+  {
+   "asset": "Handhold",
+   "x": 69.69,
+   "y": 298.9,
+   "z": 12.36,
+   "rot": 180,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 3
+  },
+  {
+   "asset": "Handhold",
+   "x": 70.58,
+   "y": 298.9,
+   "z": 20.69,
+   "rot": 180,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 3
+  },
+  {
+   "asset": "Handhold",
+   "x": 73.3,
+   "y": 298.9,
+   "z": 27.37,
+   "rot": 180,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 3
+  },
+  {
+   "asset": "Handhold",
+   "x": 76.2,
+   "y": 298.9,
+   "z": 33.43,
+   "rot": 180,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 3
+  },
+  {
+   "asset": "GlowClusterBig",
+   "x": 80.0,
+   "y": 286.5,
+   "z": 0,
+   "rot": 223.5,
+   "scale": 1.2,
+   "kind": "glow",
+   "color": "amber"
+  },
+  {
+   "asset": "GlowClusterBig",
+   "x": 80.0,
+   "y": 301.5,
+   "z": 0,
+   "rot": 101.0,
+   "scale": 1.2,
+   "kind": "glow",
+   "color": "amber"
+  },
+  {
+   "asset": "light",
+   "x": 96.0,
+   "y": 294,
+   "z": 14,
+   "rot": 0.0,
+   "scale": 1.0,
+   "kind": "light",
+   "color": "amber",
+   "range": 26,
+   "brightness": 1.2
+  },
+  {
+   "asset": "QuartzWallC",
+   "x": -50.0,
+   "y": 392,
+   "z": 0,
+   "rot": 0,
+   "scale": 1,
+   "kind": "wall",
+   "sx": 1.0667,
+   "row": 4
+  },
+  {
+   "asset": "WallCrest",
+   "x": -50.0,
+   "y": 392,
+   "z": 40,
+   "rot": 0,
+   "scale": 1,
+   "kind": "glow",
+   "sx": 1.0667,
+   "color": "cyan",
+   "row": 4
+  },
+  {
+   "asset": "Handhold",
+   "x": -24.9,
+   "y": 387.1,
+   "z": 5.53,
+   "rot": 0,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 4
+  },
+  {
+   "asset": "Handhold",
+   "x": -25.74,
+   "y": 387.1,
+   "z": 12.34,
+   "rot": 0,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 4
+  },
+  {
+   "asset": "Handhold",
+   "x": -28.37,
+   "y": 387.1,
+   "z": 20.52,
+   "rot": 0,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 4
+  },
+  {
+   "asset": "Handhold",
+   "x": -30.51,
+   "y": 387.1,
+   "z": 26.37,
+   "rot": 0,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 4
+  },
+  {
+   "asset": "Handhold",
+   "x": -32.86,
+   "y": 387.1,
+   "z": 34.01,
+   "rot": 0,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 4
+  },
+  {
+   "asset": "Handhold",
+   "x": -24.6,
+   "y": 396.9,
+   "z": 5.63,
+   "rot": 180,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 4
+  },
+  {
+   "asset": "Handhold",
+   "x": -26.85,
+   "y": 396.9,
+   "z": 12.13,
+   "rot": 180,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 4
+  },
+  {
+   "asset": "Handhold",
+   "x": -28.81,
+   "y": 396.9,
+   "z": 20.8,
+   "rot": 180,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 4
+  },
+  {
+   "asset": "Handhold",
+   "x": -30.42,
+   "y": 396.9,
+   "z": 26.83,
+   "rot": 180,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 4
+  },
+  {
+   "asset": "Handhold",
+   "x": -33.84,
+   "y": 396.9,
+   "z": 33.19,
+   "rot": 180,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 4
+  },
+  {
+   "asset": "QuartzWallA",
+   "x": 14.0,
+   "y": 392,
+   "z": 0,
+   "rot": 0,
+   "scale": 1,
+   "kind": "wall",
+   "sx": 1.0667,
+   "row": 4
+  },
+  {
+   "asset": "WallCrest",
+   "x": 14.0,
+   "y": 392,
+   "z": 40,
+   "rot": 0,
+   "scale": 1,
+   "kind": "glow",
+   "sx": 1.0667,
+   "color": "cyan",
+   "row": 4
+  },
+  {
+   "asset": "Handhold",
+   "x": -12.34,
+   "y": 387.1,
+   "z": 6.37,
+   "rot": 0,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 4
+  },
+  {
+   "asset": "Handhold",
+   "x": -9.41,
+   "y": 387.1,
+   "z": 13.87,
+   "rot": 0,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 4
+  },
+  {
+   "asset": "Handhold",
+   "x": -7.57,
+   "y": 387.1,
+   "z": 20.56,
+   "rot": 0,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 4
+  },
+  {
+   "asset": "Handhold",
+   "x": -4.96,
+   "y": 387.1,
+   "z": 27.31,
+   "rot": 0,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 4
+  },
+  {
+   "asset": "Handhold",
+   "x": -2.75,
+   "y": 387.1,
+   "z": 34.85,
+   "rot": 0,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 4
+  },
+  {
+   "asset": "Handhold",
+   "x": 39.88,
+   "y": 396.9,
+   "z": 5.85,
+   "rot": 180,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 4
+  },
+  {
+   "asset": "Handhold",
+   "x": 37.81,
+   "y": 396.9,
+   "z": 12.24,
+   "rot": 180,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 4
+  },
+  {
+   "asset": "Handhold",
+   "x": 35.13,
+   "y": 396.9,
+   "z": 20.0,
+   "rot": 180,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 4
+  },
+  {
+   "asset": "Handhold",
+   "x": 33.89,
+   "y": 396.9,
+   "z": 26.5,
+   "rot": 180,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 4
+  },
+  {
+   "asset": "Handhold",
+   "x": 30.6,
+   "y": 396.9,
+   "z": 34.63,
+   "rot": 180,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 4
+  },
+  {
+   "asset": "QuartzWallB",
+   "x": 78.0,
+   "y": 392,
+   "z": 0,
+   "rot": 0,
+   "scale": 1,
+   "kind": "wall",
+   "sx": 1.0667,
+   "row": 4
+  },
+  {
+   "asset": "WallCrest",
+   "x": 78.0,
+   "y": 392,
+   "z": 40,
+   "rot": 0,
+   "scale": 1,
+   "kind": "glow",
+   "sx": 1.0667,
+   "color": "cyan",
+   "row": 4
+  },
+  {
+   "asset": "Handhold",
+   "x": 52.87,
+   "y": 387.1,
+   "z": 5.56,
+   "rot": 0,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 4
+  },
+  {
+   "asset": "Handhold",
+   "x": 54.2,
+   "y": 387.1,
+   "z": 13.45,
+   "rot": 0,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 4
+  },
+  {
+   "asset": "Handhold",
+   "x": 57.1,
+   "y": 387.1,
+   "z": 20.83,
+   "rot": 0,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 4
+  },
+  {
+   "asset": "Handhold",
+   "x": 58.54,
+   "y": 387.1,
+   "z": 26.83,
+   "rot": 0,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 4
+  },
+  {
+   "asset": "Handhold",
+   "x": 61.2,
+   "y": 387.1,
+   "z": 33.04,
+   "rot": 0,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 4
+  },
+  {
+   "asset": "Handhold",
+   "x": 103.83,
+   "y": 396.9,
+   "z": 6.44,
+   "rot": 180,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 4
+  },
+  {
+   "asset": "Handhold",
+   "x": 100.91,
+   "y": 396.9,
+   "z": 13.24,
+   "rot": 180,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 4
+  },
+  {
+   "asset": "Handhold",
+   "x": 98.72,
+   "y": 396.9,
+   "z": 19.25,
+   "rot": 180,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 4
+  },
+  {
+   "asset": "Handhold",
+   "x": 96.9,
+   "y": 396.9,
+   "z": 27.3,
+   "rot": 180,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 4
+  },
+  {
+   "asset": "Handhold",
+   "x": 95.18,
+   "y": 396.9,
+   "z": 33.06,
+   "rot": 180,
+   "scale": 1,
+   "kind": "glow",
+   "color": "cyan",
+   "row": 4
+  },
+  {
+   "asset": "GlowClusterBig",
+   "x": -80.0,
+   "y": 384.5,
+   "z": 0,
+   "rot": 208.1,
+   "scale": 1.2,
+   "kind": "glow",
+   "color": "amber"
+  },
+  {
+   "asset": "GlowClusterBig",
+   "x": -80.0,
+   "y": 399.5,
+   "z": 0,
+   "rot": 128.1,
+   "scale": 1.2,
+   "kind": "glow",
+   "color": "amber"
+  },
+  {
+   "asset": "light",
+   "x": -96.0,
+   "y": 392,
+   "z": 14,
+   "rot": 0.0,
+   "scale": 1.0,
+   "kind": "light",
+   "color": "amber",
+   "range": 26,
+   "brightness": 1.2
+  },
+  {
+   "asset": "CaveRockA",
+   "x": -135.71,
+   "y": -6.0,
+   "z": -2,
+   "rot": 88.4,
+   "scale": 1.046,
+   "kind": "shell"
+  },
+  {
+   "asset": "CaveRockB",
+   "x": -136.54,
+   "y": 14.0,
+   "z": 44,
+   "rot": 87.8,
+   "scale": 0.984,
+   "kind": "shell"
+  },
+  {
+   "asset": "CaveRockB",
+   "x": -134.25,
+   "y": 35.25,
+   "z": -2,
+   "rot": 91.0,
+   "scale": 1.086,
+   "kind": "shell"
+  },
+  {
+   "asset": "CaveRockC",
+   "x": -140.64,
+   "y": 55.25,
+   "z": 44,
+   "rot": 91.5,
+   "scale": 1.087,
+   "kind": "shell"
+  },
+  {
+   "asset": "CaveRockC",
+   "x": -135.25,
+   "y": 79.22,
+   "z": -2,
+   "rot": 87.9,
+   "scale": 1.014,
+   "kind": "shell"
+  },
+  {
+   "asset": "CaveRockA",
+   "x": -137.04,
+   "y": 99.22,
+   "z": 44,
+   "rot": 88.2,
+   "scale": 0.905,
+   "kind": "shell"
+  },
+  {
+   "asset": "CaveRockA",
+   "x": -135.14,
+   "y": 124.01,
+   "z": -2,
+   "rot": 88.9,
+   "scale": 1.016,
+   "kind": "shell"
+  },
+  {
+   "asset": "CaveRockB",
+   "x": -138.3,
+   "y": 144.01,
+   "z": 44,
+   "rot": 90.7,
+   "scale": 1.089,
+   "kind": "shell"
+  },
+  {
+   "asset": "CaveRockB",
+   "x": -134.29,
+   "y": 172.4,
+   "z": -2,
+   "rot": 90.9,
+   "scale": 1.088,
+   "kind": "shell"
+  },
+  {
+   "asset": "CaveRockC",
+   "x": -140.74,
+   "y": 192.4,
+   "z": 44,
+   "rot": 90.1,
+   "scale": 1.092,
+   "kind": "shell"
+  },
+  {
+   "asset": "CaveRockC",
+   "x": -137.05,
+   "y": 215.06,
+   "z": -2,
+   "rot": 91.5,
+   "scale": 1.108,
+   "kind": "shell"
+  },
+  {
+   "asset": "CaveRockA",
+   "x": -138.15,
+   "y": 235.06,
+   "z": 44,
+   "rot": 91.3,
+   "scale": 0.963,
+   "kind": "shell"
+  },
+  {
+   "asset": "CaveRockA",
+   "x": -138.5,
+   "y": 255.17,
+   "z": -2,
+   "rot": 89.8,
+   "scale": 1.195,
+   "kind": "shell"
+  },
+  {
+   "asset": "CaveRockB",
+   "x": -138.39,
+   "y": 275.17,
+   "z": 44,
+   "rot": 91.4,
+   "scale": 1.094,
+   "kind": "shell"
+  },
+  {
+   "asset": "CaveRockB",
+   "x": -135.87,
+   "y": 303.79,
+   "z": -2,
+   "rot": 92.4,
+   "scale": 1.182,
+   "kind": "shell"
+  },
+  {
+   "asset": "CaveRockC",
+   "x": -138.61,
+   "y": 323.79,
+   "z": 44,
+   "rot": 93.8,
+   "scale": 0.98,
+   "kind": "shell"
+  },
+  {
+   "asset": "CaveRockC",
+   "x": -135.14,
+   "y": 353.3,
+   "z": -2,
+   "rot": 92.0,
+   "scale": 1.008,
+   "kind": "shell"
+  },
+  {
+   "asset": "CaveRockA",
+   "x": -138.25,
+   "y": 373.3,
+   "z": 44,
+   "rot": 87.6,
+   "scale": 0.969,
+   "kind": "shell"
+  },
+  {
+   "asset": "CaveRockA",
+   "x": -136.9,
+   "y": 396.89,
+   "z": -2,
+   "rot": 90.3,
+   "scale": 1.109,
+   "kind": "shell"
+  },
+  {
+   "asset": "CaveRockB",
+   "x": -136.72,
+   "y": 416.89,
+   "z": 44,
+   "rot": 92.3,
+   "scale": 0.995,
+   "kind": "shell"
+  },
+  {
+   "asset": "CaveRockB",
+   "x": -132.76,
+   "y": 442.7,
+   "z": -2,
+   "rot": 90.8,
+   "scale": 0.997,
+   "kind": "shell"
+  },
+  {
+   "asset": "CaveRockC",
+   "x": -137.68,
+   "y": 462.7,
+   "z": 44,
+   "rot": 93.2,
+   "scale": 0.931,
+   "kind": "shell"
+  },
+  {
+   "asset": "CaveRockC",
+   "x": -137.9,
+   "y": 492.2,
+   "z": -2,
+   "rot": 92.0,
+   "scale": 1.153,
+   "kind": "shell"
+  },
+  {
+   "asset": "CaveRockA",
+   "x": -139.6,
+   "y": 512.2,
+   "z": 44,
+   "rot": 92.4,
+   "scale": 1.04,
+   "kind": "shell"
+  },
+  {
+   "asset": "CaveRockA",
+   "x": -134.29,
+   "y": 538.59,
+   "z": -2,
+   "rot": 89.2,
+   "scale": 0.971,
+   "kind": "shell"
+  },
+  {
+   "asset": "CaveRockB",
+   "x": -137.59,
+   "y": 558.59,
+   "z": 44,
+   "rot": 87.1,
+   "scale": 1.046,
+   "kind": "shell"
+  },
+  {
+   "asset": "CaveRockB",
+   "x": -136.17,
+   "y": 585.99,
+   "z": -2,
+   "rot": 87.1,
+   "scale": 1.2,
+   "kind": "shell"
+  },
+  {
+   "asset": "CaveRockC",
+   "x": -137.92,
+   "y": 605.99,
+   "z": 44,
+   "rot": 92.8,
+   "scale": 0.943,
+   "kind": "shell"
+  },
+  {
+   "asset": "CaveRockC",
+   "x": -136.76,
+   "y": 631.81,
+   "z": -2,
+   "rot": 92.7,
+   "scale": 1.093,
+   "kind": "shell"
+  },
+  {
+   "asset": "CaveRockA",
+   "x": -138.39,
+   "y": 651.81,
+   "z": 44,
+   "rot": 93.7,
+   "scale": 0.976,
+   "kind": "shell"
+  },
+  {
+   "asset": "CaveRockA",
+   "x": -136.93,
+   "y": 676.98,
+   "z": -2,
+   "rot": 87.9,
+   "scale": 1.111,
+   "kind": "shell"
+  },
+  {
+   "asset": "CaveRockB",
+   "x": -136.84,
+   "y": 696.98,
+   "z": 44,
+   "rot": 86.7,
+   "scale": 1.002,
+   "kind": "shell"
+  },
+  {
+   "asset": "CaveRockA",
+   "x": 135.47,
+   "y": -6.0,
+   "z": -2,
+   "rot": 268.6,
+   "scale": 1.033,
+   "kind": "shell"
+  },
+  {
+   "asset": "CaveRockB",
+   "x": 135.27,
+   "y": 14.0,
+   "z": 44,
+   "rot": 270.7,
+   "scale": 0.908,
+   "kind": "shell"
+  },
+  {
+   "asset": "CaveRockB",
+   "x": 132.65,
+   "y": 41.87,
+   "z": -2,
+   "rot": 268.8,
+   "scale": 0.991,
+   "kind": "shell"
+  },
+  {
+   "asset": "CaveRockC",
+   "x": 139.15,
+   "y": 61.87,
+   "z": 44,
+   "rot": 268.9,
+   "scale": 1.008,
+   "kind": "shell"
+  },
+  {
+   "asset": "CaveRockC",
+   "x": 134.94,
+   "y": 91.6,
+   "z": -2,
+   "rot": 271.5,
+   "scale": 0.997,
+   "kind": "shell"
+  },
+  {
+   "asset": "CaveRockA",
+   "x": 136.99,
+   "y": 111.6,
+   "z": 44,
+   "rot": 270.8,
+   "scale": 0.902,
+   "kind": "shell"
+  },
+  {
+   "asset": "CaveRockA",
+   "x": 135.89,
+   "y": 136.4,
+   "z": -2,
+   "rot": 271.9,
+   "scale": 1.056,
+   "kind": "shell"
+  },
+  {
+   "asset": "CaveRockB",
+   "x": 138.16,
+   "y": 156.4,
+   "z": 44,
+   "rot": 273.8,
+   "scale": 1.08,
+   "kind": "shell"
+  },
+  {
+   "asset": "CaveRockB",
+   "x": 132.69,
+   "y": 186.37,
+   "z": -2,
+   "rot": 270.1,
+   "scale": 0.993,
+   "kind": "shell"
+  },
+  {
+   "asset": "CaveRockC",
+   "x": 137.77,
+   "y": 206.37,
+   "z": 44,
+   "rot": 270.3,
+   "scale": 0.936,
+   "kind": "shell"
+  },
+  {
+   "asset": "CaveRockC",
+   "x": 138.25,
+   "y": 228.01,
+   "z": -2,
+   "rot": 270.1,
+   "scale": 1.172,
+   "kind": "shell"
+  },
+  {
+   "asset": "CaveRockA",
+   "x": 140.28,
+   "y": 248.01,
+   "z": 44,
+   "rot": 271.1,
+   "scale": 1.076,
+   "kind": "shell"
+  },
+  {
+   "asset": "CaveRockA",
+   "x": 135.66,
+   "y": 268.03,
+   "z": -2,
+   "rot": 269.2,
+   "scale": 1.044,
+   "kind": "shell"
+  },
+  {
+   "asset": "CaveRockB",
+   "x": 135.86,
+   "y": 288.03,
+   "z": 44,
+   "rot": 267.2,
+   "scale": 0.943,
+   "kind": "shell"
+  },
+  {
+   "asset": "CaveRockB",
+   "x": 132.5,
+   "y": 314.13,
+   "z": -2,
+   "rot": 272.9,
+   "scale": 0.982,
+   "kind": "shell"
+  },
+  {
+   "asset": "CaveRockC",
+   "x": 138.93,
+   "y": 334.13,
+   "z": 44,
+   "rot": 273.0,
+   "scale": 0.997,
+   "kind": "shell"
+  },
+  {
+   "asset": "CaveRockC",
+   "x": 135.85,
+   "y": 361.39,
+   "z": -2,
+   "rot": 270.7,
+   "scale": 1.045,
+   "kind": "shell"
+  },
+  {
+   "asset": "CaveRockA",
+   "x": 139.4,
+   "y": 381.39,
+   "z": 44,
+   "rot": 268.8,
+   "scale": 1.03,
+   "kind": "shell"
+  },
+  {
+   "asset": "CaveRockA",
+   "x": 134.47,
+   "y": 410.49,
+   "z": -2,
+   "rot": 270.1,
+   "scale": 0.98,
+   "kind": "shell"
+  },
+  {
+   "asset": "CaveRockB",
+   "x": 137.91,
+   "y": 430.49,
+   "z": 44,
+   "rot": 271.5,
+   "scale": 1.066,
+   "kind": "shell"
+  },
+  {
+   "asset": "CaveRockB",
+   "x": 134.43,
+   "y": 455.05,
+   "z": -2,
+   "rot": 267.5,
+   "scale": 1.096,
+   "kind": "shell"
+  },
+  {
+   "asset": "CaveRockC",
+   "x": 140.05,
+   "y": 475.05,
+   "z": 44,
+   "rot": 266.7,
+   "scale": 1.056,
+   "kind": "shell"
+  },
+  {
+   "asset": "CaveRockC",
+   "x": 135.52,
+   "y": 500.0,
+   "z": -2,
+   "rot": 271.5,
+   "scale": 1.028,
+   "kind": "shell"
+  },
+  {
+   "asset": "CaveRockA",
+   "x": 137.81,
+   "y": 520.0,
+   "z": 44,
+   "rot": 268.6,
+   "scale": 0.945,
+   "kind": "shell"
+  },
+  {
+   "asset": "CaveRockA",
+   "x": 135.46,
+   "y": 545.06,
+   "z": -2,
+   "rot": 272.4,
+   "scale": 1.033,
+   "kind": "shell"
+  },
+  {
+   "asset": "CaveRockB",
+   "x": 137.56,
+   "y": 565.06,
+   "z": 44,
+   "rot": 272.9,
+   "scale": 1.045,
+   "kind": "shell"
+  },
+  {
+   "asset": "CaveRockB",
+   "x": 132.71,
+   "y": 589.09,
+   "z": -2,
+   "rot": 271.8,
+   "scale": 0.994,
+   "kind": "shell"
+  },
+  {
+   "asset": "CaveRockC",
+   "x": 137.93,
+   "y": 609.09,
+   "z": 44,
+   "rot": 271.5,
+   "scale": 0.944,
+   "kind": "shell"
+  },
+  {
+   "asset": "CaveRockC",
+   "x": 137.78,
+   "y": 632.58,
+   "z": -2,
+   "rot": 269.5,
+   "scale": 1.147,
+   "kind": "shell"
+  },
+  {
+   "asset": "CaveRockA",
+   "x": 139.98,
+   "y": 652.58,
+   "z": 44,
+   "rot": 269.1,
+   "scale": 1.061,
+   "kind": "shell"
+  },
+  {
+   "asset": "CaveRockA",
+   "x": 137.4,
+   "y": 674.12,
+   "z": -2,
+   "rot": 270.9,
+   "scale": 1.136,
+   "kind": "shell"
+  },
+  {
+   "asset": "CaveRockB",
+   "x": 135.56,
+   "y": 694.12,
+   "z": 44,
+   "rot": 268.1,
+   "scale": 0.926,
+   "kind": "shell"
+  },
+  {
+   "asset": "CaveRockC",
+   "x": -100,
+   "y": 720.89,
+   "z": -2,
+   "rot": 177.8,
+   "scale": 1.1,
+   "kind": "shell"
+  },
+  {
+   "asset": "CaveRockA",
+   "x": -80,
+   "y": 724.84,
+   "z": 44,
+   "rot": 184.1,
+   "scale": 1,
+   "kind": "shell"
+  },
+  {
+   "asset": "CaveRockA",
+   "x": -50,
+   "y": 720.72,
+   "z": -2,
+   "rot": 179.3,
+   "scale": 1.1,
+   "kind": "shell"
+  },
+  {
+   "asset": "CaveRockB",
+   "x": -30,
+   "y": 722.81,
+   "z": 44,
+   "rot": 175.7,
+   "scale": 1,
+   "kind": "shell"
+  },
+  {
+   "asset": "CaveRockB",
+   "x": 0,
+   "y": 718.49,
+   "z": -2,
+   "rot": 181.5,
+   "scale": 1.1,
+   "kind": "shell"
+  },
+  {
+   "asset": "CaveRockA",
+   "x": 20,
+   "y": 724.84,
+   "z": 44,
+   "rot": 176.8,
+   "scale": 1,
+   "kind": "shell"
+  },
+  {
+   "asset": "CaveRockC",
+   "x": 50,
+   "y": 720.89,
+   "z": -2,
+   "rot": 185.7,
+   "scale": 1.1,
+   "kind": "shell"
+  },
+  {
+   "asset": "CaveRockB",
+   "x": 70,
+   "y": 722.81,
+   "z": 44,
+   "rot": 180.7,
+   "scale": 1,
+   "kind": "shell"
+  },
+  {
+   "asset": "CaveRockA",
+   "x": 100,
+   "y": 720.72,
+   "z": -2,
+   "rot": 175.5,
+   "scale": 1.1,
+   "kind": "shell"
+  },
+  {
+   "asset": "CaveRockA",
+   "x": 120,
+   "y": 724.84,
+   "z": 44,
+   "rot": 177.5,
+   "scale": 1,
+   "kind": "shell"
+  },
+  {
+   "asset": "CeilingRockA",
+   "x": -91.98,
+   "y": -10.67,
+   "z": 92,
+   "rot": 197.9,
+   "scale": 0.982,
+   "kind": "shell"
+  },
+  {
+   "asset": "Stalactites",
+   "x": -106.55,
+   "y": -3.19,
+   "z": 84,
+   "rot": 178.1,
+   "scale": 1.239,
+   "kind": "shell"
+  },
+  {
+   "asset": "CeilingRockA",
+   "x": -23.18,
+   "y": -7.87,
+   "z": 92,
+   "rot": 152.8,
+   "scale": 1.062,
+   "kind": "shell"
+  },
+  {
+   "asset": "Stalactites",
+   "x": -26.79,
+   "y": -17.03,
+   "z": 84,
+   "rot": 96.1,
+   "scale": 1.251,
+   "kind": "shell"
+  },
+  {
+   "asset": "CeilingRockB",
+   "x": 31.58,
+   "y": -15.91,
+   "z": 92,
+   "rot": 299.9,
+   "scale": 1.101,
+   "kind": "shell"
+  },
+  {
+   "asset": "CeilingRockA",
+   "x": 80.24,
+   "y": -10.27,
+   "z": 92,
+   "rot": 229.1,
+   "scale": 1.065,
+   "kind": "shell"
+  },
+  {
+   "asset": "CeilingRockB",
+   "x": -84.4,
+   "y": 39.23,
+   "z": 92,
+   "rot": 185.4,
+   "scale": 1.056,
+   "kind": "shell"
+  },
+  {
+   "asset": "Stalactites",
+   "x": -82.4,
+   "y": 30.48,
+   "z": 84,
+   "rot": 276.8,
+   "scale": 1.391,
+   "kind": "shell"
+  },
+  {
+   "asset": "CeilingRockA",
+   "x": 94.11,
+   "y": 44.77,
+   "z": 92,
+   "rot": 204.3,
+   "scale": 1.078,
+   "kind": "shell"
+  },
+  {
+   "asset": "CeilingRockB",
+   "x": -97.84,
+   "y": 94.95,
+   "z": 104,
+   "rot": 338.1,
+   "scale": 0.911,
+   "kind": "shell"
+  },
+  {
+   "asset": "CeilingRockA",
+   "x": -29.73,
+   "y": 94.8,
+   "z": 104,
+   "rot": 355.8,
+   "scale": 1.128,
+   "kind": "shell"
+  },
+  {
+   "asset": "CeilingRockB",
+   "x": 26.83,
+   "y": 96.53,
+   "z": 104,
+   "rot": 114.4,
+   "scale": 1.02,
+   "kind": "shell"
+  },
+  {
+   "asset": "CeilingRockB",
+   "x": 86.54,
+   "y": 93.81,
+   "z": 104,
+   "rot": 13.2,
+   "scale": 1.023,
+   "kind": "shell"
+  },
+  {
+   "asset": "CeilingRockB",
+   "x": -83.82,
+   "y": 138.35,
+   "z": 92,
+   "rot": 301.1,
+   "scale": 1.017,
+   "kind": "shell"
+  },
+  {
+   "asset": "Stalactites",
+   "x": -83.38,
+   "y": 144.85,
+   "z": 84,
+   "rot": 109.5,
+   "scale": 1.191,
+   "kind": "shell"
+  },
+  {
+   "asset": "CeilingRockB",
+   "x": -22.74,
+   "y": 151.04,
+   "z": 92,
+   "rot": 353.2,
+   "scale": 1.054,
+   "kind": "shell"
+  },
+  {
+   "asset": "CeilingRockB",
+   "x": 31.92,
+   "y": 153.59,
+   "z": 92,
+   "rot": 114.5,
+   "scale": 0.985,
+   "kind": "shell"
+  },
+  {
+   "asset": "Stalactites",
+   "x": 49.52,
+   "y": 163.77,
+   "z": 84,
+   "rot": 62.8,
+   "scale": 1.029,
+   "kind": "shell"
+  },
+  {
+   "asset": "CeilingRockB",
+   "x": 97.43,
+   "y": 153.16,
+   "z": 92,
+   "rot": 227.0,
+   "scale": 1.131,
+   "kind": "shell"
+  },
+  {
+   "asset": "CeilingRockB",
+   "x": -95.18,
+   "y": 190.46,
+   "z": 104,
+   "rot": 182.9,
+   "scale": 1.032,
+   "kind": "shell"
+  },
+  {
+   "asset": "CeilingRockB",
+   "x": -24.17,
+   "y": 198.22,
+   "z": 104,
+   "rot": 279.3,
+   "scale": 1.079,
+   "kind": "shell"
+  },
+  {
+   "asset": "CeilingRockB",
+   "x": 33.57,
+   "y": 192.19,
+   "z": 104,
+   "rot": 130.9,
+   "scale": 1.063,
+   "kind": "shell"
+  },
+  {
+   "asset": "CeilingRockA",
+   "x": 94.52,
+   "y": 198.52,
+   "z": 104,
+   "rot": 54.7,
+   "scale": 1.038,
+   "kind": "shell"
+  },
+  {
+   "asset": "CeilingRockA",
+   "x": -85.43,
+   "y": 257.68,
+   "z": 92,
+   "rot": 287.0,
+   "scale": 1.1,
+   "kind": "shell"
+  },
+  {
+   "asset": "CeilingRockB",
+   "x": 82.78,
+   "y": 255.11,
+   "z": 92,
+   "rot": 46.1,
+   "scale": 0.942,
+   "kind": "shell"
+  },
+  {
+   "asset": "CeilingRockB",
+   "x": -86.4,
+   "y": 306.02,
+   "z": 104,
+   "rot": 230.8,
+   "scale": 1.022,
+   "kind": "shell"
+  },
+  {
+   "asset": "CeilingRockA",
+   "x": -39.42,
+   "y": 302.74,
+   "z": 104,
+   "rot": 185.2,
+   "scale": 1.122,
+   "kind": "shell"
+  },
+  {
+   "asset": "CeilingRockB",
+   "x": 33.61,
+   "y": 295.47,
+   "z": 104,
+   "rot": 55.8,
+   "scale": 0.981,
+   "kind": "shell"
+  },
+  {
+   "asset": "CeilingRockA",
+   "x": 80.81,
+   "y": 305.44,
+   "z": 104,
+   "rot": 20.9,
+   "scale": 0.988,
+   "kind": "shell"
+  },
+  {
+   "asset": "CeilingRockB",
+   "x": -86.03,
+   "y": 359.5,
+   "z": 92,
+   "rot": 118.4,
+   "scale": 0.907,
+   "kind": "shell"
+  },
+  {
+   "asset": "Stalactites",
+   "x": -72.74,
+   "y": 348.02,
+   "z": 84,
+   "rot": 238.8,
+   "scale": 1.0,
+   "kind": "shell"
+  },
+  {
+   "asset": "CeilingRockB",
+   "x": -35.18,
+   "y": 359.47,
+   "z": 92,
+   "rot": 76.6,
+   "scale": 0.94,
+   "kind": "shell"
+  },
+  {
+   "asset": "CeilingRockB",
+   "x": 28.46,
+   "y": 352.75,
+   "z": 92,
+   "rot": 253.8,
+   "scale": 1.142,
+   "kind": "shell"
+  },
+  {
+   "asset": "CeilingRockB",
+   "x": 98.96,
+   "y": 353.05,
+   "z": 92,
+   "rot": 33.0,
+   "scale": 1.124,
+   "kind": "shell"
+  },
+  {
+   "asset": "CeilingRockA",
+   "x": -98.42,
+   "y": 399.85,
+   "z": 104,
+   "rot": 41.5,
+   "scale": 0.951,
+   "kind": "shell"
+  },
+  {
+   "asset": "CeilingRockB",
+   "x": -22.01,
+   "y": 404.94,
+   "z": 104,
+   "rot": 11.0,
+   "scale": 1.143,
+   "kind": "shell"
+  },
+  {
+   "asset": "CeilingRockB",
+   "x": 38.27,
+   "y": 408.37,
+   "z": 104,
+   "rot": 103.4,
+   "scale": 0.991,
+   "kind": "shell"
+  },
+  {
+   "asset": "CeilingRockB",
+   "x": 90.42,
+   "y": 398.15,
+   "z": 104,
+   "rot": 302.6,
+   "scale": 1.022,
+   "kind": "shell"
+  },
+  {
+   "asset": "CeilingRockA",
+   "x": -84.13,
+   "y": 452.21,
+   "z": 92,
+   "rot": 349.1,
+   "scale": 1.014,
+   "kind": "shell"
+  },
+  {
+   "asset": "CeilingRockB",
+   "x": -21.39,
+   "y": 459.49,
+   "z": 92,
+   "rot": 271.8,
+   "scale": 1.142,
+   "kind": "shell"
+  },
+  {
+   "asset": "Stalactites",
+   "x": -22.52,
+   "y": 460.78,
+   "z": 84,
+   "rot": 286.7,
+   "scale": 1.31,
+   "kind": "shell"
+  },
+  {
+   "asset": "CeilingRockA",
+   "x": 81.61,
+   "y": 454.75,
+   "z": 92,
+   "rot": 25.3,
+   "scale": 1.131,
+   "kind": "shell"
+  },
+  {
+   "asset": "CeilingRockB",
+   "x": -87.09,
+   "y": 508.18,
+   "z": 92,
+   "rot": 220.8,
+   "scale": 1.035,
+   "kind": "shell"
+  },
+  {
+   "asset": "Stalactites",
+   "x": -93.63,
+   "y": 494.92,
+   "z": 84,
+   "rot": 141.1,
+   "scale": 0.984,
+   "kind": "shell"
+  },
+  {
+   "asset": "CeilingRockB",
+   "x": 90.42,
+   "y": 514.04,
+   "z": 92,
+   "rot": 258.2,
+   "scale": 0.977,
+   "kind": "shell"
+  },
+  {
+   "asset": "Stalactites",
+   "x": 84.02,
+   "y": 525.15,
+   "z": 84,
+   "rot": 248.6,
+   "scale": 1.1,
+   "kind": "shell"
+  },
+  {
+   "asset": "CeilingRockB",
+   "x": -83.03,
+   "y": 562.23,
+   "z": 92,
+   "rot": 14.9,
+   "scale": 0.962,
+   "kind": "shell"
+  },
+  {
+   "asset": "Stalactites",
+   "x": -94.24,
+   "y": 551.41,
+   "z": 84,
+   "rot": 171.5,
+   "scale": 1.091,
+   "kind": "shell"
+  },
+  {
+   "asset": "CeilingRockA",
+   "x": -30.02,
+   "y": 562.48,
+   "z": 92,
+   "rot": 138.5,
+   "scale": 0.909,
+   "kind": "shell"
+  },
+  {
+   "asset": "Stalactites",
+   "x": -42.97,
+   "y": 555.23,
+   "z": 84,
+   "rot": 187.7,
+   "scale": 1.034,
+   "kind": "shell"
+  },
+  {
+   "asset": "CeilingRockA",
+   "x": 34.71,
+   "y": 560.91,
+   "z": 92,
+   "rot": 127.2,
+   "scale": 1.117,
+   "kind": "shell"
+  },
+  {
+   "asset": "Stalactites",
+   "x": 35.8,
+   "y": 562.66,
+   "z": 84,
+   "rot": 290.1,
+   "scale": 1.193,
+   "kind": "shell"
+  },
+  {
+   "asset": "CeilingRockA",
+   "x": 89.15,
+   "y": 562.87,
+   "z": 92,
+   "rot": 288.6,
+   "scale": 1.101,
+   "kind": "shell"
+  },
+  {
+   "asset": "Stalactites",
+   "x": 106.3,
+   "y": 555.72,
+   "z": 84,
+   "rot": 18.4,
+   "scale": 1.276,
+   "kind": "shell"
+  },
+  {
+   "asset": "CeilingRockB",
+   "x": -94.67,
+   "y": 608.7,
+   "z": 92,
+   "rot": 30.4,
+   "scale": 0.942,
+   "kind": "shell"
+  },
+  {
+   "asset": "CeilingRockA",
+   "x": 90.99,
+   "y": 620.39,
+   "z": 92,
+   "rot": 128.0,
+   "scale": 1.121,
+   "kind": "shell"
+  },
+  {
+   "asset": "CeilingRockA",
+   "x": -81.02,
+   "y": 665.47,
+   "z": 92,
+   "rot": 344.5,
+   "scale": 1.126,
+   "kind": "shell"
+  },
+  {
+   "asset": "CeilingRockA",
+   "x": -20.58,
+   "y": 668.41,
+   "z": 92,
+   "rot": 104.9,
+   "scale": 0.942,
+   "kind": "shell"
+  },
+  {
+   "asset": "Stalactites",
+   "x": -31.21,
+   "y": 662.44,
+   "z": 84,
+   "rot": 232.7,
+   "scale": 1.136,
+   "kind": "shell"
+  },
+  {
+   "asset": "CeilingRockA",
+   "x": 37.71,
+   "y": 662.15,
+   "z": 92,
+   "rot": 197.1,
+   "scale": 1.029,
+   "kind": "shell"
+  },
+  {
+   "asset": "Stalactites",
+   "x": 37.54,
+   "y": 649.64,
+   "z": 84,
+   "rot": 126.7,
+   "scale": 1.168,
+   "kind": "shell"
+  },
+  {
+   "asset": "CeilingRockA",
+   "x": 84.85,
+   "y": 665.42,
+   "z": 92,
+   "rot": 148.9,
+   "scale": 1.039,
+   "kind": "shell"
+  },
+  {
+   "asset": "Stalactites",
+   "x": 89.26,
+   "y": 656.23,
+   "z": 84,
+   "rot": 59.3,
+   "scale": 1.0,
+   "kind": "shell"
+  },
+  {
+   "asset": "CeilingRockA",
+   "x": -92.0,
+   "y": 722.1,
+   "z": 92,
+   "rot": 168.5,
+   "scale": 0.905,
+   "kind": "shell"
+  },
+  {
+   "asset": "Stalactites",
+   "x": -82.9,
+   "y": 735.57,
+   "z": 84,
+   "rot": 204.1,
+   "scale": 1.158,
+   "kind": "shell"
+  },
+  {
+   "asset": "CeilingRockA",
+   "x": -23.64,
+   "y": 713.89,
+   "z": 92,
+   "rot": 247.2,
+   "scale": 0.981,
+   "kind": "shell"
+  },
+  {
+   "asset": "Stalactites",
+   "x": -37.49,
+   "y": 699.93,
+   "z": 84,
+   "rot": 136.6,
+   "scale": 1.383,
+   "kind": "shell"
+  },
+  {
+   "asset": "CeilingRockB",
+   "x": 28.37,
+   "y": 717.97,
+   "z": 92,
+   "rot": 184.4,
+   "scale": 0.989,
+   "kind": "shell"
+  },
+  {
+   "asset": "CeilingRockA",
+   "x": 93.01,
+   "y": 719.46,
+   "z": 92,
+   "rot": 41.6,
+   "scale": 1.119,
+   "kind": "shell"
+  },
+  {
+   "asset": "CeilingCrack",
+   "x": 0,
+   "y": 60,
+   "z": 90,
+   "rot": 214.1,
+   "scale": 1.7,
+   "kind": "shell"
+  },
+  {
+   "asset": "shaft",
+   "x": 0,
+   "y": 60,
+   "z": 46.0,
+   "rot": 0.0,
+   "scale": 1.0,
+   "kind": "shaft",
+   "height": 92,
+   "width": 22
+  },
+  {
+   "asset": "CeilingCrack",
+   "x": 0,
+   "y": 250,
+   "z": 90,
+   "rot": 207.5,
+   "scale": 1.7,
+   "kind": "shell"
+  },
+  {
+   "asset": "shaft",
+   "x": 0,
+   "y": 250,
+   "z": 46.0,
+   "rot": 0.0,
+   "scale": 1.0,
+   "kind": "shaft",
+   "height": 92,
+   "width": 22
+  },
+  {
+   "asset": "CeilingCrack",
+   "x": 0,
+   "y": 490.0,
+   "z": 90,
+   "rot": 357.8,
+   "scale": 1.7,
+   "kind": "shell"
+  },
+  {
+   "asset": "shaft",
+   "x": 0,
+   "y": 490.0,
+   "z": 46.0,
+   "rot": 0.0,
+   "scale": 1.0,
+   "kind": "shaft",
+   "height": 92,
+   "width": 34
+  },
+  {
+   "asset": "CeilingCrack",
+   "x": 0,
+   "y": 610,
+   "z": 90,
+   "rot": 64.7,
+   "scale": 1.7,
+   "kind": "shell"
+  },
+  {
+   "asset": "shaft",
+   "x": 0,
+   "y": 610,
+   "z": 46.0,
+   "rot": 0.0,
+   "scale": 1.0,
+   "kind": "shaft",
+   "height": 92,
+   "width": 22
+  },
+  {
+   "asset": "RockPillar",
+   "x": -97.97,
+   "y": 40,
+   "z": -1,
+   "rot": 10.3,
+   "scale": 1.138,
+   "kind": "shell"
+  },
+  {
+   "asset": "RockPillar",
+   "x": 93.4,
+   "y": 40,
+   "z": -1,
+   "rot": 35.0,
+   "scale": 1.1,
+   "kind": "shell"
+  },
+  {
+   "asset": "RockPillar",
+   "x": -98.0,
+   "y": 150,
+   "z": -1,
+   "rot": 343.6,
+   "scale": 1.14,
+   "kind": "shell"
+  },
+  {
+   "asset": "RockPillar",
+   "x": 95.82,
+   "y": 150,
+   "z": -1,
+   "rot": 1.4,
+   "scale": 1.079,
+   "kind": "shell"
+  },
+  {
+   "asset": "RockPillar",
+   "x": 92.16,
+   "y": 245,
+   "z": -1,
+   "rot": 341.4,
+   "scale": 1.057,
+   "kind": "shell"
+  },
+  {
+   "asset": "RockPillar",
+   "x": -97.0,
+   "y": 345,
+   "z": -1,
+   "rot": 43.7,
+   "scale": 1.034,
+   "kind": "shell"
+  },
+  {
+   "asset": "RockPillar",
+   "x": 95.51,
+   "y": 455,
+   "z": -1,
+   "rot": 338.5,
+   "scale": 1.045,
+   "kind": "shell"
+  },
+  {
+   "asset": "RockPillar",
+   "x": -95.57,
+   "y": 560,
+   "z": -1,
+   "rot": 169.0,
+   "scale": 1.129,
+   "kind": "shell"
+  },
+  {
+   "asset": "RockPillar",
+   "x": 98.54,
+   "y": 560,
+   "z": -1,
+   "rot": 197.3,
+   "scale": 1.031,
+   "kind": "shell"
+  },
+  {
+   "asset": "RockPillar",
+   "x": -99.91,
+   "y": 650,
+   "z": -1,
+   "rot": 352.3,
+   "scale": 1.149,
+   "kind": "shell"
+  },
+  {
+   "asset": "RockPillar",
+   "x": 93.8,
+   "y": 650,
+   "z": -1,
+   "rot": 117.2,
+   "scale": 1.12,
+   "kind": "shell"
+  },
+  {
+   "asset": "WallGrowth",
+   "x": -109.0,
+   "y": 151.21,
+   "z": 25.77,
+   "rot": 110.6,
+   "scale": 2.231,
+   "kind": "decor"
+  },
+  {
+   "asset": "WallGrowth",
+   "x": -109.0,
+   "y": 267.06,
+   "z": 15.49,
+   "rot": 108.3,
+   "scale": 2.162,
+   "kind": "decor"
+  },
+  {
+   "asset": "WallGrowth",
+   "x": -109.0,
+   "y": 129.43,
+   "z": 16.87,
+   "rot": 101.7,
+   "scale": 2.46,
+   "kind": "decor"
+  },
+  {
+   "asset": "WallGrowth",
+   "x": -109.0,
+   "y": 465.69,
+   "z": 10.5,
+   "rot": 114.3,
+   "scale": 2.309,
+   "kind": "decor"
+  },
+  {
+   "asset": "WallGrowth",
+   "x": -109.0,
+   "y": 473.02,
+   "z": 28.03,
+   "rot": 101.9,
+   "scale": 2.44,
+   "kind": "decor"
+  },
+  {
+   "asset": "WallGrowth",
+   "x": -109.0,
+   "y": 578.76,
+   "z": 14.13,
+   "rot": 99.6,
+   "scale": 2.505,
+   "kind": "decor"
+  },
+  {
+   "asset": "WallGrowth",
+   "x": -109.0,
+   "y": 609.64,
+   "z": 40.12,
+   "rot": 90.5,
+   "scale": 2.441,
+   "kind": "decor"
+  },
+  {
+   "asset": "WallGrowth",
+   "x": -109.0,
+   "y": 575.12,
+   "z": 28.11,
+   "rot": 82.5,
+   "scale": 2.592,
+   "kind": "decor"
+  },
+  {
+   "asset": "WallGrowth",
+   "x": -109.0,
+   "y": 520.84,
+   "z": 24.93,
+   "rot": 65.7,
+   "scale": 2.221,
+   "kind": "decor"
+  },
+  {
+   "asset": "WallGrowth",
+   "x": -109.0,
+   "y": 273.44,
+   "z": 38.12,
+   "rot": 83.2,
+   "scale": 2.556,
+   "kind": "decor"
+  },
+  {
+   "asset": "WallGrowth",
+   "x": -109.0,
+   "y": 252.24,
+   "z": 32.75,
+   "rot": 108.6,
+   "scale": 1.886,
+   "kind": "decor"
+  },
+  {
+   "asset": "WallGrowth",
+   "x": -109.0,
+   "y": 277.65,
+   "z": 41.91,
+   "rot": 72.9,
+   "scale": 2.21,
+   "kind": "decor"
+  },
+  {
+   "asset": "WallGrowth",
+   "x": -109.0,
+   "y": 264.32,
+   "z": 25.63,
+   "rot": 114.1,
+   "scale": 1.894,
+   "kind": "decor"
+  },
+  {
+   "asset": "WallGrowth",
+   "x": -109.0,
+   "y": 280.33,
+   "z": 22.47,
+   "rot": 82.4,
+   "scale": 2.213,
+   "kind": "decor"
+  },
+  {
+   "asset": "WallGrowth",
+   "x": -109.0,
+   "y": 609.4,
+   "z": 9.54,
+   "rot": 76.8,
+   "scale": 2.048,
+   "kind": "decor"
+  },
+  {
+   "asset": "WallGrowth",
+   "x": -109.0,
+   "y": 12.34,
+   "z": 38.06,
+   "rot": 103.1,
+   "scale": 2.327,
+   "kind": "decor"
+  },
+  {
+   "asset": "GlowClusterBig",
+   "x": -107.0,
+   "y": 323.82,
+   "z": 13.59,
+   "rot": 231.7,
+   "scale": 1.496,
+   "kind": "glow",
+   "color": "violet"
+  },
+  {
+   "asset": "GlowClusterBig",
+   "x": -107.0,
+   "y": 142.75,
+   "z": 24.34,
+   "rot": 309.6,
+   "scale": 1.205,
+   "kind": "glow",
+   "color": "blue"
+  },
+  {
+   "asset": "GlowClusterBig",
+   "x": -107.0,
+   "y": 136.35,
+   "z": 4.42,
+   "rot": 85.2,
+   "scale": 1.266,
+   "kind": "glow",
+   "color": "violet"
+  },
+  {
+   "asset": "GlowClusterBig",
+   "x": -107.0,
+   "y": 651.84,
+   "z": 27.64,
+   "rot": 330.5,
+   "scale": 1.33,
+   "kind": "glow",
+   "color": "blue"
+  },
+  {
+   "asset": "GlowClusterBig",
+   "x": -107.0,
+   "y": 672.67,
+   "z": 23.1,
+   "rot": 47.1,
+   "scale": 1.012,
+   "kind": "glow",
+   "color": "violet"
+  },
+  {
+   "asset": "GlowClusterBig",
+   "x": -107.0,
+   "y": 325.73,
+   "z": 26.54,
+   "rot": 22.6,
+   "scale": 1.299,
+   "kind": "glow",
+   "color": "blue"
+  },
+  {
+   "asset": "GlowClusterBig",
+   "x": -107.0,
+   "y": 315.71,
+   "z": 11.84,
+   "rot": 35.5,
+   "scale": 1.028,
+   "kind": "glow",
+   "color": "violet"
+  },
+  {
+   "asset": "GlowClusterBig",
+   "x": -107.0,
+   "y": 136.54,
+   "z": 19.93,
+   "rot": 92.1,
+   "scale": 1.327,
+   "kind": "glow",
+   "color": "blue"
+  },
+  {
+   "asset": "WallGrowth",
+   "x": 109.0,
+   "y": 17.46,
+   "z": 11.1,
+   "rot": 275.3,
+   "scale": 2.046,
+   "kind": "decor"
+  },
+  {
+   "asset": "WallGrowth",
+   "x": 109.0,
+   "y": 537.69,
+   "z": 21.65,
+   "rot": 250.1,
+   "scale": 1.981,
+   "kind": "decor"
+  },
+  {
+   "asset": "WallGrowth",
+   "x": 109.0,
+   "y": 644.22,
+   "z": 8.73,
+   "rot": 288.8,
+   "scale": 1.866,
+   "kind": "decor"
+  },
+  {
+   "asset": "WallGrowth",
+   "x": 109.0,
+   "y": 532.45,
+   "z": 15.51,
+   "rot": 266.3,
+   "scale": 2.292,
+   "kind": "decor"
+  },
+  {
+   "asset": "WallGrowth",
+   "x": 109.0,
+   "y": 403.3,
+   "z": 14.42,
+   "rot": 286.2,
+   "scale": 2.219,
+   "kind": "decor"
+  },
+  {
+   "asset": "WallGrowth",
+   "x": 109.0,
+   "y": 368.75,
+   "z": 15.11,
+   "rot": 272.8,
+   "scale": 2.001,
+   "kind": "decor"
+  },
+  {
+   "asset": "WallGrowth",
+   "x": 109.0,
+   "y": 589.55,
+   "z": 15.38,
+   "rot": 280.4,
+   "scale": 2.419,
+   "kind": "decor"
+  },
+  {
+   "asset": "WallGrowth",
+   "x": 109.0,
+   "y": 411.59,
+   "z": 11.87,
+   "rot": 285.7,
+   "scale": 2.047,
+   "kind": "decor"
+  },
+  {
+   "asset": "WallGrowth",
+   "x": 109.0,
+   "y": 190.53,
+   "z": 9.97,
+   "rot": 275.3,
+   "scale": 1.802,
+   "kind": "decor"
+  },
+  {
+   "asset": "WallGrowth",
+   "x": 109.0,
+   "y": 144.7,
+   "z": 27.42,
+   "rot": 279.9,
+   "scale": 2.382,
+   "kind": "decor"
+  },
+  {
+   "asset": "WallGrowth",
+   "x": 109.0,
+   "y": 662.84,
+   "z": 10.42,
+   "rot": 261.8,
+   "scale": 2.318,
+   "kind": "decor"
+  },
+  {
+   "asset": "WallGrowth",
+   "x": 109.0,
+   "y": 426.34,
+   "z": 27.91,
+   "rot": 278.8,
+   "scale": 2.581,
+   "kind": "decor"
+  },
+  {
+   "asset": "WallGrowth",
+   "x": 109.0,
+   "y": 601.18,
+   "z": 41.74,
+   "rot": 282.8,
+   "scale": 2.162,
+   "kind": "decor"
+  },
+  {
+   "asset": "WallGrowth",
+   "x": 109.0,
+   "y": 230.62,
+   "z": 19.59,
+   "rot": 245.7,
+   "scale": 2.085,
+   "kind": "decor"
+  },
+  {
+   "asset": "WallGrowth",
+   "x": 109.0,
+   "y": 510.13,
+   "z": 34.52,
+   "rot": 284.1,
+   "scale": 1.808,
+   "kind": "decor"
+  },
+  {
+   "asset": "WallGrowth",
+   "x": 109.0,
+   "y": 25.74,
+   "z": 31.52,
+   "rot": 272.0,
+   "scale": 2.236,
+   "kind": "decor"
+  },
+  {
+   "asset": "WallGrowth",
+   "x": 109.0,
+   "y": 47.17,
+   "z": 33.71,
+   "rot": 266.6,
+   "scale": 2.107,
+   "kind": "decor"
+  },
+  {
+   "asset": "WallGrowth",
+   "x": 109.0,
+   "y": 631.85,
+   "z": 40.29,
+   "rot": 257.9,
+   "scale": 1.965,
+   "kind": "decor"
+  },
+  {
+   "asset": "WallGrowth",
+   "x": 109.0,
+   "y": 49.22,
+   "z": 14.24,
+   "rot": 247.5,
+   "scale": 2.094,
+   "kind": "decor"
+  },
+  {
+   "asset": "GlowClusterBig",
+   "x": 107.0,
+   "y": 597.52,
+   "z": 19.33,
+   "rot": 164.2,
+   "scale": 1.406,
+   "kind": "glow",
+   "color": "violet"
+  },
+  {
+   "asset": "GlowClusterBig",
+   "x": 107.0,
+   "y": 374.49,
+   "z": 19.72,
+   "rot": 19.6,
+   "scale": 1.076,
+   "kind": "glow",
+   "color": "blue"
+  },
+  {
+   "asset": "GlowClusterBig",
+   "x": 107.0,
+   "y": 600.7,
+   "z": 8.42,
+   "rot": 250.1,
+   "scale": 1.04,
+   "kind": "glow",
+   "color": "violet"
+  },
+  {
+   "asset": "GlowClusterBig",
+   "x": 107.0,
+   "y": 546.17,
+   "z": 29.97,
+   "rot": 314.8,
+   "scale": 1.432,
+   "kind": "glow",
+   "color": "violet"
+  },
+  {
+   "asset": "GlowClusterBig",
+   "x": 107.0,
+   "y": 39.65,
+   "z": 14.34,
+   "rot": 300.2,
+   "scale": 1.441,
+   "kind": "glow",
+   "color": "blue"
+  },
+  {
+   "asset": "GlowClusterBig",
+   "x": 107.0,
+   "y": 521.81,
+   "z": 26.14,
+   "rot": 147.2,
+   "scale": 1.223,
+   "kind": "glow",
+   "color": "violet"
+  },
+  {
+   "asset": "GlowClusterBig",
+   "x": 107.0,
+   "y": 468.2,
+   "z": 24.23,
+   "rot": 68.5,
+   "scale": 1.031,
+   "kind": "glow",
+   "color": "blue"
+  },
+  {
+   "asset": "GlowClusterBig",
+   "x": 107.0,
+   "y": 223.79,
+   "z": 9.49,
+   "rot": 335.1,
+   "scale": 1.322,
+   "kind": "glow",
+   "color": "violet"
+  },
+  {
+   "asset": "NestCrown",
+   "x": 0,
+   "y": 490.0,
+   "z": 0,
+   "rot": 0.0,
+   "scale": 1.0,
+   "kind": "marker"
+  },
+  {
+   "asset": "CrystalSpire",
+   "x": 52.16,
+   "y": 476.02,
+   "z": 0,
+   "rot": 218.4,
+   "scale": 1.143,
+   "kind": "decor"
+  },
+  {
+   "asset": "CrystalSpireTall",
+   "x": 57.96,
+   "y": 505.53,
+   "z": 0,
+   "rot": 24.7,
+   "scale": 1.193,
+   "kind": "decor"
+  },
+  {
+   "asset": "CrystalSpire",
+   "x": 33.42,
+   "y": 529.83,
+   "z": 0,
+   "rot": 148.5,
+   "scale": 1.096,
+   "kind": "decor"
+  },
+  {
+   "asset": "CrystalSpireTall",
+   "x": 17.08,
+   "y": 553.75,
+   "z": 0,
+   "rot": 228.8,
+   "scale": 1.235,
+   "kind": "decor"
+  },
+  {
+   "asset": "CrystalSpireTall",
+   "x": -17.08,
+   "y": 553.75,
+   "z": 0,
+   "rot": 0.3,
+   "scale": 1.387,
+   "kind": "decor"
+  },
+  {
+   "asset": "CrystalSpire",
+   "x": -33.42,
+   "y": 529.83,
+   "z": 0,
+   "rot": 34.0,
+   "scale": 1.026,
+   "kind": "decor"
+  },
+  {
+   "asset": "CrystalSpireTall",
+   "x": -57.96,
+   "y": 505.53,
+   "z": 0,
+   "rot": 69.0,
+   "scale": 1.193,
+   "kind": "decor"
+  },
+  {
+   "asset": "CrystalSpire",
+   "x": -52.16,
+   "y": 476.02,
+   "z": 0,
+   "rot": 166.3,
+   "scale": 1.124,
+   "kind": "decor"
+  },
+  {
+   "asset": "GlowCluster",
+   "x": 15.0,
+   "y": 490.0,
+   "z": 0,
+   "rot": 74.0,
+   "scale": 1.064,
+   "kind": "glow",
+   "color": "cyan"
+  },
+  {
+   "asset": "GlowCluster",
+   "x": 12.14,
+   "y": 498.82,
+   "z": 0,
+   "rot": 288.5,
+   "scale": 1.118,
+   "kind": "glow",
+   "color": "violet"
+  },
+  {
+   "asset": "GlowCluster",
+   "x": 4.64,
+   "y": 504.27,
+   "z": 0,
+   "rot": 319.2,
+   "scale": 1.077,
+   "kind": "glow",
+   "color": "cyan"
+  },
+  {
+   "asset": "GlowCluster",
+   "x": -4.64,
+   "y": 504.27,
+   "z": 0,
+   "rot": 139.0,
+   "scale": 1.144,
+   "kind": "glow",
+   "color": "violet"
+  },
+  {
+   "asset": "GlowCluster",
+   "x": -12.14,
+   "y": 498.82,
+   "z": 0,
+   "rot": 348.2,
+   "scale": 1.343,
+   "kind": "glow",
+   "color": "cyan"
+  },
+  {
+   "asset": "GlowCluster",
+   "x": -15.0,
+   "y": 490.0,
+   "z": 0,
+   "rot": 3.6,
+   "scale": 1.231,
+   "kind": "glow",
+   "color": "violet"
+  },
+  {
+   "asset": "GlowCluster",
+   "x": -12.14,
+   "y": 481.18,
+   "z": 0,
+   "rot": 33.4,
+   "scale": 1.221,
+   "kind": "glow",
+   "color": "cyan"
+  },
+  {
+   "asset": "GlowCluster",
+   "x": -4.64,
+   "y": 475.73,
+   "z": 0,
+   "rot": 70.0,
+   "scale": 1.102,
+   "kind": "glow",
+   "color": "violet"
+  },
+  {
+   "asset": "GlowCluster",
+   "x": 4.64,
+   "y": 475.73,
+   "z": 0,
+   "rot": 109.3,
+   "scale": 1.225,
+   "kind": "glow",
+   "color": "cyan"
+  },
+  {
+   "asset": "GlowCluster",
+   "x": 12.14,
+   "y": 481.18,
+   "z": 0,
+   "rot": 296.7,
+   "scale": 1.029,
+   "kind": "glow",
+   "color": "violet"
+  },
+  {
+   "asset": "light",
+   "x": 0,
+   "y": 490.0,
+   "z": 16,
+   "rot": 0.0,
+   "scale": 1.0,
+   "kind": "light",
+   "color": "cyan",
+   "range": 40,
+   "brightness": 1.6
+  },
+  {
+   "asset": "light",
+   "x": 0,
+   "y": 545.0,
+   "z": 24,
+   "rot": 0.0,
+   "scale": 1.0,
+   "kind": "light",
+   "color": "violet",
+   "range": 45,
+   "brightness": 1.0
+  },
+  {
+   "asset": "ShardDebris",
+   "x": 98.54,
+   "y": 550.88,
+   "z": 0,
+   "rot": 17.7,
+   "scale": 1.178,
+   "kind": "decor"
+  },
+  {
+   "asset": "Boulder1",
+   "x": -73.81,
+   "y": 646.24,
+   "z": -0.5,
+   "rot": 333.3,
+   "scale": 0.946,
+   "kind": "decor"
+  },
+  {
+   "asset": "Boulder1",
+   "x": -13.0,
+   "y": 602.62,
+   "z": -0.5,
+   "rot": 10.8,
+   "scale": 0.958,
+   "kind": "decor"
+  },
+  {
+   "asset": "CrystalCluster4",
+   "x": -94.45,
+   "y": 579.14,
+   "z": 0,
+   "rot": 352.3,
+   "scale": 1.403,
+   "kind": "decor"
+  },
+  {
+   "asset": "ShardDebris",
+   "x": 23.11,
+   "y": 48.42,
+   "z": 0,
+   "rot": 177.2,
+   "scale": 1.243,
+   "kind": "decor"
+  },
+  {
+   "asset": "Boulder1",
+   "x": 37.99,
+   "y": 61.42,
+   "z": -0.5,
+   "rot": 195.0,
+   "scale": 0.927,
+   "kind": "decor"
+  },
+  {
+   "asset": "ShardDebris",
+   "x": -95.84,
+   "y": 329.7,
+   "z": 0,
+   "rot": 231.5,
+   "scale": 0.92,
+   "kind": "decor"
+  },
+  {
+   "asset": "CrystalCluster3",
+   "x": -70.86,
+   "y": 458.58,
+   "z": 0,
+   "rot": 344.7,
+   "scale": 1.059,
+   "kind": "decor"
+  },
+  {
+   "asset": "Boulder2",
+   "x": -21.25,
+   "y": 553.73,
+   "z": -0.5,
+   "rot": 64.6,
+   "scale": 1.175,
+   "kind": "decor"
+  },
+  {
+   "asset": "CrystalCluster4",
+   "x": -42.77,
+   "y": 566.06,
+   "z": 0,
+   "rot": 135.3,
+   "scale": 1.121,
+   "kind": "decor"
+  },
+  {
+   "asset": "CrystalCluster1",
+   "x": 46.31,
+   "y": 556.86,
+   "z": 0,
+   "rot": 308.1,
+   "scale": 1.344,
+   "kind": "decor"
+  },
+  {
+   "asset": "CrystalCluster4",
+   "x": 54.75,
+   "y": 638.83,
+   "z": 0,
+   "rot": 15.4,
+   "scale": 1.064,
+   "kind": "decor"
+  },
+  {
+   "asset": "CrystalCluster1",
+   "x": 92.24,
+   "y": 608.92,
+   "z": 0,
+   "rot": 227.1,
+   "scale": 1.066,
+   "kind": "decor"
+  },
+  {
+   "asset": "Boulder1",
+   "x": 89.68,
+   "y": 558.59,
+   "z": -0.5,
+   "rot": 95.5,
+   "scale": 1.137,
+   "kind": "decor"
+  },
+  {
+   "asset": "CrystalCluster1",
+   "x": -65.96,
+   "y": 638.54,
+   "z": 0,
+   "rot": 276.0,
+   "scale": 0.977,
+   "kind": "decor"
+  },
+  {
+   "asset": "CrystalCluster1",
+   "x": -64.13,
+   "y": 660.52,
+   "z": 0,
+   "rot": 265.9,
+   "scale": 0.9,
+   "kind": "decor"
+  },
+  {
+   "asset": "ShardDebris",
+   "x": -89.06,
+   "y": 30.58,
+   "z": 0,
+   "rot": 225.5,
+   "scale": 1.217,
+   "kind": "decor"
+  },
+  {
+   "asset": "ShardDebris",
+   "x": -96.27,
+   "y": 345.55,
+   "z": 0,
+   "rot": 213.6,
+   "scale": 0.954,
+   "kind": "decor"
+  },
+  {
+   "asset": "CrystalCluster2",
+   "x": 53.57,
+   "y": 152.17,
+   "z": 0,
+   "rot": 349.4,
+   "scale": 0.923,
+   "kind": "decor"
+  },
+  {
+   "asset": "ShardDebris",
+   "x": 97.08,
+   "y": 337.5,
+   "z": 0,
+   "rot": 250.0,
+   "scale": 0.948,
+   "kind": "decor"
+  },
+  {
+   "asset": "CrystalCluster2",
+   "x": 70.71,
+   "y": 617.25,
+   "z": 0,
+   "rot": 128.0,
+   "scale": 0.948,
+   "kind": "decor"
+  },
+  {
+   "asset": "CrystalCluster2",
+   "x": -51.94,
+   "y": 45.89,
+   "z": 0,
+   "rot": 1.2,
+   "scale": 0.904,
+   "kind": "decor"
+  },
+  {
+   "asset": "CrystalCluster2",
+   "x": -80.28,
+   "y": 624.06,
+   "z": 0,
+   "rot": 329.1,
+   "scale": 0.949,
+   "kind": "decor"
+  },
+  {
+   "asset": "ShardDebris",
+   "x": -91.55,
+   "y": 488.45,
+   "z": 0,
+   "rot": 279.4,
+   "scale": 1.331,
+   "kind": "decor"
+  },
+  {
+   "asset": "CrystalCluster2",
+   "x": 75.47,
+   "y": 146.53,
+   "z": 0,
+   "rot": 356.4,
+   "scale": 1.311,
+   "kind": "decor"
+  },
+  {
+   "asset": "Boulder2",
+   "x": 16.79,
+   "y": 603.18,
+   "z": -0.5,
+   "rot": 333.0,
+   "scale": 1.133,
+   "kind": "decor"
+  },
+  {
+   "asset": "CrystalCluster4",
+   "x": -20.95,
+   "y": 662.91,
+   "z": 0,
+   "rot": 149.4,
+   "scale": 1.403,
+   "kind": "decor"
+  },
+  {
+   "asset": "CrystalCluster4",
+   "x": -70.69,
+   "y": 620.84,
+   "z": 0,
+   "rot": 70.5,
+   "scale": 1.229,
+   "kind": "decor"
+  },
+  {
+   "asset": "ShardDebris",
+   "x": -8.96,
+   "y": 674.9,
+   "z": 0,
+   "rot": 58.0,
+   "scale": 1.033,
+   "kind": "decor"
+  },
+  {
+   "asset": "ShardDebris",
+   "x": -95.03,
+   "y": 458.35,
+   "z": 0,
+   "rot": 353.2,
+   "scale": 0.907,
+   "kind": "decor"
+  },
+  {
+   "asset": "CrystalCluster2",
+   "x": -73.18,
+   "y": 499.43,
+   "z": 0,
+   "rot": 9.7,
+   "scale": 1.076,
+   "kind": "decor"
+  },
+  {
+   "asset": "ShardDebris",
+   "x": -19.3,
+   "y": 366.84,
+   "z": 0,
+   "rot": 9.1,
+   "scale": 1.34,
+   "kind": "decor"
+  },
+  {
+   "asset": "CrystalCluster4",
+   "x": -23.58,
+   "y": 603.22,
+   "z": 0,
+   "rot": 4.0,
+   "scale": 0.973,
+   "kind": "decor"
+  },
+  {
+   "asset": "CrystalCluster1",
+   "x": -75.9,
+   "y": 625.17,
+   "z": 0,
+   "rot": 84.0,
+   "scale": 1.35,
+   "kind": "decor"
+  },
+  {
+   "asset": "CrystalCluster3",
+   "x": -71.36,
+   "y": 595.89,
+   "z": 0,
+   "rot": 319.9,
+   "scale": 1.162,
+   "kind": "decor"
+  },
+  {
+   "asset": "CrystalCluster2",
+   "x": 89.15,
+   "y": 676.57,
+   "z": 0,
+   "rot": 329.5,
+   "scale": 1.138,
+   "kind": "decor"
+  },
+  {
+   "asset": "CrystalCluster1",
+   "x": -80.9,
+   "y": 588.86,
+   "z": 0,
+   "rot": 62.9,
+   "scale": 1.014,
+   "kind": "decor"
+  },
+  {
+   "asset": "CrystalCluster3",
+   "x": 8.74,
+   "y": 682.23,
+   "z": 0,
+   "rot": 73.7,
+   "scale": 1.033,
+   "kind": "decor"
+  },
+  {
+   "asset": "CrystalCluster2",
+   "x": 74.21,
+   "y": 591.77,
+   "z": 0,
+   "rot": 312.9,
+   "scale": 1.348,
+   "kind": "decor"
+  },
+  {
+   "asset": "Boulder1",
+   "x": -76.16,
+   "y": 505.81,
+   "z": -0.5,
+   "rot": 156.9,
+   "scale": 1.239,
+   "kind": "decor"
+  },
+  {
+   "asset": "Boulder2",
+   "x": 43.86,
+   "y": 662.47,
+   "z": -0.5,
+   "rot": 26.1,
+   "scale": 1.122,
+   "kind": "decor"
+  },
+  {
+   "asset": "ShardDebris",
+   "x": 10.78,
+   "y": 43.51,
+   "z": 0,
+   "rot": 353.1,
+   "scale": 0.908,
+   "kind": "decor"
+  },
+  {
+   "asset": "CrystalCluster1",
+   "x": -78.34,
+   "y": 70.7,
+   "z": 0,
+   "rot": 52.1,
+   "scale": 1.11,
+   "kind": "decor"
+  },
+  {
+   "asset": "Boulder1",
+   "x": -72.56,
+   "y": 453.4,
+   "z": -0.5,
+   "rot": 104.0,
+   "scale": 1.084,
+   "kind": "decor"
+  },
+  {
+   "asset": "CrystalCluster2",
+   "x": -57.17,
+   "y": 358.55,
+   "z": 0,
+   "rot": 135.0,
+   "scale": 0.979,
+   "kind": "decor"
+  },
+  {
+   "asset": "CrystalCluster2",
+   "x": -77.23,
+   "y": 498.74,
+   "z": 0,
+   "rot": 252.7,
+   "scale": 1.382,
+   "kind": "decor"
+  },
+  {
+   "asset": "CrystalCluster4",
+   "x": 77.18,
+   "y": 480.21,
+   "z": 0,
+   "rot": 174.8,
+   "scale": 0.928,
+   "kind": "decor"
+  },
+  {
+   "asset": "CrystalCluster4",
+   "x": 42.63,
+   "y": 259.12,
+   "z": 0,
+   "rot": 187.1,
+   "scale": 1.095,
+   "kind": "decor"
+  },
+  {
+   "asset": "ShardDebris",
+   "x": 41.05,
+   "y": 428.41,
+   "z": 0,
+   "rot": 176.5,
+   "scale": 1.028,
+   "kind": "decor"
+  },
+  {
+   "asset": "Boulder2",
+   "x": -92.1,
+   "y": 572.01,
+   "z": -0.5,
+   "rot": 31.8,
+   "scale": 1.107,
+   "kind": "decor"
+  },
+  {
+   "asset": "CrystalCluster4",
+   "x": -27.1,
+   "y": 321.49,
+   "z": 0,
+   "rot": 95.4,
+   "scale": 1.032,
+   "kind": "decor"
+  },
+  {
+   "asset": "ShardDebris",
+   "x": -59.33,
+   "y": 329.63,
+   "z": 0,
+   "rot": 60.0,
+   "scale": 1.172,
+   "kind": "decor"
+  },
+  {
+   "asset": "Boulder2",
+   "x": 7.88,
+   "y": 564.93,
+   "z": -0.5,
+   "rot": 356.3,
+   "scale": 1.259,
+   "kind": "decor"
+  },
+  {
+   "asset": "CrystalCluster4",
+   "x": -84.04,
+   "y": 503.28,
+   "z": 0,
+   "rot": 202.4,
+   "scale": 1.005,
+   "kind": "decor"
+  },
+  {
+   "asset": "CrystalCluster2",
+   "x": 32.28,
+   "y": 611.69,
+   "z": 0,
+   "rot": 12.2,
+   "scale": 1.276,
+   "kind": "decor"
+  },
+  {
+   "asset": "CrystalCluster1",
+   "x": 99.17,
+   "y": 429.99,
+   "z": 0,
+   "rot": 9.3,
+   "scale": 1.241,
+   "kind": "decor"
+  },
+  {
+   "asset": "CrystalCluster2",
+   "x": 19.7,
+   "y": 352.35,
+   "z": 0,
+   "rot": 60.2,
+   "scale": 0.907,
+   "kind": "decor"
+  },
+  {
+   "asset": "Boulder1",
+   "x": -1.35,
+   "y": 646.61,
+   "z": -0.5,
+   "rot": 355.9,
+   "scale": 1.061,
+   "kind": "decor"
+  },
+  {
+   "asset": "Boulder1",
+   "x": -89.76,
+   "y": 272.26,
+   "z": -0.5,
+   "rot": 99.5,
+   "scale": 0.933,
+   "kind": "decor"
+  },
+  {
+   "asset": "CrystalCluster4",
+   "x": -87.46,
+   "y": 330.56,
+   "z": 0,
+   "rot": 336.5,
+   "scale": 1.131,
+   "kind": "decor"
+  },
+  {
+   "asset": "ShardDebris",
+   "x": -67.35,
+   "y": 89,
+   "z": 0,
+   "rot": 226.1,
+   "scale": 1.034,
+   "kind": "decor"
+  },
+  {
+   "asset": "ShardDebris",
+   "x": -84.46,
+   "y": 107,
+   "z": 0,
+   "rot": 325.0,
+   "scale": 1.134,
+   "kind": "decor"
+  },
+  {
+   "asset": "ShardDebris",
+   "x": -65.54,
+   "y": 285,
+   "z": 0,
+   "rot": 103.1,
+   "scale": 1.21,
+   "kind": "decor"
+  },
+  {
+   "asset": "ShardDebris",
+   "x": -89.2,
+   "y": 303,
+   "z": 0,
+   "rot": 77.7,
+   "scale": 1.298,
+   "kind": "decor"
+  },
+  {
+   "asset": "ShardDebris",
+   "x": 94.82,
+   "y": 187,
+   "z": 0,
+   "rot": 107.8,
+   "scale": 1.193,
+   "kind": "decor"
+  },
+  {
+   "asset": "ShardDebris",
+   "x": 81.15,
+   "y": 205,
+   "z": 0,
+   "rot": 236.8,
+   "scale": 1.132,
+   "kind": "decor"
+  },
+  {
+   "asset": "ShardDebris",
+   "x": 82.45,
+   "y": 383,
+   "z": 0,
+   "rot": 310.3,
+   "scale": 1.019,
+   "kind": "decor"
+  },
+  {
+   "asset": "ShardDebris",
+   "x": 92.23,
+   "y": 401,
+   "z": 0,
+   "rot": 207.2,
+   "scale": 1.239,
+   "kind": "decor"
+  },
+  {
+   "asset": "FloorMound",
+   "x": 92.7,
+   "y": 354.23,
+   "z": 0,
+   "rot": 340.2,
+   "scale": 1.063,
+   "kind": "mound"
+  },
+  {
+   "asset": "FloorMound",
+   "x": -88.38,
+   "y": 74.62,
+   "z": 0,
+   "rot": 189.5,
+   "scale": 1.385,
+   "kind": "mound"
+  },
+  {
+   "asset": "FloorMound",
+   "x": 81.63,
+   "y": 457.09,
+   "z": 0,
+   "rot": 321.7,
+   "scale": 1.268,
+   "kind": "mound"
+  },
+  {
+   "asset": "FloorMound",
+   "x": 85.29,
+   "y": 238.61,
+   "z": 0,
+   "rot": 344.6,
+   "scale": 1.198,
+   "kind": "mound"
+  },
+  {
+   "asset": "FloorMound",
+   "x": -88.45,
+   "y": 339.2,
+   "z": 0,
+   "rot": 145.5,
+   "scale": 1.119,
+   "kind": "mound"
+  },
+  {
+   "asset": "FloorMound",
+   "x": -87.74,
+   "y": 544.84,
+   "z": 0,
+   "rot": 254.8,
+   "scale": 1.358,
+   "kind": "mound"
+  },
+  {
+   "asset": "FloorMound",
+   "x": 85.66,
+   "y": 677.98,
+   "z": 0,
+   "rot": 25.5,
+   "scale": 1.117,
+   "kind": "mound"
+  },
+  {
+   "asset": "FloorMound",
+   "x": 87.39,
+   "y": 565.7,
+   "z": 0,
+   "rot": 206.2,
+   "scale": 1.384,
+   "kind": "mound"
+  },
+  {
+   "asset": "FloorMound",
+   "x": 85.92,
+   "y": 522.01,
+   "z": 0,
+   "rot": 16.6,
+   "scale": 1.183,
+   "kind": "mound"
+  },
+  {
+   "asset": "FloorMound",
+   "x": 92.82,
+   "y": 230.1,
+   "z": 0,
+   "rot": 325.8,
+   "scale": 1.217,
+   "kind": "mound"
+  },
+  {
+   "asset": "FloorMound",
+   "x": -82.01,
+   "y": 548.53,
+   "z": 0,
+   "rot": 23.0,
+   "scale": 1.313,
+   "kind": "mound"
+  },
+  {
+   "asset": "FloorMound",
+   "x": 80.77,
+   "y": 524.05,
+   "z": 0,
+   "rot": 10.5,
+   "scale": 1.285,
+   "kind": "mound"
+  },
+  {
+   "asset": "GlowClusterBig",
+   "x": -93.49,
+   "y": 26.71,
+   "z": 0,
+   "rot": 298.4,
+   "scale": 1.234,
+   "kind": "glow",
+   "color": "blue"
+  },
+  {
+   "asset": "GlowClusterBig",
+   "x": 94.17,
+   "y": 20.31,
+   "z": 0,
+   "rot": 330.9,
+   "scale": 1.005,
+   "kind": "glow",
+   "color": "blue"
+  },
+  {
+   "asset": "GlowClusterBig",
+   "x": -71.62,
+   "y": 25.57,
+   "z": 0,
+   "rot": 345.3,
+   "scale": 1.25,
+   "kind": "glow",
+   "color": "blue"
+  },
+  {
+   "asset": "GlowClusterBig",
+   "x": 88.52,
+   "y": 38.15,
+   "z": 0,
+   "rot": 338.0,
+   "scale": 1.093,
+   "kind": "glow",
+   "color": "blue"
+  },
+  {
+   "asset": "GlowClusterBig",
+   "x": -71.68,
+   "y": 9.47,
+   "z": 0,
+   "rot": 127.7,
+   "scale": 1.146,
+   "kind": "glow",
+   "color": "blue"
+  },
+  {
+   "asset": "GlowClusterBig",
+   "x": 89.3,
+   "y": 14.41,
+   "z": 0,
+   "rot": 227.6,
+   "scale": 1.04,
+   "kind": "glow",
+   "color": "blue"
+  },
+  {
+   "asset": "GlowClusterBig",
+   "x": -71.8,
+   "y": 28.73,
+   "z": 0,
+   "rot": 126.4,
+   "scale": 1.171,
+   "kind": "glow",
+   "color": "blue"
+  },
+  {
+   "asset": "GlowClusterBig",
+   "x": 89.39,
+   "y": 35.02,
+   "z": 0,
+   "rot": 219.7,
+   "scale": 1.251,
+   "kind": "glow",
+   "color": "blue"
+  },
+  {
+   "asset": "light",
+   "x": 0,
+   "y": 18,
+   "z": 18,
+   "rot": 0.0,
+   "scale": 1.0,
+   "kind": "light",
+   "color": "blue",
+   "range": 40,
+   "brightness": 0.8
+  }
+ ]
+}

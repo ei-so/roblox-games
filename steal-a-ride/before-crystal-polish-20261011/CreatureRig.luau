@@ -5,8 +5,7 @@ local Config = require(game.ReplicatedStorage.Shared.Config)
 local Rig = {}
 
 local legCuts = { Chick = .23, Duckling = .22, Penguin = .2, Monkey = .32, Scarab = .2, Frog = .25,
-	Bunny = .29, Mammoth = .29, Parrot = .23, SnowOwl = .2, Vulture = .24,
-	CrystalBeetle = .226, GemGecko = .379, CrystalPangolin = .238 }
+	Bunny = .29, Mammoth = .29, Parrot = .23, SnowOwl = .2, Vulture = .24 }
 local flying = { Parrot = true, SnowOwl = true, Vulture = true, EmberBat = true, BabyDragon = true }
 local wingCuts = { Parrot = .23, SnowOwl = .27, Vulture = .25, EmberBat = .2, BabyDragon = .25 }
 

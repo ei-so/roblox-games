@@ -52,6 +52,14 @@ assert(Climb.landing(top, size, at(0), "crack", 0).Y == 3, "with a ground height
 assert(Climb.lift(5) == 12, "slow carrier still climbs: 12 studs/s floor")
 assert(Climb.lift(100) == 150, "climbs at 1.5x ride speed")
 
+-- cresting the top: a fast climber keeps only the upward speed that lifts its feet `rise` studs (no launch over the walls)
+local g = 196.2
+local crest = Climb.crestSpeed(177, 6, g)
+assert(math.abs(crest - math.sqrt(2 * g * 6)) < 1e-6, "fast climber: just enough to clear the edge, got " .. crest)
+assert(crest * crest / (2 * g) <= 8, "apex stays inside the ClimbTop headroom (8 studs)")
+assert(Climb.crestSpeed(12, 6, g) == 12, "a slow climber is never sped up")
+assert(Climb.crestSpeed(-5, 6, g) == -5, "already falling: unchanged")
+
 -- leaving the cave, the Golem's leash snaps it to reach behind; a rider who climbed a wall this chase keeps the lead
 assert(Climb.keptLead(70, 41, true) == 20, "kept lead is capped at keepLead")
 assert(Climb.keptLead(51, 41, true) == 10, "keeps the studs beyond the normal leash reach")

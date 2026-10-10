@@ -64,12 +64,6 @@ RunService.RenderStepped:Connect(function()
 		local m = moverOn(root)
 		if climbing then
 			m.LineVelocity = Climb.lift(humanoid.WalkSpeed)
-		elseif m.Enabled then
-			-- the climb just ended at the top: keep only enough upward speed to lift the feet over the edge
-			local cf, size = character:GetBoundingBox()
-			local rise = root.Position.Y - (cf.Position.Y - size.Y / 2) + 1.5
-			local v = root.AssemblyLinearVelocity
-			root.AssemblyLinearVelocity = Vector3.new(v.X, Climb.crestSpeed(v.Y, rise, workspace.Gravity), v.Z)
 		end
 		m.Enabled = climbing
 	end
