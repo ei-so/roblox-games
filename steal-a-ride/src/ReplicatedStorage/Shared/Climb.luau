@@ -29,6 +29,24 @@ function Climb.landing(top: CFrame, size: Vector3, pos: Vector3, action: string,
 	return Vector3.new(spot.X, (groundY or spot.Y) + 3, spot.Z)
 end
 
+-- while climbing: drop the part of the rider's velocity that points away from the wall (normal = the face's
+-- outward normal), so hitting the wall at full speed doesn't bounce you off it mid-climb
+function Climb.pressed(v: Vector3, normal: Vector3): Vector3
+	local away = v:Dot(normal)
+	return away > 0 and v - normal * away or v
+end
+
+-- a walking guardian chasing a rider who is on this wall's top or climbing one of its faces (within 6 studs, off the
+-- ground) can't reach them: it heads for the exit-side landing spot instead (on the ground, so it routes through a
+-- gap). nil = not on this wall: chase the rider as usual
+function Climb.chaseGoal(top: CFrame, size: Vector3, pos: Vector3, groundY: number?): Vector3?
+	local p = top:PointToObjectSpace(pos)
+	if math.abs(p.X) > size.X / 2 or math.abs(p.Z) > size.Z / 2 + 6 or pos.Y < (groundY or 0) + 6 then
+		return nil
+	end
+	return Climb.landing(top, size, pos, "crack", groundY)
+end
+
 -- extra leash studs when the guardian's leash first pulls on this target: the lead beyond the normal reach, capped,
 -- only for a rider who climbed a wall during this chase (so the walls' shortcut survives the cave exit)
 function Climb.keptLead(gap: number, reach: number, climbed: boolean): number

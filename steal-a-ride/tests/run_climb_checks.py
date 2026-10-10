@@ -60,6 +60,26 @@ assert(crest * crest / (2 * g) <= 8, "apex stays inside the ClimbTop headroom (8
 assert(Climb.crestSpeed(12, 6, g) == 12, "a slow climber is never sped up")
 assert(Climb.crestSpeed(-5, 6, g) == -5, "already falling: unchanged")
 
+-- hitting the wall at full speed bounces you back off the face; while climbing, the part of your speed that points
+-- away from the wall is dropped so you stay on it (sideways and up/down speed untouched)
+Vector3.__sub = function(a, b) return Vector3.new(a.X - b.X, a.Y - b.Y, a.Z - b.Z) end
+Vector3.__mul = function(a, k) return Vector3.new(a.X * k, a.Y * k, a.Z * k) end
+function Vector3:Dot(o) return self.X * o.X + self.Y * o.Y + self.Z * o.Z end
+local n = Vector3.new(0, 0, -1) -- the nest face points toward the nest (-Z)
+local v1 = Climb.pressed(Vector3.new(5, 199, -61), n)
+assert(v1.X == 5 and v1.Y == 199 and v1.Z == 0, "bounce away from the face is dropped, sideways and climb speed kept")
+local v2 = Climb.pressed(Vector3.new(0, 50, 30), n)
+assert(v2.Z == 30, "speed into the wall is left alone")
+
+-- a walking guardian can't reach a rider on (or climbing) a wall: it heads for the exit-side landing spot instead,
+-- which is on the ground, so it routes through a gap rather than walking at the wall
+local g1 = Climb.chaseGoal(top, size, Vector3.new(12, 44, 1), 0)
+assert(g1 and g1.Z == 10 and g1.X == 12 and g1.Y == 3, "rider on the top: guardian goes to the exit-side landing")
+assert(Climb.chaseGoal(top, size, Vector3.new(12, 20, -7), 0), "rider climbing the nest face (just outside the footprint): same")
+assert(Climb.chaseGoal(top, size, Vector3.new(12, 3, -7), 0) == nil, "rider on the ground beside the wall: chase them normally")
+assert(Climb.chaseGoal(top, size, Vector3.new(12, 30, -30), 0) == nil, "rider far from this wall: not this wall's business")
+assert(Climb.chaseGoal(top, size, Vector3.new(50, 30, 0), 0) == nil, "rider past the wall's end (the gap side): chase normally")
+
 -- leaving the cave, the Golem's leash snaps it to reach behind; a rider who climbed a wall this chase keeps the lead
 assert(Climb.keptLead(70, 41, true) == 20, "kept lead is capped at keepLead")
 assert(Climb.keptLead(51, 41, true) == 10, "keeps the studs beyond the normal leash reach")

@@ -6,7 +6,6 @@
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 local PathfindingService = game:GetService("PathfindingService")
-local CollectionService = game:GetService("CollectionService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Config = require(ReplicatedStorage.Shared.Config)
 local CreatureBuilder = require(ReplicatedStorage.Shared.CreatureBuilder)
@@ -220,15 +219,6 @@ local blockers = RaycastParams.new()
 blockers.FilterType = Enum.RaycastFilterType.Include
 blockers.RespectCanCollide = true
 
--- Crystal Caverns quartz walls: guardians never take a straight-line shortcut through one (filled in start)
-local walls = RaycastParams.new()
-walls.FilterType = Enum.RaycastFilterType.Include
-
-local function wallBetween(from: Vector3, to: Vector3): boolean
-	local a, b = Vector3.new(from.X, 3, from.Z), Vector3.new(to.X, 3, to.Z)
-	return workspace:Raycast(a, b - a, walls) ~= nil
-end
-
 local function clearLine(from: Vector3, to: Vector3): boolean
 	local a, b = Vector3.new(from.X, 3, from.Z), Vector3.new(to.X, 3, to.Z)
 	return workspace:Raycast(a, b - a, blockers) == nil
@@ -256,15 +246,6 @@ local function chaseTarget(g, goal: Vector3, dist: number, now: number): (Vector
 		return goal, 1
 	end
 	local pos = g.cf.Position
-	-- a rider on or climbing a quartz wall is out of reach: head for that wall's exit-side landing (via a gap)
-	for _, top in CollectionService:GetTagged("ClimbTop") do
-		local landing = Climb.chaseGoal(top.CFrame, top.Size, goal, top:GetAttribute("GroundY"))
-		if landing then
-			goal = landing
-			break
-		end
-	end
-	local walled = wallBetween(pos, goal)
 	local see = clearLine(pos, goal)
 	if not g.raging and see and dist <= G.lungeRange + g.radius and now >= (g.lungeReadyAt or 0) then
 		g.lungeUntil, g.lungeReadyAt = now + G.lungeSeconds, now + G.lungeCooldown
@@ -279,7 +260,7 @@ local function chaseTarget(g, goal: Vector3, dist: number, now: number): (Vector
 		end
 		g.windowPos, g.windowAt = pos, now
 	end
-	if (see and dist <= G.directRange + g.radius) or ((g.pushUntil or 0) > now and not walled) then
+	if (see and dist <= G.directRange + g.radius) or (g.pushUntil or 0) > now then
 		return goal, mult
 	end
 	if not g.computing and now - (g.pathAt or 0) >= G.pathEvery then
@@ -287,13 +268,12 @@ local function chaseTarget(g, goal: Vector3, dist: number, now: number): (Vector
 	end
 	local wps = g.waypoints
 	if not wps then
-		return walled and pos or goal, mult -- no route found: straight at you (never through a quartz wall: wait)
+		return goal, mult -- no route found: straight at you
 	end
 	while wps[g.wp] and (flat(wps[g.wp].Position) - flat(pos)).Magnitude < 4 do
 		g.wp += 1
 	end
-	-- past the last waypoint of a path to where you were: straight at you, unless a quartz wall is in the way (wait)
-	return wps[g.wp] and wps[g.wp].Position or (walled and pos or goal), mult
+	return wps[g.wp] and wps[g.wp].Position or goal, mult
 end
 
 local function catch(g, player)
@@ -493,7 +473,6 @@ function GuardianService.start(eggs)
 		end
 	end
 	blockers.FilterDescendantsInstances = solid
-	walls.FilterDescendantsInstances = CollectionService:GetTagged("ClimbWall")
 	for _, biome in Config.Biomes do
 		local m = workspace.Biomes[biome.id]
 		table.insert(zones, { id = biome.id, entranceZ = m:GetAttribute("EntranceZ"), farZ = m:GetAttribute("FarZ") })

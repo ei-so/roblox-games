@@ -41,7 +41,7 @@ RunService.RenderStepped:Connect(function()
 	if not root or not humanoid then
 		return
 	end
-	local climbing = false
+	local climbing, normal = false, nil
 	if humanoid.Health > 0 and hasClimb() and not player:GetAttribute("Flying") then
 		local mount = character:FindFirstChild("Mount")
 		local depth = 2
@@ -58,12 +58,14 @@ RunService.RenderStepped:Connect(function()
 			local hit = workspace:Raycast(root.Position, look.Unit * (depth / 2 + 2), params)
 			climbing = hit ~= nil and CollectionService:HasTag(hit.Instance, "ClimbWall")
 				and humanoid.MoveDirection:Dot(hit.Normal) < -0.3
+			normal = climbing and hit.Normal or nil
 		end
 	end
 	if climbing or (mover and mover.Parent == root) then
 		local m = moverOn(root)
 		if climbing then
 			m.LineVelocity = Climb.lift(humanoid.WalkSpeed)
+			root.AssemblyLinearVelocity = Climb.pressed(root.AssemblyLinearVelocity, normal) -- no bounce off the face
 		elseif m.Enabled then
 			-- the climb just ended at the top: keep only enough upward speed to lift the feet over the edge
 			local cf, size = character:GetBoundingBox()
