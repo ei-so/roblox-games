@@ -1010,6 +1010,7 @@ Config.Icons = {
 		Swim = "rbxassetid://100279436902805",
 		Fireproof = "rbxassetid://135382872676979",
 		Phase = "rbxassetid://108030336595358",
+		Climb = "rbxassetid://121675949374159",
 	},
 	Rarities = {
 		Common = "rbxassetid://139228409390857",
