@@ -16,6 +16,10 @@ saddle costs, map layout, hazards/VFX/sounds, guardian models.
 
 ## Escape ability per biome
 
+**Order changed by user 2026-10-10:** 8 Mystic Grove, 9 Crystal Caverns (Climb), 10 Atlantis, 11 Sky Kingdom,
+12 Haunted Realm, 13 Cyber City, 14 The Void (Glide now 3 biomes after Sky Kingdom, accepted). The table below
+keeps the original numbering; species are unchanged. Crystal Caverns design: `2026-10-10-crystal-caverns-design.md`.
+
 | # | Biome | Guardian | Escape ability | Patch idea | Ability last used |
 |---|---|---|---|---|---|
 | 8 | Mystic Grove | Giant Spider | Jump | Bouncy mushroom caps | Desert (#3) |
