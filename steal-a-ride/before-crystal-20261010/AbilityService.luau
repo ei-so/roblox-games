@@ -1,7 +1,6 @@
 -- Abilities that need the server: Dash timing, zone effects (water slows non-swimmers, lava burns
--- non-fireproof riders, thin ice cracks under non-gliders, quicksand swallows non-jumpers, falling into the chasm),
--- Crystal Caverns wall tops (crack after a moment, push off riders without Climb), and the escape-lane check guardians use.
--- Jump/Glide/Phase/Climb movement itself runs on the client (it owns its character's physics).
+-- non-fireproof riders, thin ice cracks under non-gliders, quicksand swallows non-jumpers, falling into the chasm), and the escape-lane check guardians use.
+-- Jump/Glide/Phase movement itself runs on the client (it owns its character's physics).
 local Players = game:GetService("Players")
 local CollectionService = game:GetService("CollectionService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -9,7 +8,6 @@ local Config = require(ReplicatedStorage.Shared.Config)
 local SpeedService = require(script.Parent.SpeedService)
 local MountService = require(script.Parent.MountService)
 local PlotService = require(script.Parent.PlotService)
-local Climb = require(ReplicatedStorage.Shared.Climb)
 
 local Remotes = ReplicatedStorage.Remotes
 local Notify = Remotes.Notify
@@ -20,7 +18,6 @@ AbilityService.onPenalty = nil -- function(player): drop the carried egg, set by
 local lastDash = {}
 local lastPenalty = {}
 local onPatchSince, stuckUntil = {}, {} -- escape patches: time on one, and the sinking timer
-local climbSince = {} -- Crystal Caverns: when the rider's current wall top started cracking
 
 -- inside a zone part's footprint, from just below it to Headroom studs above it
 local function inside(part: BasePart, pos: Vector3): boolean
@@ -37,15 +34,6 @@ local function inAny(tag: string, pos: Vector3): boolean
 		end
 	end
 	return false
-end
-
-local function taggedAt(tag: string, pos: Vector3): BasePart?
-	for _, part in CollectionService:GetTagged(tag) do
-		if inside(part, pos) then
-			return part
-		end
-	end
-	return nil
 end
 
 local function rootOf(player)
@@ -123,26 +111,6 @@ local function penalty(player, message: string)
 	Notify:FireClient(player, "toast", message)
 end
 
--- quartz wall tops: Climb riders get crackAfter seconds before the top drops them on the exit side (egg kept);
--- anyone else is pushed straight off the side they came from
-local function climbCheck(player, root: BasePart, now: number)
-	local pos = root.Position
-	local top = taggedAt("ClimbTop", pos)
-	local action, since = Climb.step(climbSince[player], now, top ~= nil, MountService.hasAbility(player, "Climb"),
-		Config.Abilities.Climb.crackAfter)
-	climbSince[player] = since
-	if action == "start" then
-		player:SetAttribute("ClimbSince", workspace:GetServerTimeNow()) -- clients play the crack warning from this
-	elseif action ~= "wait" and player:GetAttribute("ClimbSince") then
-		player:SetAttribute("ClimbSince", nil)
-	end
-	if top and (action == "crack" or action == "slip") then
-		local spot = Climb.landing(top.CFrame, top.Size, pos, action, top:GetAttribute("GroundY"))
-		PlotService.teleport(player.Character, CFrame.new(spot) * root.CFrame.Rotation)
-		Notify:FireClient(player, "toast", action == "crack" and "The crystal cracks!" or "Only Climb riders can cross the crystal")
-	end
-end
-
 local function check(player)
 	local root = rootOf(player)
 	local humanoid = player.Character and player.Character:FindFirstChildOfClass("Humanoid")
@@ -160,9 +128,8 @@ local function check(player)
 	elseif inAny("Pit", pos) then
 		penalty(player, "You fell into the chasm! Glide riders can make that jump.")
 	end
-	local now = os.clock()
-	climbCheck(player, root, now)
 	local biome = biomeAt(pos.Z)
+	local now = os.clock()
 	if biome and (stuckUntil[player] or 0) <= now and patchAt(biome.Name, pos) then
 		if not onPatchSince[player] then
 			onPatchSince[player] = now
@@ -200,7 +167,6 @@ function AbilityService.start()
 	end)
 	Players.PlayerRemoving:Connect(function(player)
 		lastDash[player], lastPenalty[player], onPatchSince[player], stuckUntil[player] = nil, nil, nil, nil
-		climbSince[player] = nil
 	end)
 end
 

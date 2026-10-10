@@ -481,16 +481,6 @@ player:GetAttributeChangedSignal("PatchSince"):Connect(function()
 		play("Patch" .. lane)
 	end
 end)
--- Crystal Caverns: the wall top starts cracking under you (the server drops you off after Climb.crackAfter)
-player:GetAttributeChangedSignal("ClimbSince"):Connect(function()
-	local character = player.Character
-	local root = character and character:FindFirstChild("HumanoidRootPart")
-	local humanoid = character and character:FindFirstChildOfClass("Humanoid")
-	if player:GetAttribute("ClimbSince") and root and humanoid then
-		play("HatchCrack", 0.75)
-		burst(root.Position - Vector3.new(0, root.Size.Y / 2 + humanoid.HipHeight, 0), Color3.fromRGB(235, 245, 255), 24, 14, 0.6)
-	end
-end)
 local nextTick = 0
 RunService.Heartbeat:Connect(function()
 	local since = player:GetAttribute("PatchSince")

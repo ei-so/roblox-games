@@ -170,7 +170,6 @@ Config.Abilities = {
 	Swim = { nonSwimmerMult = 0.5 }, -- riders without Swim move at half speed in water
 	Fireproof = {},
 	Phase = {},
-	Climb = { speedMult = 0.6, crackAfter = 1.5 }, -- up quartz walls at 0.6x ride speed; a wall top cracks after 1.5 s
 }
 
 -- noLane*: carriers without the biome's lane ability get no wake-up head start and a faster guardian
