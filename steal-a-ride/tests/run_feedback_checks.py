@@ -1388,7 +1388,7 @@ for i,u in W do
     assert(i==1 or u.version>W[i-1].version,"updates are listed oldest first with rising versions")
 end
 local v=W[#W].version
-assert(v==5 and W[#W].title=="Top players","latest update is v5 Top players")
+assert(v==6 and W[#W].title=="Event timers","latest update is v6 Event timers")
 local since=Config.updatesSince
 assert(#since(nil)==#W and #since(0)==#W,"never seen anything: every update")
 assert(#since(v)==0,"seen the latest: nothing")
@@ -1705,7 +1705,7 @@ def main():
     from run_secret_checks import harness as secret_harness
     from run_seat_checks import harness as seat_harness
     from run_engagement_checks import likes, quests, friends, popups, leaderboard, steal_success
-    from run_hud_checks import menu, hints, shop, popup, shield, event_layout
+    from run_hud_checks import menu, hints, shop, popup, shield, event_layout, event_schedule
     parser = argparse.ArgumentParser()
     parser.add_argument("--runtime", type=Path, required=True)
     args = parser.parse_args()
@@ -1722,7 +1722,7 @@ def main():
         subprocess.run([str(args.runtime / ("luau" + exe)), str(script)], check=True)
         script.write_text(mama_harness(), encoding="utf-8")
         subprocess.run([str(args.runtime / ("luau" + exe)), str(script)], check=True)
-        for extra in (flight_harness, secret_harness, seat_harness, movement_harness, pen_roam_harness, tutorial_harness, mount_harness, get_off_harness, storm_harness, guardian_harness, guardian_fx_harness, mama_fx_harness, egg_fx_harness, fuse_ui_harness, gear_harness, touch_buttons_harness, pacing_harness, plaza_harness, top_players_harness, base_harness, rebirth_harness, whats_new_harness, expansion_harness, legacy_harness, likes, quests, friends, popups, leaderboard, steal_success, menu, hints, shop, popup, shield, event_layout):
+        for extra in (flight_harness, secret_harness, seat_harness, movement_harness, pen_roam_harness, tutorial_harness, mount_harness, get_off_harness, storm_harness, guardian_harness, guardian_fx_harness, mama_fx_harness, egg_fx_harness, fuse_ui_harness, gear_harness, touch_buttons_harness, pacing_harness, plaza_harness, top_players_harness, base_harness, rebirth_harness, whats_new_harness, expansion_harness, legacy_harness, likes, quests, friends, popups, leaderboard, steal_success, menu, hints, shop, popup, shield, event_layout, event_schedule):
             script.write_text(extra(), encoding="utf-8")
             subprocess.run([str(args.runtime / ("luau" + exe)), str(script)], check=True)
     scripts = sorted((ROOT / "src").rglob("*.luau"))

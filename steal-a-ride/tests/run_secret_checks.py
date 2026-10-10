@@ -19,7 +19,7 @@ def harness():
     event = (root / 'ServerScriptService/Services/EventService.luau').read_text(encoding='utf-8-sig')
     schedule = event[event.index('function EventService.start()'):event.index('\nreturn EventService')]
     ui = (root / 'StarterGui/MainUI/UIController.luau').read_text(encoding='utf-8-sig')
-    status = ui[ui.index('local parts ='):ui.index('local statusY =')]
+    helpers = ui[ui.index('-- Pure helpers below'):ui.index('-- End of pure helpers.')]
     return r'''
 local Color3={fromRGB=function(r,g,b) return {R=r/255,G=g/255,B=b/255} end}
 local Enum=setmetatable({},{__index=function() return setmetatable({},{__index=function(_,k) return k end}) end})
@@ -65,18 +65,16 @@ EventService.start()
 assert(attrs.NextSecretEgg==520,'next Secret spawn is replicated at server startup')
 now=520;assert(coroutine.resume(routines[1]))
 assert(spawned==1 and attrs.NextSecretEgg==940,'scheduled spawn refreshes countdown for the next7min cycle')
-local player={GetAttribute=function() return nil end}
-local UDim2={fromOffset=function(x,y) return {X=x,Y=y} end}
-local status={}
-local function render()
-''' + status + r'''
-end
-now=520;render()
-assert(status.Text:find('Secret Egg in 7:00',1,true) and status.Size.Y==78,'Secret countdown is the third sticky row')
-now=521;render();assert(status.Text:find('Secret Egg in 6:59',1,true),'timer advances with server time')
-now=942;render();assert(status.Text:find('Secret Egg in 0:00',1,true),'overdue countdown never becomes negative')
-attrs.NextSecretEgg=nil;render();assert(status.Size.Y==52 and not status.Text:find('Secret Egg',1,true),'missing replication keeps existing base/nest rows')
-print('PASS: scheduled Secret timestamp initializes/resets; sticky countdown advances, clamps and tolerates missing replication')
+local WEATHER_TEXT,WEATHER_TIP={},{}
+''' + helpers + r'''
+local function get(k) return attrs[k] end
+assert(secretView(get,520).detail=='Next in 7:00','Secret countdown card at the new cycle')
+assert(secretView(get,521).detail=='Next in 6:59','timer advances with server time')
+assert(secretView(get,942).detail=='Appearing soon…','overdue countdown never becomes negative')
+assert(refillView(get,942).detail=='Eggs refilling…' and baseView(nil,nil).detail=='Base unlocked','base/nest cards stay')
+attrs.NextSecretEgg=nil;assert(secretView(get,942)==nil,'missing replication hides the Secret card')
+assert(refillView(get,100).detail=='Eggs refill in 5:00','nest card unaffected')
+print('PASS: scheduled Secret timestamp initializes/resets; Secret card counts down, clamps and tolerates missing replication')
 '''
 
 

@@ -53,11 +53,9 @@ Config.Biomes = {
 	{ id = "CrystalCaverns", guardian = "Crystal Golem", guardianSpeed = 96, depth = 700, minEscape = 61, mountBase = 90,
 		lane = "Climb", shortcuts = true, hatchTime = 300, baseIncome = 32000, carry = 0.893,
 		species = { "CrystalBeetle", "GemGecko", "CrystalPangolin" },
-		-- darker blue-grey cave (polish pass): the crystals carry the light, the rock stays muted. The ceiling shades
-		-- the whole cave, so the fog stays thin and the grade a little bright (Play-tuned: routes readable at distance)
-		look = { floor = rgb(90, 100, 126), material = Enum.Material.Slate, accent = rgb(120, 240, 255),
-			tint = rgb(205, 220, 250), atmosphere = rgb(78, 94, 132), density = 0.26, haze = 0.8,
-			brightness = 0.1, saturation = 0.15, contrast = 0.12 } },
+		look = { floor = rgb(196, 198, 208), material = Enum.Material.Slate, accent = rgb(170, 240, 255),
+			tint = rgb(240, 244, 255), atmosphere = rgb(206, 214, 232), density = 0.3, haze = 1,
+			brightness = 0.04, saturation = 0.08, contrast = 0.06 } },
 }
 Config.HomeLook = { tint = rgb(255, 255, 255), atmosphere = rgb(200, 220, 240), density = 0.25, haze = 0 }
 
@@ -654,13 +652,6 @@ Config.WhatsNew = {
 			"Rebirth 10 unlocks a <b>Base Expansion</b> behind your base: 10 more pen spots and 2 more incubators",
 			"Nests hold <b>fewer eggs in quieter servers</b> and fill back up as players join",
 			"<b>Enraged guardians</b> now flash a pulsing glow, kick up dust and let out a roar, and the Giant Spider drips venom",
-		},
-	},
-	{
-		version = 6,
-		title = "Event timers",
-		lines = {
-			"New <b>event cards</b> on the right count down to the next weather, Mama Dragon and Secret Egg",
 		},
 	},
 }

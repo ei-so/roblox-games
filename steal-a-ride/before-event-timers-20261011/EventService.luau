@@ -37,7 +37,7 @@ function EventService.startWeather(name: string?)
 	end
 	EventService.weatherBusy = true
 	workspace:SetAttribute("Weather", name)
-	workspace:SetAttribute("WeatherEnds", workspace:GetServerTimeNow() + Config.Events.weatherDuration)
+	workspace:SetAttribute("WeatherEnds", os.time() + Config.Events.weatherDuration)
 	GuardianService.speedMultiplier = name == "BloodMoon" and Config.Guardian.bloodMoonMult or 1
 	local mutation = WEATHERS[name]
 	local m = Config.Mutations[mutation]
@@ -107,8 +107,6 @@ function EventService.start()
 	end)
 	task.spawn(function()
 		while true do
-			-- the HUD counts down to this; the wait below stays the only weather schedule
-			workspace:SetAttribute("NextWeather", workspace:GetServerTimeNow() + Config.Events.weatherInterval)
 			task.wait(Config.Events.weatherInterval)
 			EventService.startWeather()
 		end

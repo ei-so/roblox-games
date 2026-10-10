@@ -158,50 +158,25 @@ game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("Notif
 	end
 end)
 
--- Compact side status keeps the play area clear.
-local status = Instance.new("TextLabel")
+-- Base lock and nest refill: compact cards under the event cards (built with them below).
+local status = Instance.new("Frame")
 status.Name = "Status"
-status.AnchorPoint = Vector2.new(1, 0)
-status.Position = UDim2.new(1, -16, 0, 64)
-status.Size = UDim2.fromOffset(230, 26)
+status.Size = UDim2.fromOffset(244, 0)
+status.AutomaticSize = Enum.AutomaticSize.Y
 status.BackgroundTransparency = 1
-status.Font = Enum.Font.FredokaOne
-status.TextScaled = true
-status.RichText = true
-status.TextXAlignment = Enum.TextXAlignment.Right
-status.TextColor3 = Color3.new(1, 1, 1)
-local statusStroke = Instance.new("UIStroke")
-statusStroke.Thickness = 2
-statusStroke.Color = Color3.fromRGB(25, 30, 40)
-statusStroke.Parent = status
+local statusList = Instance.new("UIListLayout")
+statusList.SortOrder = Enum.SortOrder.LayoutOrder
+statusList.Padding = UDim.new(0, 6)
+statusList.Parent = status
 status.Parent = gui
 
--- Event banner (top right): weather countdown, Secret Egg location
-local banner = Instance.new("TextLabel")
-banner.Name = "EventBanner"
-banner.AnchorPoint = Vector2.new(1, 0)
-banner.Position = UDim2.new(1, -16, 0, 8)
-banner.Size = UDim2.new(0, 230, 0, 48)
-banner.BackgroundColor3 = Color3.fromRGB(30, 34, 50)
-banner.BackgroundTransparency = 0.2
-banner.Font = Enum.Font.FredokaOne
-banner.TextScaled = true
-banner.RichText = true
-banner.TextColor3 = Color3.new(1, 1, 1)
-banner.Visible = false
-local bannerCorner = Instance.new("UICorner")
-bannerCorner.CornerRadius = UDim.new(0, 12)
-bannerCorner.Parent = banner
-local bannerPad = Instance.new("UIPadding")
-bannerPad.PaddingTop, bannerPad.PaddingBottom = UDim.new(0, 6), UDim.new(0, 6)
-bannerPad.PaddingLeft, bannerPad.PaddingRight = UDim.new(0, 8), UDim.new(0, 8)
-bannerPad.Parent = banner
-banner.Parent = gui
-
+-- Event column (top right): Weather, Mama Dragon and Secret Egg cards (the EventBanner), then Mama's Top damage
+-- and the base lock / nest refill cards, stacked by UIListLayouts. Every time is a server attribute on the
+-- GetServerTimeNow basis, so all clients count down to the same instant and late joiners see the true time left.
 local WEATHER_TEXT = {
-	Thunderstorm = '<font color="#7ec8ff">THUNDERSTORM</font>',
+	Thunderstorm = '<font color="#a9dcff">THUNDERSTORM</font>',
 	GoldenHour = '<font color="#ffd25a">GOLDEN HOUR</font>',
-	BloodMoon = '<font color="#ff5a5a">BLOOD MOON</font>',
+	BloodMoon = '<font color="#ff7a7a">BLOOD MOON</font>',
 }
 -- Lines under the weather name: what grabbing an egg can give you right now
 local WEATHER_TIP = {}
@@ -211,58 +186,457 @@ for mutation, m in Config.Mutations do
 		("x%s income, +%s speed"):format(m.incomeX, m.speed),
 	}
 end
-table.insert(WEATHER_TIP.BloodMoon, '<font color="#ff9a9a">Guardians are faster!</font>')
+table.insert(WEATHER_TIP.BloodMoon, '<font color="#ffb0b0">Guardians are faster!</font>')
+
+-- Pure helpers below are run as actual source by tests/run_hud_checks.py.
+-- M:SS, or H:MM:SS from an hour; rounds up so a timer never shows 0:00 while time is left
+local function clock(seconds: number): string
+	local s = math.max(0, math.ceil(seconds))
+	if s >= 3600 then
+		return ("%d:%02d:%02d"):format(s // 3600, s // 60 % 60, s % 60)
+	end
+	return ("%d:%02d"):format(s // 60, s % 60)
+end
+-- What the Weather card says now (get = workspace attribute reader); nil hides the card
+local function weatherView(get, now: number)
+	local weather = get("Weather")
+	if weather then
+		local ends = get("WeatherEnds")
+		return { key = weather, icon = weather, title = WEATHER_TEXT[weather] or string.upper(weather),
+			detail = not ends and "Happening now" or ends > now and "Ends in " .. clock(ends - now) or "Clearing up…",
+			tips = WEATHER_TIP[weather] }
+	end
+	local nextAt = get("NextWeather")
+	if not nextAt then
+		return nil
+	end
+	return { key = "clear", icon = "Clear", title = "Clear skies",
+		detail = nextAt > now and "Next weather in " .. clock(nextAt - now) or "Weather on the way…" }
+end
+-- What the Mama Dragon card says now; the HP bar and Top damage stay in RetentionUI
+local function mamaView(get, now: number)
+	local phase, ends = get("MamaPhase"), get("MamaEnds")
+	if phase == "warning" then
+		return { key = "warning", alert = true, detail = ends and ends > now and "Arriving in " .. clock(ends - now) or "Arriving now!" }
+	elseif phase then
+		return { key = "active", alert = true,
+			detail = ends and ends > now and "Here now! " .. clock(ends - now) .. " left" or "Here now!" }
+	elseif get("MamaWaiting") then
+		return { key = "waiting", detail = "Waiting for weather…" }
+	end
+	local nextAt = get("NextMama")
+	if not nextAt then
+		return nil
+	end
+	return { key = "scheduled", detail = nextAt > now and "Next in " .. clock(nextAt - now) or "Arriving soon…" }
+end
+-- Column top (unscaled px): 8, or just below anything drawn above the column's x-range (cash/speed pills,
+-- boost chip, Mama bar on narrow screens). Boxes are absolute pixels; scale is the MainUI UIScale.
+local function columnTop(x0: number, x1: number, boxes, scale: number, originY: number): number
+	local y = 8
+	for _, b in boxes do
+		if b.x0 < x1 and b.x1 > x0 then
+			y = math.max(y, (b.y1 - originY) / scale + 8)
+		end
+	end
+	return y
+end
+-- The Secret Egg card: where it is now (if out) and when the next one spawns
+local function secretView(get, now: number)
+	local biome, nextAt = get("SecretEgg"), get("NextSecretEgg")
+	if biome then
+		local nextText = nextAt and (nextAt > now and "Next one in " .. clock(nextAt - now) or "Next one soon")
+		return { key = nextText and "out" or "outOnly", icon = "SecretEgg", title = "Secret Egg is out!",
+			detail = "In the " .. biome, tips = nextText and { nextText } }
+	elseif not nextAt then
+		return nil
+	end
+	return { key = "next", icon = "SecretEgg", title = "Secret Egg",
+		detail = nextAt > now and "Next in " .. clock(nextAt - now) or "Appearing soon…" }
+end
+-- Compact cards: your base lock (tone picks the card colours) and the nest refill
+local function baseView(shielded, lockLeft)
+	if shielded then
+		return { key = "shield", tone = "shield", icon = "Lock", detail = "Base protected" }
+	elseif lockLeft and lockLeft > 0 then
+		return { key = "locked", tone = "locked", icon = "Lock", detail = ("Base locked %ds"):format(lockLeft) }
+	end
+	return { key = "open", tone = "open", icon = "LockOpen", detail = "Base unlocked" }
+end
+local function refillView(get, now: number)
+	local at = get("NextNestRefill")
+	if not at then
+		return nil
+	end
+	return { key = "refill", icon = "Egg", detail = at > now and "Eggs refill in " .. clock(at - now) or "Eggs refilling…" }
+end
+-- Seconds until the soonest shown countdown changes digit (times round up, so a digit flips as T - now crosses a whole
+-- second). Waking right then keeps the text exact and every client flips at the same server instant.
+local function nextTick(now: number, targets): number
+	local wait = 1
+	for _, at in targets do
+		if at > now then
+			wait = math.min(wait, (at - now) % 1)
+		end
+	end
+	return wait + 0.02
+end
+-- End of pure helpers.
+
+local column = Instance.new("Frame")
+column.Name = "EventColumn"
+column.AnchorPoint = Vector2.new(1, 0)
+column.Position = UDim2.new(1, -16, 0, 8)
+column.Size = UDim2.fromOffset(244, 0)
+column.AutomaticSize = Enum.AutomaticSize.Y
+column.BackgroundTransparency = 1
+local columnList = Instance.new("UIListLayout")
+columnList.SortOrder = Enum.SortOrder.LayoutOrder
+columnList.HorizontalAlignment = Enum.HorizontalAlignment.Right
+columnList.Padding = UDim.new(0, 8)
+columnList.Parent = column
+column.Parent = gui
+
+local banner = Instance.new("Frame")
+banner.Name = "EventBanner"
+banner.LayoutOrder = 1
+banner.Size = UDim2.fromOffset(244, 0)
+banner.AutomaticSize = Enum.AutomaticSize.Y
+banner.BackgroundTransparency = 1
+local bannerList = Instance.new("UIListLayout")
+bannerList.SortOrder = Enum.SortOrder.LayoutOrder
+bannerList.Padding = UDim.new(0, 6)
+bannerList.Parent = banner
+banner.Parent = column
+status.LayoutOrder = 3
+status.Parent = column
+
+local function dot(parent, color: Color3, size: number, x: number, y: number, z: number?)
+	local f = Instance.new("Frame")
+	f.AnchorPoint = Vector2.new(0.5, 0.5)
+	f.Position = UDim2.fromOffset(x, y)
+	f.Size = UDim2.fromOffset(size, size)
+	f.BackgroundColor3 = color
+	f.BorderSizePixel = 0
+	f.ZIndex = z or 2
+	Instance.new("UICorner", f).CornerRadius = UDim.new(1, 0)
+	f.Parent = parent
+	return f
+end
+local function cloud(parent, color: Color3, x: number, y: number)
+	dot(parent, color, 14, x - 6, y + 2, 3)
+	dot(parent, color, 18, x + 2, y - 2, 3)
+	dot(parent, color, 12, x + 10, y + 3, 3)
+	local base = Instance.new("Frame")
+	base.AnchorPoint = Vector2.new(0.5, 0.5)
+	base.Position = UDim2.fromOffset(x + 2, y + 6)
+	base.Size = UDim2.fromOffset(26, 8)
+	base.BackgroundColor3 = color
+	base.BorderSizePixel = 0
+	base.ZIndex = 3
+	Instance.new("UICorner", base).CornerRadius = UDim.new(1, 0)
+	base.Parent = parent
+end
+local function lock(parent, open: boolean)
+	local shackle = Instance.new("Frame")
+	shackle.AnchorPoint = Vector2.new(0.5, 0.5)
+	shackle.Position = UDim2.fromOffset(open and 22 or 17, open and 10 or 13)
+	shackle.Size = UDim2.fromOffset(12, 14)
+	shackle.BackgroundTransparency = 1
+	shackle.ZIndex = 2
+	Instance.new("UICorner", shackle).CornerRadius = UDim.new(1, 0)
+	local ring = Instance.new("UIStroke")
+	ring.Thickness, ring.Color = 3, Color3.new(1, 1, 1)
+	ring.Parent = shackle
+	shackle.Parent = parent
+	local body = Instance.new("Frame")
+	body.AnchorPoint = Vector2.new(0.5, 0.5)
+	body.Position = UDim2.fromOffset(17, 22)
+	body.Size = UDim2.fromOffset(20, 14)
+	body.BackgroundColor3 = Color3.new(1, 1, 1)
+	body.BorderSizePixel = 0
+	body.ZIndex = 3
+	Instance.new("UICorner", body).CornerRadius = UDim.new(0, 4)
+	body.Parent = parent
+	dot(parent, Color3.fromRGB(60, 50, 70), 5, 17, 21, 4)
+end
+local function egg(parent, shell: Color3)
+	local e = Instance.new("Frame")
+	e.AnchorPoint = Vector2.new(0.5, 0.5)
+	e.Position = UDim2.fromOffset(17, 18)
+	e.Size = UDim2.fromOffset(20, 25)
+	e.BackgroundColor3 = shell
+	e.BorderSizePixel = 0
+	e.ZIndex = 2
+	Instance.new("UICorner", e).CornerRadius = UDim.new(1, 0)
+	e.Parent = parent
+end
+-- Small flat icons drawn from rounded frames (34 x 34), so they stay crisp at every UIScale
+local ICONS = {
+	Clear = function(p)
+		dot(p, Color3.fromRGB(255, 214, 90), 20, 21, 12)
+		cloud(p, Color3.fromRGB(245, 250, 255), 13, 21)
+	end,
+	Thunderstorm = function(p)
+		cloud(p, Color3.fromRGB(150, 170, 200), 16, 13)
+		for i, spot in { { 16, 25, -25 }, { 13, 30, 25 } } do
+			local bolt = Instance.new("Frame")
+			bolt.AnchorPoint = Vector2.new(0.5, 0.5)
+			bolt.Position = UDim2.fromOffset(spot[1], spot[2])
+			bolt.Size = UDim2.fromOffset(4, 9)
+			bolt.Rotation = spot[3]
+			bolt.BackgroundColor3 = Color3.fromRGB(255, 220, 70)
+			bolt.BorderSizePixel = 0
+			bolt.ZIndex = 4 + i
+			bolt.Parent = p
+		end
+	end,
+	GoldenHour = function(p)
+		dot(p, Color3.fromRGB(255, 160, 60), 28, 17, 17)
+		dot(p, Color3.fromRGB(255, 214, 90), 20, 17, 17)
+		dot(p, Color3.fromRGB(255, 240, 170), 8, 13, 13)
+	end,
+	BloodMoon = function(p)
+		dot(p, Color3.fromRGB(230, 60, 70), 26, 17, 17)
+		dot(p, Color3.fromRGB(170, 30, 45), 8, 12, 13)
+		dot(p, Color3.fromRGB(170, 30, 45), 5, 22, 22)
+		dot(p, Color3.fromRGB(170, 30, 45), 4, 22, 11)
+	end,
+	Mama = function(p) -- a dragon eye: amber iris, slit pupil, highlight
+		dot(p, Color3.fromRGB(255, 120, 40), 30, 17, 17)
+		dot(p, Color3.fromRGB(255, 196, 60), 22, 17, 17)
+		local pupil = Instance.new("Frame")
+		pupil.AnchorPoint = Vector2.new(0.5, 0.5)
+		pupil.Position = UDim2.fromOffset(17, 17)
+		pupil.Size = UDim2.fromOffset(6, 20)
+		pupil.BackgroundColor3 = Color3.fromRGB(40, 16, 10)
+		pupil.ZIndex = 4
+		Instance.new("UICorner", pupil).CornerRadius = UDim.new(1, 0)
+		pupil.Parent = p
+		dot(p, Color3.new(1, 1, 1), 5, 12, 11, 5)
+	end,
+	Lock = function(p)
+		lock(p, false)
+	end,
+	LockOpen = function(p)
+		lock(p, true)
+	end,
+	Egg = function(p)
+		egg(p, Color3.fromRGB(255, 246, 220))
+		dot(p, Color3.fromRGB(110, 190, 90), 6, 13, 14, 3)
+		dot(p, Color3.fromRGB(110, 190, 90), 4, 21, 22, 3)
+	end,
+	SecretEgg = function(p)
+		egg(p, Color3.fromRGB(255, 150, 225))
+		dot(p, Color3.new(1, 1, 1), 5, 13, 13, 3)
+		dot(p, Color3.fromRGB(255, 240, 140), 4, 21, 21, 3)
+		dot(p, Color3.new(1, 1, 1), 3, 21, 11, 3)
+	end,
+}
+
+local function label(parent, size: number, color: Color3, y: number, h: number)
+	local t = Instance.new("TextLabel")
+	t.BackgroundTransparency = 1
+	t.Position = UDim2.fromOffset(42, y)
+	t.Size = UDim2.new(1, -42, 0, h)
+	t.Font = Enum.Font.FredokaOne
+	t.TextSize = size
+	t.TextColor3 = color
+	t.TextXAlignment = Enum.TextXAlignment.Left
+	t.RichText = true
+	t.TextTruncate = Enum.TextTruncate.AtEnd
+	local stroke = Instance.new("UIStroke")
+	stroke.Thickness, stroke.Color = 1.5, Color3.fromRGB(20, 24, 40)
+	stroke.Parent = t
+	t.Parent = parent
+	return t
+end
+-- One rounded card: icon well on the left, title + countdown on the right, optional tip lines underneath.
+-- A compact card has one line beside the icon.
+local function card(name: string, order: number, fill: Color3, edge: Color3, sub: Color3, parent: Instance, compact: boolean?)
+	local f = Instance.new("Frame")
+	f.Name, f.LayoutOrder = name, order
+	f.Size = UDim2.fromOffset(244, compact and 46 or 56)
+	f.BackgroundColor3, f.BackgroundTransparency = fill, 0.08
+	f.Visible = false
+	Instance.new("UICorner", f).CornerRadius = UDim.new(0, 14)
+	local border = Instance.new("UIStroke")
+	border.ApplyStrokeMode, border.Thickness, border.Color, border.Transparency = Enum.ApplyStrokeMode.Border, 2, edge, 0.15
+	border.Parent = f
+	local pad = Instance.new("UIPadding")
+	pad.PaddingTop, pad.PaddingBottom = UDim.new(0, compact and 6 or 8), UDim.new(0, compact and 6 or 8)
+	pad.PaddingLeft, pad.PaddingRight = UDim.new(0, 8), UDim.new(0, 10)
+	pad.Parent = f
+	local pop = Instance.new("UIScale")
+	pop.Parent = f
+	local well = Instance.new("Frame")
+	well.Name = "Icon"
+	well.Size = UDim2.fromOffset(34, 34)
+	well.Position = UDim2.fromOffset(0, 1)
+	well.BackgroundColor3, well.BackgroundTransparency = Color3.new(1, 1, 1), 0.85
+	well.ClipsDescendants = true
+	Instance.new("UICorner", well).CornerRadius = UDim.new(0, 10)
+	well.Parent = f
+	local title = label(f, 19, Color3.new(1, 1, 1), -1, 21)
+	local detail = label(f, 16, sub, 20, 19)
+	local tips = label(f, 15, Color3.fromRGB(225, 240, 255), 44, 0)
+	tips.Position, tips.Size = UDim2.fromOffset(2, 44), UDim2.new(1, -2, 0, 0)
+	tips.TextYAlignment, tips.TextTruncate, tips.LineHeight = Enum.TextYAlignment.Top, Enum.TextTruncate.None, 1.05
+	tips.Visible = false
+	if compact then
+		title.Visible = false
+		well.Position = UDim2.new()
+		detail.Position, detail.Size, detail.TextSize = UDim2.fromOffset(42, 0), UDim2.new(1, -42, 0, 34), 17
+	end
+	f.Parent = parent
+	return { frame = f, border = border, edge = edge, pop = pop, well = well, title = title, detail = detail, tips = tips,
+		compact = compact }
+end
+local weatherCard = card("WeatherCard", 1, Color3.fromRGB(38, 82, 160), Color3.fromRGB(150, 205, 255), Color3.fromRGB(200, 230, 255), banner)
+local mamaCard = card("MamaCard", 2, Color3.fromRGB(150, 58, 30), Color3.fromRGB(255, 160, 90), Color3.fromRGB(255, 222, 190), banner)
+mamaCard.title.Text = "Mama Dragon"
+ICONS.Mama(mamaCard.well)
+local secretCard = card("SecretCard", 3, Color3.fromRGB(128, 40, 120), Color3.fromRGB(255, 150, 230), Color3.fromRGB(255, 215, 245), banner)
+local baseCard = card("BaseCard", 1, Color3.fromRGB(160, 112, 28), Color3.fromRGB(255, 214, 120), Color3.new(1, 1, 1), status, true)
+local refillCard = card("RefillCard", 2, Color3.fromRGB(52, 120, 62), Color3.fromRGB(170, 240, 150), Color3.new(1, 1, 1), status, true)
+-- the base card's colours follow its state: gold unlocked, red locked, blue protected
+local TONES = {
+	open = { Color3.fromRGB(160, 112, 28), Color3.fromRGB(255, 214, 120) },
+	locked = { Color3.fromRGB(160, 44, 56), Color3.fromRGB(255, 150, 150) },
+	shield = { Color3.fromRGB(40, 96, 160), Color3.fromRGB(150, 210, 255) },
+}
+
+local POP = TweenInfo.new(0.28, Enum.EasingStyle.Back, Enum.EasingDirection.Out)
+local function show(c, view)
+	local was = c.frame.Visible and c.key
+	c.frame.Visible = view ~= nil
+	if not view then
+		c.key = nil
+		return
+	end
+	if view.key ~= was then -- a new state: one small pop, nothing per second
+		c.key = view.key
+		c.pop.Scale = 0.92
+		TweenService:Create(c.pop, POP, { Scale = 1 }):Play()
+		if view.icon then
+			c.well:ClearAllChildren()
+			Instance.new("UICorner", c.well).CornerRadius = UDim.new(0, 10)
+			local draw = ICONS[view.icon] or ICONS.Clear
+			draw(c.well)
+		end
+		if view.title then c.title.Text = view.title end
+		local tone = TONES[view.tone]
+		if tone then
+			c.frame.BackgroundColor3, c.edge = tone[1], tone[2]
+		end
+		c.border.Color = view.alert and Color3.fromRGB(255, 96, 96) or c.edge
+		c.tips.Visible = view.tips ~= nil
+		c.tips.Size = UDim2.new(1, -2, 0, view.tips and 18 * #view.tips or 0)
+		if not c.compact then
+			c.frame.Size = UDim2.fromOffset(244, 56 + (view.tips and 4 + 18 * #view.tips or 0))
+		end
+	end
+	c.detail.Text = view.detail
+	c.tips.Text = view.tips and table.concat(view.tips, "\n") or ""
+end
+
+local mamaTop -- RetentionUI's "Top damage" list; it joins the column so it never overlaps the cards
+local OBSTACLES = { "TopBar", "BoostTimer", "MamaBar", "MenuToggle" }
+local function placeColumn()
+	if not mamaTop then
+		mamaTop = gui:FindFirstChild("MamaTop")
+		if mamaTop then
+			mamaTop.LayoutOrder = 2
+			-- the same orange card as Mama's, sized to its lines; no box (and no gap) until someone has hit her
+			mamaTop.Size, mamaTop.AutomaticSize = UDim2.fromOffset(244, 0), Enum.AutomaticSize.Y
+			mamaTop.TextXAlignment, mamaTop.TextSize = Enum.TextXAlignment.Left, 16
+			mamaTop.BackgroundColor3 = Color3.fromRGB(150, 58, 30)
+			Instance.new("UICorner", mamaTop).CornerRadius = UDim.new(0, 14)
+			local border = Instance.new("UIStroke")
+			border.ApplyStrokeMode, border.Thickness, border.Color, border.Transparency =
+				Enum.ApplyStrokeMode.Border, 2, Color3.fromRGB(255, 160, 90), 0.15
+			border.Parent = mamaTop
+			local pad = Instance.new("UIPadding")
+			pad.Parent = mamaTop
+			local function fill()
+				local empty = mamaTop.ContentText == ""
+				local inset = UDim.new(0, empty and 0 or 8)
+				mamaTop.BackgroundTransparency, border.Enabled = empty and 1 or 0.08, not empty
+				pad.PaddingTop, pad.PaddingBottom, pad.PaddingLeft, pad.PaddingRight = inset, inset, inset, inset
+			end
+			mamaTop:GetPropertyChangedSignal("ContentText"):Connect(fill)
+			fill()
+			mamaTop.Parent = column
+		end
+	end
+	local boxes = {}
+	for _, name in OBSTACLES do
+		local o = gui:FindFirstChild(name)
+		if o and o:IsA("GuiObject") and o.Visible then
+			table.insert(boxes, { x0 = o.AbsolutePosition.X, x1 = o.AbsolutePosition.X + o.AbsoluteSize.X,
+				y1 = o.AbsolutePosition.Y + o.AbsoluteSize.Y })
+		end
+	end
+	local scale = gui:FindFirstChildOfClass("UIScale")
+	local x0 = column.AbsolutePosition.X
+	column.Position = UDim2.new(1, -16, 0, columnTop(x0, x0 + column.AbsoluteSize.X, boxes, scale and scale.Scale or 1,
+		gui.AbsolutePosition.Y))
+end
+
+local function getAttr(name: string)
+	return workspace:GetAttribute(name)
+end
+local function render()
+	local now = workspace:GetServerTimeNow()
+	show(weatherCard, weatherView(getAttr, now))
+	show(mamaCard, mamaView(getAttr, now))
+	show(secretCard, secretView(getAttr, now))
+	show(baseCard, baseView(player:GetAttribute("Shielded"), player:GetAttribute("LockLeft")))
+	show(refillCard, refillView(getAttr, now))
+	placeColumn()
+end
+-- Re-render at once when an event changes, otherwise only when a shown countdown changes digit (about once a
+-- second), so every client flips its countdowns at the same moment and nothing updates per frame.
+local renderQueued = false
+local function queueRender()
+	if not renderQueued then
+		renderQueued = true
+		task.defer(function()
+			renderQueued = false
+			render()
+		end)
+	end
+end
+for _, name in { "Weather", "WeatherEnds", "NextWeather", "MamaPhase", "MamaEnds", "MamaWaiting", "NextMama",
+	"SecretEgg", "NextSecretEgg", "NextNestRefill" } do
+	workspace:GetAttributeChangedSignal(name):Connect(queueRender)
+end
+for _, name in { "Shielded", "LockLeft" } do
+	player:GetAttributeChangedSignal(name):Connect(queueRender)
+end
+local function watchObstacle(child)
+	if table.find(OBSTACLES, child.Name) then
+		for _, prop in { "Visible", "AbsolutePosition", "AbsoluteSize" } do
+			child:GetPropertyChangedSignal(prop):Connect(queueRender)
+		end
+		queueRender()
+	elseif child.Name == "MamaTop" then -- RetentionUI made it: move it into the column
+		queueRender()
+	end
+end
+gui.ChildAdded:Connect(watchObstacle)
+for _, child in gui:GetChildren() do watchObstacle(child) end
+gui:GetPropertyChangedSignal("AbsoluteSize"):Connect(queueRender)
+local TIMERS = { "WeatherEnds", "NextWeather", "MamaEnds", "NextMama", "NextNestRefill", "NextSecretEgg" }
 task.spawn(function()
 	while true do
-		local lines = {}
-		local weather = workspace:GetAttribute("Weather")
-		if weather then
-			local left = math.max(0, (workspace:GetAttribute("WeatherEnds") or 0) - os.time())
-			table.insert(lines, ("%s  %d:%02d"):format(WEATHER_TEXT[weather] or weather, left // 60, left % 60))
-			for _, tip in WEATHER_TIP[weather] or {} do
-				table.insert(lines, tip)
-			end
+		render()
+		local targets = {}
+		for _, name in TIMERS do
+			local at = workspace:GetAttribute(name)
+			if type(at) == "number" then table.insert(targets, at) end
 		end
-		local secret = workspace:GetAttribute("SecretEgg")
-		if secret then
-			table.insert(lines, '<font color="#ff8ae0">Secret Egg: ' .. secret .. "</font>")
-		end
-		banner.Visible = #lines > 0
-		banner.Text = table.concat(lines, "\n")
-		banner.Size = UDim2.new(0, 230, 0, 12 + 20 * #lines)
-		local narrow = gui.AbsoluteSize.X < 600
-		local bannerY = narrow and (workspace:GetAttribute("MamaPhase") and 228 or 64) or 8
-		banner.Position = UDim2.new(1, -16, 0, bannerY)
-		local parts = {}
-		if player:GetAttribute("Shielded") then
-			table.insert(parts, '<font color="#8fd3ff">Base protected</font>')
-		elseif (player:GetAttribute("LockLeft") or 0) > 0 then
-			table.insert(parts, ('<font color="#ff9a9a">Base locked %ds</font>'):format(player:GetAttribute("LockLeft")))
-		else
-			table.insert(parts, '<font color="#ffd27a">Base unlocked</font>')
-		end
-		local refillAt = workspace:GetAttribute("NextNestRefill")
-		if refillAt then
-			local left = math.max(0, math.ceil(refillAt - workspace:GetServerTimeNow()))
-			table.insert(parts, ('<font color="#c8f7a6">Eggs refill %d:%02d</font>'):format(left // 60, left % 60))
-		end
-		local secretAt = workspace:GetAttribute("NextSecretEgg")
-		if secretAt then
-			local left = math.max(0, math.ceil(secretAt - workspace:GetServerTimeNow()))
-			table.insert(parts, ('<font color="#ff8ae0">Secret Egg in %d:%02d</font>'):format(left // 60, left % 60))
-		end
-		status.Text = table.concat(parts, "\n")
-		status.Size = UDim2.fromOffset(230, 26 * #parts)
-		local statusY = banner.Visible and (bannerY + banner.Size.Y.Offset + 8) or bannerY
-		if narrow and workspace:GetAttribute("MamaPhase") then statusY = math.max(statusY, 228) end
-		local mamaTop = gui:FindFirstChild("MamaTop")
-		if mamaTop and mamaTop.Visible then
-			local topY = math.max(76, banner.Visible and (bannerY + banner.Size.Y.Offset + 8) or 76)
-			mamaTop.Position = UDim2.new(1, -16, 0, topY)
-			statusY = math.max(statusY, topY + 88)
-		end
-		status.Position = UDim2.new(1, -16, 0, statusY)
-		task.wait(0.5)
+		task.wait(nextTick(workspace:GetServerTimeNow(), targets))
 	end
 end)
 

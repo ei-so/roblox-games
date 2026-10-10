@@ -492,7 +492,7 @@ local mamaTop = text({ Name = "MamaTop", AnchorPoint = Vector2.new(1, 0), Positi
 task.spawn(function()
 	while true do
 		local phase = workspace:GetAttribute("MamaPhase")
-		local left = math.max(0, math.ceil((workspace:GetAttribute("MamaEnds") or 0) - workspace:GetServerTimeNow()))
+		local left = math.max(0, (workspace:GetAttribute("MamaEnds") or 0) - os.time())
 		mama.Visible = phase ~= nil
 		mama.Position = UDim2.new(0.5, 0, 0, gui.AbsoluteSize.X < 600 and 124 or 8)
 		mamaTop.Visible = phase == "active" and gui.AbsoluteSize.X >= 1000

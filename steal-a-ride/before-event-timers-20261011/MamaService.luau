@@ -358,7 +358,7 @@ function MamaService.run(opts)
 	for _, player in Players:GetPlayers() do player:SetAttribute("MamaDamage", 0) end
 	local warning = opts.warning or E.mamaWarning
 	setAttr("MamaPhase", "warning")
-	setAttr("MamaEnds", workspace:GetServerTimeNow() + warning)
+	setAttr("MamaEnds", os.time() + warning)
 	Notify:FireAllClients("mama", { phase = "warning" })
 	task.wait(warning)
 
@@ -370,7 +370,7 @@ function MamaService.run(opts)
 	setAttr("MamaHP", fight.hp)
 	setAttr("MamaHoard", 0)
 	setAttr("MamaTop", "")
-	setAttr("MamaEnds", workspace:GetServerTimeNow() + duration)
+	setAttr("MamaEnds", os.time() + duration)
 	setAttr("MamaPhase", "active")
 	Notify:FireAllClients("mama", { phase = "active" })
 
@@ -452,16 +452,10 @@ function MamaService.start()
 	hit.OnServerEvent:Connect(MamaService.hit)
 	task.spawn(function()
 		while true do
-			-- the HUD counts down to NextMama (earliest start) and shows MamaWaiting while weather holds her back;
-			-- the waits below stay the only Mama schedule, so the next time is set after each fight really ends
-			setAttr("NextMama", workspace:GetServerTimeNow() + E.mamaInterval)
 			task.wait(E.mamaInterval)
 			while MamaService.weatherBusy() do -- never during a weather event
-				setAttr("MamaWaiting", true)
 				task.wait(5)
 			end
-			setAttr("MamaWaiting", nil)
-			setAttr("NextMama", nil)
 			MamaService.run()
 		end
 	end)

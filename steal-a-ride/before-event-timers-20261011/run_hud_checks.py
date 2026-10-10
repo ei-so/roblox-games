@@ -235,145 +235,31 @@ print("PASS: overhead shield tag, no duplicates, expiry, respawn and preserved O
 
 
 def event_layout():
-    """Weather/Mama countdown text, late joiners and column placement, from the actual UIController helpers."""
     source = read("StarterGui/MainUI/UIController.luau")
-    helpers = source[source.index("-- Pure helpers below"):source.index("-- End of pure helpers.")]
+    banner = source[source.index("local narrow ="):source.index("local parts =")]
+    status = source[source.index("local statusY ="):source.index("task.wait(0.5)")]
     return """
-local WEATHER_TEXT={Thunderstorm="THUNDERSTORM",GoldenHour="GOLDEN HOUR",BloodMoon="BLOOD MOON"}
-local WEATHER_TIP={Thunderstorm={"a","b"},GoldenHour={"a","b"},BloodMoon={"a","b","Guardians are faster!"}}
-""" + helpers + """
-assert(clock(0)=="0:00" and clock(-5)=="0:00","expired clamps to zero")
-assert(clock(0.2)=="0:01" and clock(59.01)=="1:00","rounds up while time is left")
-assert(clock(600)=="10:00" and clock(1200)=="20:00","minutes past ten stay M:SS")
-assert(clock(3600)=="1:00:00" and clock(3725)=="1:02:05","hours switch to H:MM:SS")
-local attrs={}
-local function get(k) return attrs[k] end
-local T=1000000.25
-assert(weatherView(get,T)==nil and mamaView(get,T)==nil,"no server data hides both cards")
-attrs.NextWeather=T+432
-local w=weatherView(get,T)
-assert(w.key=="clear" and w.title=="Clear skies" and w.detail=="Next weather in 7:12" and not w.tips,w.detail)
-assert(weatherView(get,T+433).detail=="Weather on the way…","expired next-weather shows a transition, not 0:00")
-attrs.Weather,attrs.WeatherEnds="Thunderstorm",T+120
-w=weatherView(get,T)
-assert(w.key=="Thunderstorm" and w.detail=="Ends in 2:00" and #w.tips==2,w.detail)
--- a player who joins 37.4 s into the storm reads the same attributes and sees the true time left
-assert(weatherView(get,T+37.4).detail=="Ends in 1:23","late joiner")
-assert(weatherView(get,T+121).detail=="Clearing up…","weather past its end")
-attrs.WeatherEnds=nil
-assert(weatherView(get,T).detail=="Happening now","missing end time is not invented")
-attrs.Weather,attrs.WeatherEnds="BloodMoon",T+60
-assert(#weatherView(get,T).tips==3,"Blood Moon keeps the faster-guardians tip")
-attrs.NextMama=T+1200
-local m=mamaView(get,T)
-assert(m.key=="scheduled" and m.detail=="Next in 20:00" and not m.alert,m.detail)
-assert(mamaView(get,T+1200.5).detail=="Arriving soon…","due but not started")
-attrs.MamaWaiting=true
-assert(mamaView(get,T+1205).detail=="Waiting for weather…","weather holds Mama back")
-attrs.MamaWaiting,attrs.NextMama=nil,nil
-attrs.MamaPhase,attrs.MamaEnds="warning",T+30
-m=mamaView(get,T+6.5)
-assert(m.key=="warning" and m.alert and m.detail=="Arriving in 0:24",m.detail)
-attrs.MamaPhase,attrs.MamaEnds="active",T+150
-assert(mamaView(get,T+48).detail=="Here now! 1:42 left","active shows time left")
-assert(mamaView(get,T+151).detail=="Here now!","no negative time after the end")
-attrs.MamaWaiting=true
-assert(mamaView(get,T+48).key=="active","a running fight wins over a stale waiting flag")
--- two clients on the same server clock render identical text
-attrs={NextMama=T+999.6,NextWeather=T+12.2}
-assert(mamaView(get,T+3).detail=="Next in 16:37" and weatherView(get,T+3).detail=="Next weather in 0:10")
--- column placement (unscaled px). Portrait phone 390 px wide at UIScale 0.94: column x 160-376.
-local cash={x0=15,x1=301,y1=53}
-assert(columnTop(160,376,{cash},0.94,0)==53/0.94+8,"clears the cash/speed pills it sits under")
-local bar={x0=21,x1=369,y1=207}
-assert(columnTop(160,376,{cash,bar},0.94,0)==207/0.94+8,"clears the Mama bar on narrow screens")
--- desktop 1920 px at UIScale 1.2: column x 1626-1900, pills and bar are elsewhere
-assert(columnTop(1626,1900,{{x0=19,x1=384,y1=67},{x0=672,x1=1248,y1=125}},1.2,0)==8,"desktop keeps the top-right spot")
--- tablet 1024 px, UIScale 0.85: centred Mama bar 308-716 does not reach the column 811-1010
-assert(columnTop(811,1010,{{x0=308,x1=716,y1=88}},0.85,0)==8)
-assert(columnTop(500,700,{{x0=308,x1=716,y1=88}},0.85,36)==(88-36)/0.85+8,"measured from the gui origin")
--- base lock and nest refill compact cards
-assert(baseView(nil,nil).detail=="Base unlocked" and baseView(nil,0).tone=="open")
-assert(baseView(nil,12).detail=="Base locked 12s" and baseView(nil,12).tone=="locked")
-assert(baseView(true,12).detail=="Base protected" and baseView(true,12).tone=="shield","protection wins over the lock timer")
-attrs={NextNestRefill=T+215}
-assert(refillView(get,T).detail=="Eggs refill in 3:35" and refillView(get,T+216).detail=="Eggs refilling…")
-attrs={}
-assert(refillView(get,T)==nil and secretView(get,T)==nil,"missing data hides the cards")
--- Secret Egg card: location while out, plus the next spawn
-attrs={NextSecretEgg=T+35}
-local s=secretView(get,T)
-assert(s.key=="next" and s.detail=="Next in 0:35" and not s.tips)
-attrs.SecretEgg="Desert"
-s=secretView(get,T)
-assert(s.title=="Secret Egg is out!" and s.detail=="In the Desert" and s.tips[1]=="Next one in 0:35")
-assert(secretView(get,T+40).tips[1]=="Next one soon")
-attrs.NextSecretEgg=nil
-assert(secretView(get,T).key=="outOnly" and not secretView(get,T).tips)
--- ticks land just after the soonest digit flip, so the shown time is exact (no up-to-1 s lag)
-local wake=nextTick(T,{T+16.7,T+57.9})
-assert(math.abs(wake-0.72)<1e-6,"wakes 0.7 s later, when 16.7 s becomes 16")
-assert(clock(T+16.7-(T+wake))=="0:16","shown value right after the wake is the true one")
-assert(math.abs(nextTick(T,{T-3,T+57.25})-0.27)<1e-6,"expired targets are ignored")
-assert(nextTick(T,{})==1.02,"no timers: once a second")
-print("PASS: weather/Mama countdown text, late joiners, expiry states, digit-aligned ticks and column placement")
-"""
-
-
-def event_schedule():
-    """The existing weather and Mama loops publish NextWeather/NextMama/MamaWaiting without changing their waits."""
-    events = read("ServerScriptService/Services/EventService.luau")
-    mama = read("ServerScriptService/Services/MamaService.luau")
-    end_w = "EventService.startWeather()\n\t\tend"
-    weather_loop = events[events.index("\t\twhile true do\n\t\t\t-- the HUD counts down"):]
-    weather_loop = weather_loop[:weather_loop.index(end_w) + len(end_w)]
-    end_m = "MamaService.run()\n\t\tend"
-    mama_loop = mama[mama.index("\t\twhile true do\n\t\t\t-- the HUD counts down"):]
-    mama_loop = mama_loop[:mama_loop.index(end_m) + len(end_m)]
-    assert 'workspace:SetAttribute("WeatherEnds", workspace:GetServerTimeNow()' in events
-    assert mama.count('setAttr("MamaEnds", workspace:GetServerTimeNow()') == 2
-    return """
-local now=0
-local log={}
-local attrs={}
-local workspace={GetServerTimeNow=function() return now end,
- SetAttribute=function(_,k,v) attrs[k]=v end,GetAttribute=function(_,k) return attrs[k] end}
-local function setAttr(k,v) attrs[k]=v end
-local waits={}
-local stopAt=math.huge
-local task={wait=function(s) table.insert(waits,s);now+=s;if now>stopAt then error("stop") end end}
-local Config={Events={weatherInterval=600}}
-local E={mamaInterval=1200}
-local busyUntil=0
-local fights={}
-local EventService={startWeather=function() table.insert(log,{"weather",now,attrs.NextWeather}) end}
-local MamaService={weatherBusy=function() return now<busyUntil end,
- run=function()
-  table.insert(fights,{start=now,next=attrs.NextMama,waiting=attrs.MamaWaiting})
-  now+=(#fights==1 and 75 or 150) -- first fight: an early defeat 45 s after the 30 s warning
- end}
-stopAt=1850
-pcall(function()
-""" + weather_loop + """
-end)
-assert(#log==3 and log[1][2]==600 and log[2][2]==1200 and log[3][2]==1800,"weather still starts every 600 s")
-for _,entry in log do assert(entry[3]==entry[2],"NextWeather pointed at the real start") end
-assert(attrs.NextWeather==2400)
-for _,s in waits do assert(s==600,"weather loop keeps its single 600 s wait") end
-now,waits,attrs,stopAt=0,{},{},4000
-busyUntil=1200+120 -- weather started at the same boundary Mama was due
-local sawWaiting=false
-local wait=task.wait
-task.wait=function(s) if attrs.MamaWaiting and attrs.NextMama==1200 then sawWaiting=true end wait(s) end
-pcall(function()
-""" + mama_loop + """
-end)
-assert(sawWaiting,"MamaWaiting is published while her due time has passed and weather is on")
-assert(fights[1].start==1320 and fights[1].next==nil and fights[1].waiting==nil,"Mama waits for weather, flags cleared when she starts")
-assert(waits[1]==1200 and waits[2]==5,"original 1200 s wait, then 5 s weather polls")
--- early defeat: the next time is measured from when the fight really ended
-assert(fights[2].start==1320+75+1200,"next Mama 1200 s after the early defeat")
-print("PASS: NextWeather/NextMama/MamaWaiting follow the existing loops, early defeat reschedules")
+local phase="active"
+local top={Visible=false}
+local gui={AbsoluteSize={X=401},FindFirstChild=function() return top end}
+local workspace={GetAttribute=function() return phase end}
+local UDim2={new=function(xs,xo,ys,yo) return {X={Scale=xs,Offset=xo},Y={Scale=ys,Offset=yo}} end}
+local banner={Visible=true,Size={Y={Offset=92}}}
+local status={}
+local function layout()
+""" + banner + status + """
+end
+layout()
+assert(banner.Position.Y.Offset>=220+8,"portrait weather clears the Mama bar")
+assert(status.Position.Y.Offset>=banner.Position.Y.Offset+92+8,"base status clears weather")
+phase=nil;layout()
+assert(banner.Position.Y.Offset==64,"portrait weather clears the cash HUD without Mama")
+phase="active";gui.AbsoluteSize.X=1920;top.Visible=true;layout()
+assert(top.Position.Y.Offset>=banner.Position.Y.Offset+92+8,"Top damage clears weather on desktop")
+assert(status.Position.Y.Offset>=top.Position.Y.Offset+80+8,"base status clears Top damage")
+banner.Visible=false;layout()
+assert(top.Position.Y.Offset==76 and status.Position.Y.Offset==164,"desktop empty-weather placement stays compact")
+print("PASS: concurrent Mama/weather/Top damage/base status do not overlap")
 """
 
 
@@ -383,7 +269,7 @@ def main():
     args = parser.parse_args()
     with tempfile.TemporaryDirectory(prefix="sam-hud-") as temp:
         script = Path(temp) / "check.luau"
-        for harness in (menu, hints, shop, popup, shield, event_layout, event_schedule):
+        for harness in (menu, hints, shop, popup, shield, event_layout):
             script.write_text(harness(), encoding="utf-8")
             subprocess.run([str(args.runtime / "luau.exe"), str(script)], check=True)
 
