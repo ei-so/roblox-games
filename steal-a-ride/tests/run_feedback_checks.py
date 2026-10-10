@@ -287,7 +287,8 @@ local player={Parent=true,SetAttribute=function(_,k,v) speedAttrs[k]=v end,Chara
     checks=r"""
 assert(Config.WalkSpeed==25,"walking starts at 25")
 local plan={Forest={22.5,4,.96},Lake={33.75,15,.934},Desert={45,60,.866},Jungle={55,200,.927},Tundra={65,700,.859},Volcano={75,2500,.828},Cosmic={95,8000,.925},
-    MysticGrove={110,16000,.927}} -- leash sim 2026-10-09 (tools/pacing-sim/leash-out.txt): first-try rider ~= guardian speed
+    MysticGrove={110,16000,.927}, -- leash sim 2026-10-09 (tools/pacing-sim/leash-out.txt): first-try rider ~= guardian speed
+    CrystalCaverns={120,32000,.893}} -- crystal sim 2026-10-11 (tools/pacing-sim/crystal-gap-out.txt), user-approved
 for _,b in Config.Biomes do
     local want=plan[b.id]
     assert(math.abs(b.guardianSpeed-want[1])<1e-9,b.id.." guardian speed after the 1.25 scale")
@@ -299,7 +300,7 @@ for _,b in Config.Biomes do
 end
 assert(Config.Guardian.tiredMult==0.95,"guardians tire less")
 assert(Config.Steal.carrierHold==0 and Config.Steal.takeBackHold==0,"stealing from a carrier and taking it back are instant taps")
-local hatch={Forest=15,Lake=30,Desert=45,Jungle=68,Tundra=90,Volcano=135,Cosmic=180,MysticGrove=240}
+local hatch={Forest=15,Lake=30,Desert=45,Jungle=68,Tundra=90,Volcano=135,Cosmic=180,MysticGrove=240,CrystalCaverns=300}
 for _,b in Config.Biomes do assert(b.hatchTime==hatch[b.id],b.id.." base hatch time spread x1.5") end
 assert(Config.Nests.refillInterval==300 and Config.Nests.forestRefill==nil,"all nests refill together every 5 min")
 assert(math.abs(Config.Costs.saddle(10)-100*1.85^10)<1e-6,"saddle price grows 1.85x per level")

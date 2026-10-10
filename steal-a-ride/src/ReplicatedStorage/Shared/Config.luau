@@ -49,6 +49,13 @@ Config.Biomes = {
 		look = { floor = rgb(45, 72, 65), material = Enum.Material.LeafyGrass, accent = rgb(100, 235, 205),
 			tint = rgb(185, 225, 215), atmosphere = rgb(42, 75, 82), density = 0.44, haze = 2.1,
 			brightness = -0.12, saturation = 0.12, contrast = 0.08 } },
+	-- shortcuts: quartz walls (Climb) instead of escape patches; pacing sim tools/pacing-sim/crystal*.py (2026-10-11)
+	{ id = "CrystalCaverns", guardian = "Crystal Golem", guardianSpeed = 96, depth = 700, minEscape = 61, mountBase = 90,
+		lane = "Climb", shortcuts = true, hatchTime = 300, baseIncome = 32000, carry = 0.893,
+		species = { "CrystalBeetle", "GemGecko", "CrystalPangolin" },
+		look = { floor = rgb(196, 198, 208), material = Enum.Material.Slate, accent = rgb(170, 240, 255),
+			tint = rgb(240, 244, 255), atmosphere = rgb(206, 214, 232), density = 0.3, haze = 1,
+			brightness = 0.04, saturation = 0.08, contrast = 0.06 } },
 }
 Config.HomeLook = { tint = rgb(255, 255, 255), atmosphere = rgb(200, 220, 240), density = 0.25, haze = 0 }
 
@@ -124,6 +131,13 @@ Config.Species = {
 		legs = 4, eyeColor = rgb(35, 80, 75), features = { "ears:long", "muzzle", "antlers", "spots", "tail:puff" } },
 	WispLynx = { display = "Wisp Lynx", ability = "Phase", shape = "Block", size = 1.1, body = rgb(135, 120, 195), accent = rgb(140, 245, 220),
 		legs = 4, eyeColor = rgb(100, 250, 220), features = { "ears:tufts", "muzzle", "tail:puff", "spots" } },
+	-- Crystal Caverns (Blender meshes in CreatureMeshSources; these recipes are the native fallback)
+	CrystalBeetle = { display = "Crystal Beetle", ability = nil, shape = "Ball", size = 0.95, body = rgb(200, 222, 255),
+		accent = rgb(90, 230, 255), headSize = 0.7, legs = 4, features = { "shell", "horns:single" } },
+	GemGecko = { display = "Gem Gecko", ability = "Climb", shape = "Block", size = 1, body = rgb(236, 238, 250),
+		accent = rgb(255, 120, 205), legs = 4, features = { "spikes", "tail:long" } },
+	CrystalPangolin = { display = "Crystal Pangolin", ability = nil, shape = "Block", size = 1.35, body = rgb(150, 158, 198),
+		accent = rgb(214, 200, 250), legs = 4, features = { "spikes", "tail:long" } },
 }
 for _, biome in Config.Biomes do
 	for _, speciesId in biome.species do
@@ -140,6 +154,7 @@ Config.Species.Frog.locomotion = "hop"
 Config.Species.Penguin.locomotion = "waddle"
 Config.Species.Duckling.locomotion = "waddle"
 Config.Species.Mammoth.locomotion = "heavy"
+Config.Species.CrystalPangolin.locomotion = "heavy" -- large like the Mammoth
 Config.Flight = { verticalSpeed = 16, landingSpeed = 10, maxHeight = 48, takeoffSeconds = .6 }
 
 -- hatchX: hatch time multiplier (rarity is rolled when the egg goes into an incubator, kept hidden until it hatches)
@@ -182,7 +197,7 @@ Config.Patch = { count = 5, width = 20, length = 30, stuckAfter = 4, stuckSecond
 	warn = { flash = 2.5, tick = 3.2, frantic = 3.7 },
 	messages = { Lake = "Dragged under!", Desert = "Quicksand! You're sinking!", Jungle = "The current sweeps you under!",
 		Tundra = "The ice cracks under you!", Volcano = "The lava is melting your ride!", Cosmic = "The rift collapses on you!",
-		MysticGrove = "The mushroom cap softens! You're sinking!" } }
+		MysticGrove = "The mushroom cap softens! You're sinking!", CrystalCaverns = "The crystal cracks!" } }
 
 -- wakeDelay: guardians are awake and patrolling, so it's just a reaction time
 Config.Guardian = { wakeDelay = 0.2, sleepDistance = 12, catchRadius = 5, stun = 1.5, bloodMoonMult = 1.15,
@@ -404,6 +419,7 @@ Config.Events = {
 		Volcano = { 0, 0, 0, 72, 20, 8 },
 		Cosmic = { 0, 0, 0, 60, 25, 15 },
 		MysticGrove = { 0, 0, 0, 55, 28, 17 },
+		CrystalCaverns = { 0, 0, 0, 50, 30, 20 },
 	},
 	weatherInterval = 600, weatherDuration = 120,
 	mamaInterval = 1200, mamaWarning = 30, mamaDuration = 120, mamaSnatchEvery = 6,
@@ -529,6 +545,10 @@ Config.Guardians = {
 	MysticGrove = { scale = 3.5, gait = "spider", recipe = { shape = "Squat", headSize = 0.85, headLow = true,
 		body = rgb(46, 42, 65), accent = rgb(140, 235, 210), eyeColor = rgb(150, 255, 190),
 		legs = 0, features = { "spiderLegs", "spiderEyes", "fangs", "spots" } } },
+	-- Crystal Golem: authored Blender model (CreatureMeshSources.Guardian_CrystalCaverns, about 20 studs tall at scale 1);
+	-- the recipe is only the native fallback
+	CrystalCaverns = { scale = 1, gait = "biped", recipe = { shape = "Block", body = rgb(236, 238, 250), accent = rgb(70, 230, 255),
+		eyeColor = rgb(70, 230, 255), legs = 2, glow = true, features = { "spikes", "horns" } } },
 }
 
 Config.Guardians.Lake.canFly = true
@@ -703,6 +723,7 @@ Config.Sounds = {
 	AmbienceForest = 9112835068, AmbienceLake = 9126195224, AmbienceDesert = 551546110, AmbienceJungle = 9113048424,
 	AmbienceTundra = 4175285709, AmbienceVolcano = 9112823197, AmbienceCosmic = 9119413402,
 	AmbienceMysticGrove = 9112835068, -- existing authorised forest ambience, softer pitch in Studio
+	AmbienceCrystalCaverns = 9120505297, -- Pro Sound Effects: thin cave trickle, reverberant (chimes are spot sounds in the map)
 	-- escape patches: entry sound per lane ability, and the sink-warning tick
 	PatchSwim = 9114455247, PatchJump = 2772396665, PatchGlide = 9113840530, PatchFireproof = 9114446852,
 	PatchPhase = 9118158252, PatchTick = 134410911353980,
@@ -711,6 +732,7 @@ Config.Sounds = {
 -- calmer the closer to home; crossing the safe line with the egg plays the sting. Entry: { assetId, volume }
 Config.EscapeMusic = {
 	tracks = {
+		CrystalCaverns = { 1838919062, 0.4 }, -- Wild Wind (APM)
 		MysticGrove = { 1842359824, 0.35 }, -- restrained drone under silk/chitter cues
 		Cosmic = { 9042161703, 0.45 }, -- Silicon Circuits: building synths, cinematic techno
 		Volcano = { 1837850904, 0.5 }, -- Hell's Canyon (percussion)
@@ -730,6 +752,9 @@ local eggSmoke = "rbxasset://textures/particles/smoke_main.dds"
 Config.EggFX = {
 	distance = 80, maxActive = 24,
 	themes = {
+		CrystalCaverns = { texture = eggSpark, color = rgb(235, 245, 255), color2 = rgb(150, 230, 255), size = { 0.22, 0.03 }, rate = 2.5,
+			life = 1.6, speed = 0.5, light = 1, spread = 60, spin = 60, accel = 0.3, hatchCount = 26,
+			sound = { 9120751091, 1.1, 0.5, 2.5 } }, -- quartz sparkle; glass wind chimes
 		MysticGrove = { texture = eggSpark, color = rgb(130, 245, 210), color2 = rgb(195, 150, 245), size = { 0.24, 0.04 }, rate = 2, life = 2,
 			speed = 0.65, light = 0.75, spread = 100, spin = 50, accel = 0.5, hatchCount = 24, sound = { 9116418035, 0.9, 0.45, 3 } },
 		Forest = { texture = eggSpark, color = rgb(255, 235, 120), size = { 0.24, 0.03 }, rate = 2, life = 1.8,
@@ -777,6 +802,28 @@ Config.GuardianFX = {
 		chase = { pitch = 1.1, volume = 0.6 }, -- the chase loop speeds up and gets at least this loud
 	},
 	guardians = { -- sizes are tier 1; tier 4 is x1.45
+		CrystalCaverns = { -- Crystal Golem: quartz glints and a soft rainbow sparkle off its crystals, quartz dust when it stomps
+			layers = {
+				{ texture = fx .. "sparkles_main.dds", color = rgb(255, 255, 255), color2 = rgb(190, 225, 255), size = { 1.3, 0.1 },
+					rate = 16, life = 1.6, speed = 1.5, spread = 180, light = 1, spin = 60, locked = true, flare = 20 },
+				{ texture = fx .. "sparkles_main.dds", color = rgb(255, 120, 200), color2 = rgb(140, 120, 255), size = { 0.9, 0 },
+					rate = 10, life = 2.4, speed = 2.5, spread = 180, accel = 0.6, light = 1, flare = 16 },
+			},
+			light = { color = rgb(170, 230, 255), range = 28, brightness = 0.7 },
+			step = { texture = fx .. "smoke_main.dds", color = rgb(225, 228, 238), size = { 2.4, 5.5 }, count = 5, life = 1.2,
+				speed = 9, spread = 70, accel = -5, drag = 3, trans = 0.4 },
+			rage = { -- rainbow shards burst off it as it snaps, a rainbow shard storm around it; a grinding-stone roar
+				layers = {
+					{ texture = fx .. "SquareParticle.png", color = rgb(255, 110, 190), color2 = rgb(110, 230, 255), size = { 0.9, 0.2 },
+						rate = 10, life = 1.2, speed = 10, spread = 180, accel = -8, drag = 1.5, spin = 240, squash = 3, light = 1,
+						minTier = 4, flare = 18 },
+				},
+				light = { color = rgb(255, 120, 220) },
+				onset = { texture = fx .. "SquareParticle.png", color = rgb(255, 240, 120), color2 = rgb(120, 220, 255), size = { 1.5, 0.2 },
+					count = 44, life = 0.9, speed = 42, spread = 180, drag = 4, accel = -12, spin = 200, squash = 3, light = 1 },
+				sound = { 9113926971, 0.6, 0.9, 2 }, -- heavy granite grind, slowed into a roar
+			},
+		},
 		MysticGrove = { -- Spider: silk at the fangs, glowing spores around the abdomen, tiny chitin footsteps.
 			layers = {
 				{ texture = fx .. "smoke_main.dds", color = rgb(95, 235, 170), color2 = rgb(175, 100, 235), size = { 3.2, 6 },
@@ -904,6 +951,8 @@ Config.MamaFX = {
 -- Each guardian's voice: idle (3D call while patrolling nearby), alert (it spots you; also replayed louder on rage),
 -- chase (loop while it hunts you, louder as it closes in), step (each footfall). Entry: { assetId, pitch, volume, maxSeconds? }
 Config.GuardianSounds = {
+	CrystalCaverns = { idle = { 9113924526, 0.7, 0.45, 2.5 }, alert = { 9113926535, 0.75, 0.85 }, -- granite rolls / grinds (Pro Sound Effects)
+		chase = { 9113927452, 0.8, 0.5 }, step = { 9113525391, 0.4, 0.6 } }, -- grinding loop; the Yeti's heavy step, deeper
 	MysticGrove = { idle = { 9125917896, 0.65, 0.35, 1.8 }, alert = { 9119471684, 1.25, 0.65, 2 },
 		chase = { 9119458695, 1.3, 0.35 }, step = { 9125914961, 1.6, 0.22 } }, -- familiar insect assets, lighter/faster spider mix
 	Forest = { idle = { 77584650945481, 1, 0.6 }, alert = { 139070736738965, 1, 0.7, 1.8 }, -- chicken cluck / squawk
@@ -925,6 +974,7 @@ Config.SellSeconds = 60
 
 -- Tutorial: guide entries (in Guide order). `when` ones also pop up once, the first time it happens.
 Config.Tips = {
+	{ key = "crystal", title = "Crystal Caverns", body = "Beyond Mystic Grove, the Crystal Golem guards Crystal Beetle, Gem Gecko and Crystal Pangolin eggs. Climb riders run up the quartz walls and cross the top, which cracks after 1.5 seconds and drops you on the far side, keeping a head start. No Climb? Take the gaps and race home." },
 	{ key = "mystic", title = "Mystic Grove", body = "Beyond Cosmic, the Giant Spider guards Shroomling, Glow Deer and Wisp Lynx eggs. Ride Jump to leap onto raised mushroom caps. They hide you from guardians, but soften after 4 seconds. No Jump? Keep to the open paths and race home. Silk and glowing spores show the spider's chase intensity." },
 	{ key = "basics", title = "How to play", body = "Steal an egg from a biome nest and run it home before the guardian catches you. Eggs incubate at home; when one says Ready, tap it to hatch. Creatures in your pen earn cash every second, and the one you ride sets your speed." },
 	{ key = "controls", title = "Controls", body = "PC: F gets off all mounts, Q uses Dash, R takes off or lands a flying mount (Space up, Ctrl down). Phone/tablet: use the Get off, Fly and Dash buttons. Flyers: Vulture, Parrot, Snow Owl, Ember Bat and Baby Dragon. Carrying an egg forces a landing; deliver or drop it to fly again." },

@@ -27,6 +27,12 @@ end
 
 -- particles that fill the air around the camera, per biome
 local AIR = {
+	CrystalCaverns = {
+		{ Texture = SMOKE, Color = rgb(235, 238, 248), Size = ns(0.22, 0.1), Rate = 22, Life = 8, Speed = 0.35, Accel = V3(0.05, -0.08, 0),
+			Peak = 0.3, Light = 0.4, Rot = 40 }, -- slow dust motes in the light shafts
+		{ Texture = SPARK, Color = rgb(255, 170, 230), Size = ns(0.45, 0), Rate = 8, Life = 4, Speed = 0.4, Light = 1, Twinkle = true },
+		{ Texture = SPARK, Color = rgb(150, 230, 255), Size = ns(0.45, 0), Rate = 8, Life = 4, Speed = 0.4, Light = 1, Twinkle = true },
+	},
 	MysticGrove = {
 		{ Texture = SPARK, Color = rgb(115, 235, 190), Size = ns(0.95, 0.15), Rate = 32, Life = 6, Speed = 1.1, Light = 1, Spread = 180 },
 		{ Texture = SMOKE, Color = rgb(95, 170, 155), Size = ns(7, 12), Rate = 4, Life = 7, Speed = 0.65, Peak = 0.72, Low = true },
@@ -65,6 +71,7 @@ local AIR = {
 
 -- per-biome glow and sun rays (on top of ClientMain's atmosphere + tint)
 local LIGHT = {
+	CrystalCaverns = { bloom = 0.8, threshold = 0.8, rays = 0.2 },
 	MysticGrove = { bloom = 1.05, threshold = 0.72, rays = 0.025 },
 	Forest = { bloom = 0.5, threshold = 0.9, rays = 0.15 },
 	Lake = { bloom = 0.55, threshold = 0.9, rays = 0.1 },
@@ -306,6 +313,12 @@ local function buildLocalFx(id)
 					light.Parent = host
 					table.insert(fx.lights, light)
 				end
+			elseif d.Name == "RainbowSpot" and d:IsA("BasePart") then
+				-- Crystal Caverns: coloured light where the shafts hit the quartz (flat Neon spots placed by the build tool)
+				local hue = (#fx.emitters * 0.17) % 1
+				d.Color = Color3.fromHSV(hue, 0.45, 1)
+				table.insert(fx.emitters, emitter({ Texture = SPARK, Color = Color3.fromHSV(hue, 0.35, 1), Size = ns(0.5, 0), Rate = 3,
+					Life = 2.5, Speed = 0.8, Dir = V3(0, 1, 0), Light = 1, Spread = 40 }, d))
 			elseif d.Name == "Nest" and (d:IsA("BasePart") or d:IsA("Model")) then
 				local host = d:IsA("Model") and (d.PrimaryPart or d:FindFirstChildWhichIsA("BasePart", true)) or d
 				if host then
