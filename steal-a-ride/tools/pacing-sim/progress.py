@@ -101,6 +101,9 @@ def run(P, seed, verbose=False, target="Cosmic", tries=None):
         dash = mount is not None and mount[2] == "Dash"
         if P.get("secondSlot"):  # 2nd mount slot (Rebirth 6 / pass): speed of the faster, both abilities -> any Dash pet counts
             dash = dash or any(c[2] == "Dash" for c in pen)
+        climb = mount is not None and mount[2] == "Climb"  # Crystal Caverns walls (crystal.py); no other biome uses it
+        if P.get("secondSlot"):
+            climb = climb or any(c[2] == "Climb" for c in pen)
         gear = max(P["gearMin"], math.floor(ips() * P["gearSeconds"]))
         best = None
         for i, b in enumerate(BIOMES):
@@ -109,7 +112,8 @@ def run(P, seed, verbose=False, target="Cosmic", tries=None):
             for soda in (False, True):
                 if soda and st["cash"] < gear: continue
                 v = base * P["carry"][b] * (P.get("soda", 1.25) if soda else 1)
-                p = escapeProb(P["guard"][b] * S, round(v, 1), dist, b in FLY, dash, P.get("tired", .95))
+                kw = {"climb": True} if climb and b in P.get("climbBiomes", ()) else {}
+                p = escapeProb(P["guard"][b] * S, round(v, 1), dist, b in FLY, dash, P.get("tired", .95), **kw)
                 if p >= 0.35 and (best is None or (i, p) > (best[0], best[2])):
                     best = (i, b, p, soda)
         if best is None or len(incub) >= incN:

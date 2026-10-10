@@ -1,0 +1,38 @@
+    golem  carry   ride  reached   Mystic->Crystal real min p10/med/p90   escape at median ride (no Dash / Dash), lead/wall: none | 20 | 35 | 50
+  92=115.0  0.952  117.8    35/200        3.8     15.3     21.5     0%/  0% |   0%/  5% |   0%/  5% |   0%/  5%
+  94=117.5  0.911  125.8   198/200       14.2     27.8     41.3     0%/  0% |   0%/  0% |   0%/  0% |   0%/  0%
+  96=120.0  0.921  127.0   198/200       14.2     28.1     41.7     0%/  0% |   0%/  0% |   0%/  0% |   0%/  0%
+  98=122.5  0.940  127.0   199/200       16.8     28.5     42.1     0%/  0% |   0%/  0% |   0%/  0% |   0%/  0%
+ 100=125.0  0.960  127.0   199/200       15.7     28.4     42.1     0%/  0% |   0%/  0% |   0%/  0% |   0%/  0%
+
+Egg weight (margin) sweep at Golem 96: heavier eggs = later first Crystal
+  margin 0.93  carry 0.879 (carrying 111.6 vs Golem 120.0) reached 200/200 gap p10  29.1 median  46.1 p90  66.1
+  margin 0.94  carry 0.888 (carrying 112.8 vs Golem 120.0) reached 200/200 gap p10  28.4 median  44.4 p90  60.7
+  margin 0.95  carry 0.898 (carrying 114.0 vs Golem 120.0) reached 199/200 gap p10  21.7 median  31.4 p90  49.6
+  margin 0.96  carry 0.907 (carrying 115.2 vs Golem 120.0) reached 199/200 gap p10  17.0 median  29.2 p90  44.7
+  margin 0.975 carry 0.921 (carrying 117.0 vs Golem 120.0) reached 198/200 gap p10  14.2 median  28.1 p90  41.7
+
+Escape odds by carrying speed / Golem 96 (no Dash / Dash), lead per wall none | 20 | 35 | 50 -- INSTALLED leash: lead lost at the cave exit
+  rider x0.9     0%/  0% |   0%/  0% |   0%/  0% |   0%/  0%
+  rider x0.93    0%/  0% |   0%/  0% |   0%/  0% |   0%/  0%
+  rider x0.95    0%/  0% |   0%/  0% |   0%/  0% |   0%/  0%
+  rider x0.975   0%/  2% |   0%/  0% |   0%/  0% |   0%/  0%
+  rider x1.0     0%/ 70% |   0%/ 73% |   0%/ 73% |   0%/ 73%
+  rider x1.03   14%/ 66% |  14%/ 66% |  14%/ 66% |  14%/ 66%
+  rider x1.05   75%/ 95% |  75%/ 95% |  75%/ 95% |  75%/ 95%
+
+Escape odds by carrying speed / Golem 96 (no Dash / Dash), lead per wall none | 20 | 35 | 50 -- PROPOSAL: Climb lead kept after the cave exit (leash 30 + lead)
+  rider x0.9     0%/  0% |   0%/ 61% |   0%/100% |   0%/100%
+  rider x0.93    0%/  0% |   0%/100% |   0%/100% |   0%/100%
+  rider x0.95    0%/  0% |   0%/100% |   0%/100% |   0%/100%
+  rider x0.975   0%/  2% |   0%/100% |   0%/100% | 100%/100%
+  rider x1.0     0%/ 70% |  55%/100% | 100%/100% | 100%/100%
+  rider x1.03   14%/ 66% | 100%/100% | 100%/100% | 100%/100%
+  rider x1.05   75%/ 95% | 100%/100% | 100%/100% | 100%/100%
+PICK margin 0.945 carry 0.893 (carrying 113.4 vs Golem 120.0): reached 400/400, Mystic->Crystal real min p10 26.0 median 34.2 p90 52.8
+Lead kept after the exit, small leads (no Dash / Dash): lead per wall none | 5 | 10 | 15
+  rider x0.93    0%/  0% |   0%/  0% |   0%/  2% |   0%/ 61%
+  rider x0.95    0%/  0% |   0%/  2% |   0%/ 64% |   0%/100%
+  rider x0.975   0%/  2% |   0%/ 68% |   0%/100% |   0%/100%
+  rider x1.0     0%/ 70% |   0%/ 93% |   0%/100% |   2%/100%
+  rider x1.03   14%/ 66% |  75%/100% | 100%/100% | 100%/100%
