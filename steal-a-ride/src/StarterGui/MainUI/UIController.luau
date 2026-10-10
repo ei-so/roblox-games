@@ -662,6 +662,13 @@ toggle.Font, toggle.TextSize, toggle.TextColor3 = Enum.Font.FredokaOne, 20, Colo
 toggle.ZIndex, toggle.Parent = 30, gui
 local corner = Instance.new("UICorner")
 corner.CornerRadius, corner.Parent = UDim.new(0, 10), toggle
+-- the same white border and text outline as the entries it opens (normalizeEntry)
+local toggleBorder = Instance.new("UIStroke")
+toggleBorder.Color, toggleBorder.Thickness, toggleBorder.ApplyStrokeMode = Color3.new(1, 1, 1), 3, Enum.ApplyStrokeMode.Border
+toggleBorder.Parent = toggle
+local toggleText = Instance.new("UIStroke")
+toggleText.Color, toggleText.Thickness = Color3.fromRGB(25, 30, 40), 1.5
+toggleText.Parent = toggle
 local toggleScale = Instance.new("UIScale")
 toggleScale.Parent = toggle
 local menuPanels = { StablePanel = true, FusePanel = true, ShopPanel = true, IndexPanel = true,
