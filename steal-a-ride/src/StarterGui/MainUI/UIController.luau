@@ -14,35 +14,36 @@ local warning = gui:WaitForChild("Warning")
 top.AnchorPoint = Vector2.new(0, 0)
 top.Position = UDim2.fromOffset(16, 8)
 top.Size = UDim2.fromOffset(286, 48)
-top.CashPill.Size = UDim2.fromOffset(180, 48)
-cashLabel.Position = UDim2.fromOffset(10, 2)
-cashLabel.Size = UDim2.new(1, -20, 0, 28)
+top.CashPill.Size = UDim2.fromOffset(206, 48) -- 34 px icon well on the left (added with the event cards below)
+cashLabel.Position = UDim2.fromOffset(44, 2)
+cashLabel.Size = UDim2.new(1, -52, 0, 28)
 cashLabel.TextScaled = false
 cashLabel.TextSize = 26
-perSecLabel.Position = UDim2.fromOffset(10, 30)
-perSecLabel.Size = UDim2.new(1, -20, 0, 16)
+perSecLabel.Position = UDim2.fromOffset(44, 30)
+perSecLabel.Size = UDim2.new(1, -52, 0, 16)
 perSecLabel.TextScaled = false
 perSecLabel.TextSize = 18
-top.SpeedPill.Size = UDim2.fromOffset(112, 44)
-top.Size = UDim2.fromOffset(304, 48)
+top.SpeedPill.Size = UDim2.fromOffset(132, 44)
+top.Size = UDim2.fromOffset(346, 48)
 speedLabel.TextScaled = false
 speedLabel.TextSize = 24
+speedLabel.Position, speedLabel.Size = UDim2.fromOffset(42, 8), UDim2.new(1, -50, 1, -16)
 local layout = top:FindFirstChildOfClass("UIListLayout")
 if layout then layout.Padding = UDim.new(0, 8) end
 
 -- Boost timer: a gold chip under the speed pill while a Speed Soda / Mama speed-up runs (server attr BoostUntil)
 local boostChip = Instance.new("TextLabel")
 boostChip.Name = "BoostTimer"
-boostChip.Position = UDim2.fromOffset(16 + 180 + 8, 8 + 48 + 6)
+boostChip.Position = UDim2.fromOffset(16 + 206 + 8, 8 + 48 + 6)
 boostChip.Size = UDim2.fromOffset(150, 26)
 boostChip.BackgroundColor3 = Color3.fromRGB(255, 176, 46)
 boostChip.Font = Enum.Font.FredokaOne
 boostChip.TextSize = 17
 boostChip.TextColor3 = Color3.new(1, 1, 1)
 boostChip.Visible = false
-Instance.new("UICorner", boostChip).CornerRadius = UDim.new(1, 0)
+Instance.new("UICorner", boostChip).CornerRadius = UDim.new(0, 12)
 local chipBorder = Instance.new("UIStroke")
-chipBorder.Color, chipBorder.Thickness, chipBorder.ApplyStrokeMode = Color3.new(1, 1, 1), 2, Enum.ApplyStrokeMode.Border
+chipBorder.Color, chipBorder.Thickness, chipBorder.ApplyStrokeMode = Color3.new(1, 1, 1), 3, Enum.ApplyStrokeMode.Border
 chipBorder.Parent = boostChip
 local chipText = Instance.new("UIStroke")
 chipText.Color, chipText.Thickness = Color3.fromRGB(110, 60, 0), 1.5
@@ -71,7 +72,7 @@ local function refresh()
 	perSecLabel.Text = "+$" .. Format.number(player:GetAttribute("CashPerSecond") or 0) .. "/s"
 	-- always the real speed right now (mount, saddle, boosts, Dash, carrying, water), same units as guardian speeds
 	local speed = player:GetAttribute("CurrentSpeed") or player:GetAttribute("Speed") or 20
-	speedLabel.Text = "⚡ " .. speedText(speed)
+	speedLabel.Text = speedText(speed)
 	warning.Visible = player:GetAttribute("DataLoadFailed") == true
 	if not boostTicking and (player:GetAttribute("BoostUntil") or 0) > workspace:GetServerTimeNow() then
 		boostTicking = true
@@ -432,6 +433,30 @@ local ICONS = {
 		dot(p, Color3.fromRGB(255, 240, 140), 4, 21, 21, 3)
 		dot(p, Color3.new(1, 1, 1), 3, 21, 11, 3)
 	end,
+	Coin = function(p)
+		dot(p, Color3.fromRGB(230, 160, 30), 24, 17, 17)
+		dot(p, Color3.fromRGB(255, 214, 90), 18, 17, 17, 3)
+		dot(p, Color3.fromRGB(255, 244, 190), 6, 13, 13, 4)
+	end,
+	Bolt = function(p)
+		for i, s in { { 19, 10, 6, 13, 20 }, { 17, 17, 13, 5, -20 }, { 15, 24, 6, 13, 20 } } do
+			local f = Instance.new("Frame")
+			f.AnchorPoint = Vector2.new(0.5, 0.5)
+			f.Position, f.Size, f.Rotation = UDim2.fromOffset(s[1], s[2]), UDim2.fromOffset(s[3], s[4]), s[5]
+			f.BackgroundColor3, f.BorderSizePixel, f.ZIndex = Color3.fromRGB(255, 220, 70), 0, 2 + i
+			f.Parent = p
+		end
+	end,
+	Menu = function(p)
+		for _, y in { 11, 17, 23 } do
+			local f = Instance.new("Frame")
+			f.AnchorPoint = Vector2.new(0.5, 0.5)
+			f.Position, f.Size = UDim2.fromOffset(17, y), UDim2.fromOffset(18, 3)
+			f.BackgroundColor3, f.BorderSizePixel, f.ZIndex = Color3.new(1, 1, 1), 0, 2
+			Instance.new("UICorner", f).CornerRadius = UDim.new(1, 0)
+			f.Parent = p
+		end
+	end,
 }
 
 local function label(parent, size: number, color: Color3, y: number, h: number)
@@ -451,17 +476,19 @@ local function label(parent, size: number, color: Color3, y: number, h: number)
 	t.Parent = parent
 	return t
 end
+-- One HUD kit on both sides: bright fill, 3 px white border, 12 px corners, a dark icon well, outlined white text
+local WHITE, WELL = Color3.new(1, 1, 1), Color3.fromRGB(20, 24, 40)
 -- One rounded card: icon well on the left, title + countdown on the right, optional tip lines underneath.
 -- A compact card has one line beside the icon.
-local function card(name: string, order: number, fill: Color3, edge: Color3, sub: Color3, parent: Instance, compact: boolean?)
+local function card(name: string, order: number, fill: Color3, parent: Instance, compact: boolean?)
 	local f = Instance.new("Frame")
 	f.Name, f.LayoutOrder = name, order
 	f.Size = UDim2.fromOffset(244, compact and 46 or 56)
 	f.BackgroundColor3, f.BackgroundTransparency = fill, 0.08
 	f.Visible = false
-	Instance.new("UICorner", f).CornerRadius = UDim.new(0, 14)
+	Instance.new("UICorner", f).CornerRadius = UDim.new(0, 12)
 	local border = Instance.new("UIStroke")
-	border.ApplyStrokeMode, border.Thickness, border.Color, border.Transparency = Enum.ApplyStrokeMode.Border, 2, edge, 0.15
+	border.ApplyStrokeMode, border.Thickness, border.Color = Enum.ApplyStrokeMode.Border, 3, WHITE
 	border.Parent = f
 	local pad = Instance.new("UIPadding")
 	pad.PaddingTop, pad.PaddingBottom = UDim.new(0, compact and 6 or 8), UDim.new(0, compact and 6 or 8)
@@ -473,13 +500,13 @@ local function card(name: string, order: number, fill: Color3, edge: Color3, sub
 	well.Name = "Icon"
 	well.Size = UDim2.fromOffset(34, 34)
 	well.Position = UDim2.fromOffset(0, 1)
-	well.BackgroundColor3, well.BackgroundTransparency = Color3.new(1, 1, 1), 0.85
+	well.BackgroundColor3, well.BackgroundTransparency = WELL, 0.7
 	well.ClipsDescendants = true
 	Instance.new("UICorner", well).CornerRadius = UDim.new(0, 10)
 	well.Parent = f
-	local title = label(f, 19, Color3.new(1, 1, 1), -1, 21)
-	local detail = label(f, 16, sub, 20, 19)
-	local tips = label(f, 15, Color3.fromRGB(225, 240, 255), 44, 0)
+	local title = label(f, 19, WHITE, -1, 21)
+	local detail = label(f, 16, WHITE, 20, 19)
+	local tips = label(f, 15, WHITE, 44, 0)
 	tips.Position, tips.Size = UDim2.fromOffset(2, 44), UDim2.new(1, -2, 0, 0)
 	tips.TextYAlignment, tips.TextTruncate, tips.LineHeight = Enum.TextYAlignment.Top, Enum.TextTruncate.None, 1.05
 	tips.Visible = false
@@ -489,22 +516,41 @@ local function card(name: string, order: number, fill: Color3, edge: Color3, sub
 		detail.Position, detail.Size, detail.TextSize = UDim2.fromOffset(42, 0), UDim2.new(1, -42, 0, 34), 17
 	end
 	f.Parent = parent
-	return { frame = f, border = border, edge = edge, pop = pop, well = well, title = title, detail = detail, tips = tips,
+	return { frame = f, border = border, pop = pop, well = well, title = title, detail = detail, tips = tips,
 		compact = compact }
 end
-local weatherCard = card("WeatherCard", 1, Color3.fromRGB(38, 82, 160), Color3.fromRGB(150, 205, 255), Color3.fromRGB(200, 230, 255), banner)
-local mamaCard = card("MamaCard", 2, Color3.fromRGB(150, 58, 30), Color3.fromRGB(255, 160, 90), Color3.fromRGB(255, 222, 190), banner)
+local MAMA_FILL = Color3.fromRGB(230, 110, 45)
+local weatherCard = card("WeatherCard", 1, Color3.fromRGB(64, 135, 245), banner)
+local mamaCard = card("MamaCard", 2, MAMA_FILL, banner)
 mamaCard.title.Text = "Mama Dragon"
 ICONS.Mama(mamaCard.well)
-local secretCard = card("SecretCard", 3, Color3.fromRGB(128, 40, 120), Color3.fromRGB(255, 150, 230), Color3.fromRGB(255, 215, 245), banner)
-local baseCard = card("BaseCard", 1, Color3.fromRGB(160, 112, 28), Color3.fromRGB(255, 214, 120), Color3.new(1, 1, 1), status, true)
-local refillCard = card("RefillCard", 2, Color3.fromRGB(52, 120, 62), Color3.fromRGB(170, 240, 150), Color3.new(1, 1, 1), status, true)
+local secretCard = card("SecretCard", 3, Color3.fromRGB(190, 75, 175), banner)
+local baseCard = card("BaseCard", 1, Color3.fromRGB(215, 160, 40), status, true)
+local refillCard = card("RefillCard", 2, Color3.fromRGB(47, 175, 92), status, true)
 -- the base card's colours follow its state: gold unlocked, red locked, blue protected
 local TONES = {
-	open = { Color3.fromRGB(160, 112, 28), Color3.fromRGB(255, 214, 120) },
-	locked = { Color3.fromRGB(160, 44, 56), Color3.fromRGB(255, 150, 150) },
-	shield = { Color3.fromRGB(40, 96, 160), Color3.fromRGB(150, 210, 255) },
+	open = Color3.fromRGB(215, 160, 40),
+	locked = Color3.fromRGB(215, 60, 70),
+	shield = Color3.fromRGB(40, 170, 170),
 }
+-- the same dark icon well for the left side's pills and Menu button
+local function iconWell(parent, x: number, y: number, icon: string)
+	local well = Instance.new("Frame")
+	well.Name = "Icon"
+	well.Position, well.Size = UDim2.fromOffset(x, y), UDim2.fromOffset(34, 34)
+	well.BackgroundColor3, well.BackgroundTransparency = WELL, 0.7
+	well.ClipsDescendants = true
+	Instance.new("UICorner", well).CornerRadius = UDim.new(0, 10)
+	ICONS[icon](well)
+	well.Parent = parent
+	return well
+end
+iconWell(top.CashPill, 7, 7, "Coin")
+iconWell(top.SpeedPill, 5, 5, "Bolt")
+for _, pill in { top.CashPill, top.SpeedPill } do
+	local round = pill:FindFirstChildOfClass("UICorner")
+	if round then round.CornerRadius = UDim.new(0, 12) end
+end
 
 local POP = TweenInfo.new(0.28, Enum.EasingStyle.Back, Enum.EasingDirection.Out)
 local function show(c, view)
@@ -527,9 +573,9 @@ local function show(c, view)
 		if view.title then c.title.Text = view.title end
 		local tone = TONES[view.tone]
 		if tone then
-			c.frame.BackgroundColor3, c.edge = tone[1], tone[2]
+			c.frame.BackgroundColor3 = tone
 		end
-		c.border.Color = view.alert and Color3.fromRGB(255, 96, 96) or c.edge
+		c.border.Color = view.alert and Color3.fromRGB(255, 96, 96) or WHITE
 		c.tips.Visible = view.tips ~= nil
 		c.tips.Size = UDim2.new(1, -2, 0, view.tips and 18 * #view.tips or 0)
 		if not c.compact then
@@ -550,11 +596,11 @@ local function placeColumn()
 			-- the same orange card as Mama's, sized to its lines; no box (and no gap) until someone has hit her
 			mamaTop.Size, mamaTop.AutomaticSize = UDim2.fromOffset(244, 0), Enum.AutomaticSize.Y
 			mamaTop.TextXAlignment, mamaTop.TextSize = Enum.TextXAlignment.Left, 16
-			mamaTop.BackgroundColor3 = Color3.fromRGB(150, 58, 30)
-			Instance.new("UICorner", mamaTop).CornerRadius = UDim.new(0, 14)
+			mamaTop.BackgroundColor3 = MAMA_FILL
+			Instance.new("UICorner", mamaTop).CornerRadius = UDim.new(0, 12)
 			local border = Instance.new("UIStroke")
 			border.ApplyStrokeMode, border.Thickness, border.Color, border.Transparency =
-				Enum.ApplyStrokeMode.Border, 2, Color3.fromRGB(255, 160, 90), 0.15
+				Enum.ApplyStrokeMode.Border, 3, WHITE, 0
 			border.Parent = mamaTop
 			local pad = Instance.new("UIPadding")
 			pad.Parent = mamaTop
@@ -657,11 +703,15 @@ local menuScale = Instance.new("UIScale")
 menuScale.Parent = menu
 local toggle = Instance.new("TextButton")
 toggle.Name, toggle.Text = "MenuToggle", "Menu"
-toggle.Size, toggle.BackgroundColor3 = UDim2.fromOffset(84, 44), Color3.fromRGB(35, 38, 56)
+toggle.Size, toggle.BackgroundColor3 = UDim2.fromOffset(112, 44), Color3.fromRGB(35, 38, 56)
 toggle.Font, toggle.TextSize, toggle.TextColor3 = Enum.Font.FredokaOne, 20, Color3.new(1, 1, 1)
 toggle.ZIndex, toggle.Parent = 30, gui
 local corner = Instance.new("UICorner")
-corner.CornerRadius, corner.Parent = UDim.new(0, 10), toggle
+corner.CornerRadius, corner.Parent = UDim.new(0, 12), toggle
+iconWell(toggle, 5, 5, "Menu")
+toggle.TextXAlignment = Enum.TextXAlignment.Right -- the label sits right of the icon well
+local togglePad = Instance.new("UIPadding")
+togglePad.PaddingRight, togglePad.Parent = UDim.new(0, 14), toggle
 -- the same white border and text outline as the entries it opens (normalizeEntry)
 local toggleBorder = Instance.new("UIStroke")
 toggleBorder.Color, toggleBorder.Thickness, toggleBorder.ApplyStrokeMode = Color3.new(1, 1, 1), 3, Enum.ApplyStrokeMode.Border
@@ -805,7 +855,7 @@ local function rescale()
 	local hudBottom = (top.Position.Y.Offset + top.Size.Y.Offset) * scale
 	toggle.Position = UDim2.fromOffset(12 / scale, (hudBottom + 8) / scale)
 	local menuX, menuY = 12, hudBottom + 8 + 44 + 6
-	if camera.ViewportSize.Y < 500 or menuY + 188 > gui.AbsoluteSize.Y then menuX, menuY = 104, hudBottom + 8 end -- short landscape: clear the thumbstick
+	if camera.ViewportSize.Y < 500 or menuY + 188 > gui.AbsoluteSize.Y then menuX, menuY = 132, hudBottom + 8 end -- short landscape: clear the thumbstick
 	menu.Position = UDim2.fromOffset(menuX / scale, menuY / scale)
 	syncMenuLock()
 end

@@ -221,7 +221,7 @@ local UDim2={fromOffset=function(x,y) return {X=x,Y=y} end}
 local function syncMenuLock() end
 ''' + resize.group() + '''
 rescale()
-assert(menu.Position.X*uiScale.Scale==104,"short-phone Menu opens beside toggle")
+assert(menu.Position.X*uiScale.Scale==132,"short-phone Menu opens beside the 112 px toggle")
 assert(menu.Position.Y*uiScale.Scale+188<=gui.AbsoluteSize.Y,"all seven 44-pixel Menu buttons fit")
 assert(menu.Position.Y*uiScale.Scale>=56*uiScale.Scale+8,"Menu clears HUD")
 camera.ViewportSize.Y=900;gui.AbsoluteSize.Y=842
