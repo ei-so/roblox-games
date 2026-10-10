@@ -23,7 +23,8 @@ def tests():
     config = module('ReplicatedStorage/Shared/Config.luau', {})
     climb = module('ReplicatedStorage/Shared/Climb.luau', {'require(script.Parent.Config)': 'Config'})
     return PRELUDE + GEOMETRY + 'local Config=' + config + '\nlocal Climb=' + climb + r'''
-assert(Config.Abilities.Climb.speedMult == 0.6 and Config.Abilities.Climb.crackAfter == 1.5, "Config.Abilities.Climb tuning")
+assert(Config.Abilities.Climb.speedMult == 1.5 and Config.Abilities.Climb.crackAfter == 1.5 and Config.Abilities.Climb.keepLead == 20,
+	"Config.Abilities.Climb tuning (user-approved 2026-10-11: climb 1.5x ride speed, keep up to 20 studs of lead)")
 local function expect(label, wantAction, wantSince, action, since)
 	assert(action == wantAction and since == wantSince,
 		label .. ": want " .. wantAction .. ", " .. tostring(wantSince) .. " got " .. tostring(action) .. ", " .. tostring(since))
@@ -48,9 +49,15 @@ assert(Climb.landing(top, size, at(-3), "slip").Z == -10, "slip from the nest ha
 assert(crack.Y == 40 + 3, "without a ground height, lands 3 above the top's base")
 assert(Climb.landing(top, size, at(0), "crack", 0).Y == 3, "with a ground height, lands 3 above the ground")
 
-assert(Climb.lift(10) == 12, "slow carrier still climbs: 12 studs/s floor")
-assert(Climb.lift(100) == 60, "climbs at 0.6x ride speed")
-print("PASS: climb crack timer, landing spots, climb speed")
+assert(Climb.lift(5) == 12, "slow carrier still climbs: 12 studs/s floor")
+assert(Climb.lift(100) == 150, "climbs at 1.5x ride speed")
+
+-- leaving the cave, the Golem's leash snaps it to reach behind; a rider who climbed a wall this chase keeps the lead
+assert(Climb.keptLead(70, 41, true) == 20, "kept lead is capped at keepLead")
+assert(Climb.keptLead(51, 41, true) == 10, "keeps the studs beyond the normal leash reach")
+assert(Climb.keptLead(30, 41, true) == 0, "no lead (Golem closer than reach) keeps nothing")
+assert(Climb.keptLead(70, 41, false) == 0, "no climb this chase, no kept lead")
+print("PASS: climb crack timer, landing spots, climb speed, kept lead")
 '''
 
 

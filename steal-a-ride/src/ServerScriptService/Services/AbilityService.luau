@@ -133,6 +133,7 @@ local function climbCheck(player, root: BasePart, now: number)
 	climbSince[player] = since
 	if action == "start" then
 		player:SetAttribute("ClimbSince", workspace:GetServerTimeNow()) -- clients play the crack warning from this
+		player:SetAttribute("ClimbedAt", now) -- server clock: GuardianService keeps a climber's lead past the cave exit
 	elseif action ~= "wait" and player:GetAttribute("ClimbSince") then
 		player:SetAttribute("ClimbSince", nil)
 	end

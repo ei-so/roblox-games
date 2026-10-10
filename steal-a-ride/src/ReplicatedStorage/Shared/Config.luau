@@ -170,7 +170,9 @@ Config.Abilities = {
 	Swim = { nonSwimmerMult = 0.5 }, -- riders without Swim move at half speed in water
 	Fireproof = {},
 	Phase = {},
-	Climb = { speedMult = 0.6, crackAfter = 1.5 }, -- up quartz walls at 0.6x ride speed; a wall top cracks after 1.5 s
+	-- up quartz walls at 1.5x ride speed; a wall top cracks after 1.5 s; a rider who climbed keeps up to keepLead studs
+	-- of lead past the Golem's normal leash when leaving the cave (pacing sim 2026-10-11, user-approved)
+	Climb = { speedMult = 1.5, crackAfter = 1.5, keepLead = 20 },
 }
 
 -- noLane*: carriers without the biome's lane ability get no wake-up head start and a faster guardian

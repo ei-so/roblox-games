@@ -742,6 +742,7 @@ def guardian_harness():
         'local Config = require(ReplicatedStorage.Shared.Config)':'',
         'local CreatureBuilder = require(ReplicatedStorage.Shared.CreatureBuilder)':'',
         'local WalkCycle = require(ReplicatedStorage.Shared.WalkCycle)':'',
+        'local Climb = require(ReplicatedStorage.Shared.Climb)':'',
         'local SpeedService = require(script.Parent.SpeedService)':''})
     pre=r"""
 local Color3={fromRGB=function(r,g,b) return {R=r/255,G=g/255,B=b/255} end}

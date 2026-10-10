@@ -10,7 +10,6 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Config = require(ReplicatedStorage.Shared.Config)
 local CreatureBuilder = require(ReplicatedStorage.Shared.CreatureBuilder)
 local WalkCycle = require(ReplicatedStorage.Shared.WalkCycle)
-local Climb = require(ReplicatedStorage.Shared.Climb)
 local SpeedService = require(script.Parent.SpeedService)
 
 local Notify = ReplicatedStorage.Remotes.Notify
@@ -121,7 +120,7 @@ local function findTarget(g)
 	end
 	local target = GuardianService.pickTarget(g.target, dists)
 	if target ~= g.target then
-		g.target, g.chaseStart, g.leashFor = target, os.clock(), nil -- a new chase winds up from patrol pace
+		g.target, g.chaseStart = target, os.clock() -- a new chase winds up from patrol pace
 		g.raging = false
 		calm(g)
 	end
@@ -353,7 +352,7 @@ local function step(dt: number)
 	end
 	for _, g in guardians do
 		if g.state == "waking" and now >= g.wakeAt then
-			g.state, g.chaseStart, g.target, g.leashFor = "chase", now, nil, nil
+			g.state, g.chaseStart, g.target = "chase", now, nil
 			g.waypoints, g.pathAt, g.windowPos, g.windowAt, g.pushUntil = nil, 0, nil, now, 0
 		end
 		if g.state == "chase" then
@@ -370,12 +369,6 @@ local function step(dt: number)
 					end
 					local reach = Config.Guardian.catchRadius + g.radius + Config.Guardian.leashBuffer
 					local dx, dz = g.cf.Position.X - tpos.X, g.cf.Position.Z - tpos.Z
-					if g.leashFor ~= player then -- first pull on this target: a rider who climbed a wall keeps some lead
-						local climbedAt = player:GetAttribute("ClimbedAt")
-						g.leashFor = player
-						g.leashExtra = Climb.keptLead(math.sqrt(dx * dx + dz * dz), reach, climbedAt ~= nil and climbedAt >= g.chaseStart)
-					end
-					reach += g.leashExtra
 					local ox, oz = GuardianService.leashOffset(dx, dz, reach)
 					if ox then
 						snap(g, tpos, ox, oz, GuardianService.snapIsVisible(dx, dz, reach))
