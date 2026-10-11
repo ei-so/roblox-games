@@ -22,6 +22,8 @@ local nests = {} -- [biomeId] = { [spotPart] = eggModel | false }
 local spotOrder = {} -- [biomeId] = { spotPart }: the nest's spots in fill order
 local lastFullWarning = {}
 local lastPos = {} -- [carrier] = { pos, t }: anti speed-hack samples, cleared whenever an egg leaves a player
+local strikes = {} -- [carrier] = over-limit samples in a row
+local excusedUntil = {} -- [player] = os.clock() until which the server's own teleport/knockback isn't measured
 
 local function anchorAll(model, anchored)
 	for _, p in model:GetDescendants() do
@@ -142,6 +144,13 @@ end
 
 function EggService.carriers()
 	return carried
+end
+
+-- The server is moving this player itself (teleport, knockback): pause the speed check and measure again from
+-- wherever they end up.
+function EggService.excuse(player, seconds: number)
+	excusedUntil[player] = os.clock() + seconds
+	lastPos[player], strikes[player] = nil, nil
 end
 
 -- An egg lying on the ground with its own prompt (Secret Eggs, eggs knocked out of Mama's hoard). Returns the model.
@@ -269,28 +278,49 @@ function EggService.start()
 		end
 	end)
 
-	-- anti speed-hack: a carrier moving faster than the server allows drops the egg
+	-- anti speed-hack: a carrier moving faster than the server allows drops the egg. It takes two samples in a row
+	-- (a full second): one fast sample is usually a lag hitch or a physics snag, while a speed hack stays fast.
+	-- A single sample past 3x the limit is a teleport, not a hitch, and drops at once.
 	task.spawn(function()
 		while true do
 			task.wait(0.5)
 			for player in carried do
 				local root = player.Character and player.Character:FindFirstChild("HumanoidRootPart")
-				if root then
+				local now = os.clock()
+				if root and (excusedUntil[player] or 0) > now then
+					lastPos[player] = nil
+				elseif root then
 					local pos = Vector3.new(root.Position.X, 0, root.Position.Z)
 					local prev = lastPos[player]
 					if prev and EggService.allowedSpeed then
-						local speed = (pos - prev.pos).Magnitude / (os.clock() - prev.t)
-						if speed > EggService.allowedSpeed(player) * 1.4 + 5 then
+						local speed = (pos - prev.pos).Magnitude / (now - prev.t)
+						local limit = EggService.allowedSpeed(player) * 1.4 + 5
+						strikes[player] = speed > limit and (strikes[player] or 0) + 1 or nil
+						if strikes[player] and (strikes[player] >= 2 or speed > limit * 3) then
+							warn(("[EggService] %s dropped an egg: %.0f studs/s, limit %.0f, at %s"):format(
+								player.Name, speed, limit, tostring(root.Position)))
 							EggService.drop(player)
 							Notify:FireClient(player, "toast", "You dropped the egg: moving too fast!")
 						end
 					end
-					lastPos[player] = { pos = pos, t = os.clock() }
+					if carried[player] then
+						lastPos[player] = { pos = pos, t = now }
+					end
 				end
 			end
 			for player in lastPos do
 				if not carried[player] then
 					lastPos[player] = nil
+				end
+			end
+			for player in strikes do
+				if not carried[player] then
+					strikes[player] = nil
+				end
+			end
+			for player, untilClock in excusedUntil do
+				if untilClock < os.clock() - 5 or not player.Parent then
+					excusedUntil[player] = nil
 				end
 			end
 		end

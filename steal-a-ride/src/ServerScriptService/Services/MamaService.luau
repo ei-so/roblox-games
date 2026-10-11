@@ -153,6 +153,7 @@ local function bigStomp(fight)
 		local away = root and Vector3.new(root.Position.X - center.X, 0, root.Position.Z - center.Z)
 		if away and away.Magnitude <= E.mamaStompRadius and not airborne then
 			away = away.Magnitude > 0.1 and away.Unit or Vector3.new(1, 0, 0)
+			EggService.excuse(player, E.mamaStompStun + 1.5) -- the knockback isn't the carrier's own speed
 			Notify:FireClient(player, "fling", away * 60 + Vector3.new(0, 35, 0))
 			SpeedService.stun(player, E.mamaStompStun)
 			Notify:FireClient(player, "toast", "Stomped! Jump or get out of the red ring!")

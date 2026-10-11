@@ -67,6 +67,10 @@ GuardianService.hasLane = function(player, biomeId)
 end
 AbilityService.onPenalty = EggService.drop
 EggService.allowedSpeed = SpeedService.allowed
+PlotService.onTeleport = function(character) -- a server teleport isn't the carrier's own speed
+	local player = Players:GetPlayerFromCharacter(character)
+	if player then EggService.excuse(player, 1) end
+end
 SpeedService.carryOf = EggService.getCarried
 EggService.onCarryChanged = SpeedService.carryChanged
 EggService.onDeposit = function(player, egg)

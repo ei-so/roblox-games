@@ -2,6 +2,7 @@
 local Config = require(game:GetService("ReplicatedStorage").Shared.Config)
 
 local PlotService = {}
+PlotService.onTeleport = nil -- function(character): the server is about to move this character (set by Main)
 
 local plots = workspace:WaitForChild("HomeRow"):WaitForChild("Plots")
 
@@ -65,6 +66,9 @@ function PlotService.teleport(character, cframe)
 		humanoid.Sit = false
 		humanoid:ChangeState(Enum.HumanoidStateType.GettingUp)
 		task.wait() -- let the detached seat assembly settle before moving the character
+	end
+	if PlotService.onTeleport then
+		PlotService.onTeleport(character)
 	end
 	character:PivotTo(cframe)
 end
