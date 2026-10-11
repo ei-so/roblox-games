@@ -179,6 +179,9 @@ local function onPlayerAdded(player)
 	player:SetAttribute("Cash", data.Cash)
 	player:SetAttribute("CashPerSecond", 0)
 	player:SetAttribute("Rebirths", data.Rebirths)
+	if Config.ExtraOG[player.UserId] then
+		data.OG = true
+	end
 	player:SetAttribute("OG", data.OG)
 	PacingService.onPlayerReady(player) -- before anything adds playtime, so brand-new saves are recognised
 	PlotService.assign(player)

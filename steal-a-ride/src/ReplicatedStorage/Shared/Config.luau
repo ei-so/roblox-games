@@ -10,6 +10,10 @@ Config.WalkSpeed = 20 * Config.SpeedScale
 Config.DataStoreName = "StealARide_v2"
 -- Pre-reset store: anyone with a save there is OG (overhead tag + one Lucky Egg of their best old biome + cash, once)
 Config.LegacyDataStoreName = "StealARide_v1"
+-- Hand-picked OG badges (glitching username tag only, no legacy gift), by user id; saved as OG on their next join
+Config.ExtraOG = {
+	[7375210629] = "o_0valerie",
+}
 Config.LegacyGiftCash = 5000
 
 -- Biomes in road order. minEscape = legacy chase metadata (not an enforced gate).
